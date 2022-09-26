@@ -1,8 +1,8 @@
 ---
 layout: docs-content
-title: Compound II | Docs - cTokens
-permalink: /v2/ctokens/
-docs_version: v2
+title: Bitlend II | Docs - cTokens
+permalink: /v1/ctokens/
+docs_version: v1
 
 ## Element ID: In-page Heading
 sidebar_nav_data:
@@ -33,9 +33,9 @@ sidebar_nav_data:
 
 ## Introduction
 
-Each asset supported by the Compound Protocol is integrated through a cToken contract, which is an [EIP-20](https://eips.ethereum.org/EIPS/eip-20){:target="_blank"} compliant representation of balances supplied to the protocol. By minting cTokens, users (1) earn interest through the cToken's exchange rate, which increases in value relative to the underlying asset, and (2) gain the ability to use cTokens as collateral.
+Each asset supported by the Bitlend Protocol is integrated through a cToken contract, which is an [EIP-20](https://eips.ethereum.org/EIPS/eip-20){:target="_blank"} compliant representation of balances supplied to the protocol. By minting cTokens, users (1) earn interest through the cToken's exchange rate, which increases in value relative to the underlying asset, and (2) gain the ability to use cTokens as collateral.
 
-cTokens are the primary means of interacting with the Compound Protocol; when a user mints, redeems, borrows, repays a borrow, liquidates a borrow, or transfers cTokens, she will do so using the cToken contract.
+cTokens are the primary means of interacting with the Bitlend Protocol; when a user mints, redeems, borrows, repays a borrow, liquidates a borrow, or transfers cTokens, she will do so using the cToken contract.
 
 There are currently two types of cTokens: CErc20 and CEther. Though both types expose the EIP-20 interface, CErc20 wraps an underlying ERC-20 asset, while CEther simply wraps Ether itself. As such, the core functions which involve transferring an asset into the protocol have slightly different interfaces depending on the type, each of which is shown below.
 
@@ -83,7 +83,7 @@ await cToken.methods.mint().send({from: myAccount, value: 50});
 
 ## Redeem
 
-The redeem function converts a specified quantity of cTokens into the underlying asset, and returns them to the user. The amount of underlying tokens received is equal to the quantity of cTokens redeemed, multiplied by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/v2/comptroller#account-liquidity) and the market's available liquidity.
+The redeem function converts a specified quantity of cTokens into the underlying asset, and returns them to the user. The amount of underlying tokens received is equal to the quantity of cTokens redeemed, multiplied by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/v1/comptroller#account-liquidity) and the market's available liquidity.
 
 #### CErc20 / CEther
 
@@ -110,7 +110,7 @@ cToken.methods.redeem(1).send({from: ...});
 
 ## Redeem Underlying
 
-The redeem underlying function converts cTokens into a specified quantity of the underlying asset, and returns them to the user. The amount of cTokens redeemed is equal to the quantity of underlying tokens received, divided by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/v2/comptroller#account-liquidity) and the market's available liquidity.
+The redeem underlying function converts cTokens into a specified quantity of the underlying asset, and returns them to the user. The amount of cTokens redeemed is equal to the quantity of underlying tokens received, divided by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/v1/comptroller#account-liquidity) and the market's available liquidity.
 
 #### CErc20 / CEther
 
@@ -137,7 +137,7 @@ cToken.methods.redeemUnderlying(10).send({from: ...});
 
 ## Borrow
 
-The borrow function transfers an asset from the protocol to the user, and creates a borrow balance which begins accumulating interest based on the [Borrow Rate](#borrow-rate) for the asset. The amount borrowed must be less than the user's [Account Liquidity](/v2/comptroller#account-liquidity) and the market's available liquidity. To borrow Ether, the borrower must be 'payable' (solidity).
+The borrow function transfers an asset from the protocol to the user, and creates a borrow balance which begins accumulating interest based on the [Borrow Rate](#borrow-rate) for the asset. The amount borrowed must be less than the user's [Account Liquidity](/v1/comptroller#account-liquidity) and the market's available liquidity. To borrow Ether, the borrower must be 'payable' (solidity).
 
 #### CErc20 / CEther
 
@@ -244,7 +244,7 @@ await cToken.methods.repayBorrowBehalf(0xBorrower, 10000).send({from: 0xPayer});
 
 ## Transfer
 
-Transfer is an ERC-20 method that allows accounts to send tokens to other Ethereum addresses. A cToken transfer will fail if the account has [entered](/v2/comptroller#enter-markets) that cToken market and the transfer would have put the account into a state of negative [liquidity](/v2/comptroller#account-liquidity).
+Transfer is an ERC-20 method that allows accounts to send tokens to other Ethereum addresses. A cToken transfer will fail if the account has [entered](/v1/comptroller#enter-markets) that cToken market and the transfer would have put the account into a state of negative [liquidity](/v1/comptroller#account-liquidity).
 
 #### CErc20 / CEther
 
@@ -272,7 +272,7 @@ await cToken.methods.transfer(0xABCD..., 100000000000).send({from: 0xSender});
 
 ## Liquidate Borrow
 
-A user who has negative [account liquidity](/v2/comptroller#account-liquidity) is subject to [liquidation](#liquidate-borrow) by other users of the protocol to return his/her account liquidity back to positive (i.e. above the collateral requirement). When a liquidation occurs, a liquidator may repay some or all of an outstanding borrow on behalf of a borrower and in return receive a discounted amount of collateral held by the borrower; this discount is defined as the liquidation incentive.
+A user who has negative [account liquidity](/v1/comptroller#account-liquidity) is subject to [liquidation](#liquidate-borrow) by other users of the protocol to return his/her account liquidity back to positive (i.e. above the collateral requirement). When a liquidation occurs, a liquidator may repay some or all of an outstanding borrow on behalf of a borrower and in return receive a discounted amount of collateral held by the borrower; this discount is defined as the liquidation incentive.
 A liquidator may close up to a certain fixed percentage (i.e. close factor) of any individual outstanding borrow of the underwater account. Unlike in v1, liquidators must interact with each cToken contract in which they wish to repay a borrow and seize another asset as collateral. When collateral is seized, the liquidator is transferred cTokens, which they may redeem the same as if they had supplied the asset themselves. Users must approve each cToken contract before calling liquidate (i.e. on the borrowed asset which they are repaying), as they are transferring funds into the contract.
 
 #### CErc20
@@ -282,7 +282,7 @@ function liquidateBorrow(address borrower, uint amount, address collateral) retu
 ```
 
 * `msg.sender`: The account which shall liquidate the borrower by repaying their debt and seizing their collateral.
-* `borrower`: The account with negative [account liquidity](/v2/comptroller#account-liquidity) that shall be liquidated.
+* `borrower`: The account with negative [account liquidity](/v1/comptroller#account-liquidity) that shall be liquidated.
 * `repayAmount`: The amount of the borrowed asset to be repaid and converted into collateral, specified in units of the underlying borrowed asset.
 * `cTokenCollateral`: The address of the cToken currently held as collateral by a borrower, that the liquidator shall seize.
 * `RETURN`: 0 on success, otherwise an [Error code](#error-codes)
@@ -296,7 +296,7 @@ function liquidateBorrow(address borrower, address cTokenCollateral) payable
 
 * `msg.value`: The amount of ether to be repaid and converted into collateral, in wei.
 * `msg.sender`: The account which shall liquidate the borrower by repaying their debt and seizing their collateral.
-* `borrower`: The account with negative [account liquidity](/v2/comptroller#account-liquidity) that shall be liquidated.
+* `borrower`: The account with negative [account liquidity](/v1/comptroller#account-liquidity) that shall be liquidated.
 * `cTokenCollateral`: The address of the cToken currently held as collateral by a borrower, that the liquidator shall seize.
 * `RETURN`: No return, reverts on error.
 

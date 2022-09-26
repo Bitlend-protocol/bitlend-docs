@@ -1,12 +1,12 @@
 ---
 layout: docs-content
-title: Compound II | Docs - API
-permalink: /v2/api/
-docs_version: v2
+title: Bitlend II | Docs - API
+permalink: /v1/api/
+docs_version: v1
 
 ## Element ID: In-page Heading
 sidebar_nav_data:
-  compound-api: Compound API
+  compound-api: Bitlend API
   account-service: AccountService
   ctoken-service: CTokenService
   market-history-service: MarketHistoryService
@@ -14,27 +14,27 @@ sidebar_nav_data:
   shared-data-types: Shared Data Types
 ---
 
-# Compound API
+# Bitlend API
 
 ## Introduction
 
-The Compound API input and output formats are specified by [Protocol Buffers](https://developers.google.com/protocol-buffers/){:target="_blank"}, known colloquially as protobufs. Unlike typical protobufs endpoints, the Compound endpoints support JSON for input and output in addition to the protobufs binary format. To use JSON in both the input and the output, specify the headers `"Content-Type: application/json"` and `"Accept: application/json"` in the request.
+The Bitlend API input and output formats are specified by [Protocol Buffers](https://developers.google.com/protocol-buffers/){:target="_blank"}, known colloquially as protobufs. Unlike typical protobufs endpoints, the Bitlend endpoints support JSON for input and output in addition to the protobufs binary format. To use JSON in both the input and the output, specify the headers `"Content-Type: application/json"` and `"Accept: application/json"` in the request.
 
-The Compound API no longer supports the Ethereum testnets.
+The Bitlend API no longer supports the Ethereum testnets.
 
 It is a possibility that in the future, API keys will be required to access the API.
 
 ## AccountService
 {:id='account-service'}
 
-The Account API retrieves information for various accounts which have interacted with Compound. You can use this API to pull data about a specific account by address, or alternatively, pull data for a list of unhealthy accounts (that is, accounts which are approaching under-collateralization).
+The Account API retrieves information for various accounts which have interacted with Bitlend. You can use this API to pull data about a specific account by address, or alternatively, pull data for a list of unhealthy accounts (that is, accounts which are approaching under-collateralization).
 
 ```js
 // Retreives list of accounts and related supply and borrow balances.
-fetch("https://api.compound.finance/api/v2/account");
+fetch("https://api.compound.finance/api/v1/account");
 
 // Returns details for given account
-fetch("https://api.compound.finance/api/v2/account?addresses[]=0x00..");
+fetch("https://api.compound.finance/api/v1/account?addresses[]=0x00..");
 ```
 
 #### GET: `/account`
@@ -66,7 +66,7 @@ The request to the account API can specify a number filters, such as which addre
 
 #### AccountResponse
 
-The account API returns an overall picture of accounts matching the filters on Compound.
+The account API returns an overall picture of accounts matching the filters on Bitlend.
 
 | Type | Key | Description |
 |------|-----|-------------|
@@ -176,7 +176,7 @@ This includes a list of cTokens contextualized to the full market.
    "collateral_factor": {"value": "0.80000000000000000"},
    "exchange_rate": {"value": "0.020024242770802729"},
    "interest_rate_model_address": "0x1a43bfd39b15dcf444e17ab408c4b5be32deb7f5",
-   "name": "Compound USD Coin",
+   "name": "Bitlend USD Coin",
    "number_of_borrowers": 3,
    "number_of_suppliers": 34,
    "reserves": {"value": "0"},
@@ -239,7 +239,7 @@ The market history service retrieves historical information about a market. You 
 
 ```js
 // Returns 10 buckets of market data
-fetch("https://api.compound.finance/api/v2/market_history/graph?asset=0xf5dce57282a584d2746faf1593d3121fcac444dc&amp;min_block_timestamp=1556747900&amp;max_block_timestamp=1559339900&amp;num_buckets=10");
+fetch("https://api.compound.finance/api/v1/market_history/graph?asset=0xf5dce57282a584d2746faf1593d3121fcac444dc&amp;min_block_timestamp=1556747900&amp;max_block_timestamp=1559339900&amp;num_buckets=10");
 ```
 
 #### GET: `/graph`
@@ -306,17 +306,17 @@ The market history graph API response contains the rates for both suppliers and 
 ## GovernanceService
 {:id='governance-service'}
 
-The Governance Service includes three endpoints to retrieve information about COMP accounts, governance proposals, and proposal vote receipts. You can use the APIs below to pull data about the Compound governance system:
+The Governance Service includes three endpoints to retrieve information about COMP accounts, governance proposals, and proposal vote receipts. You can use the APIs below to pull data about the Bitlend governance system:
 
 ```js
 // Retreives a list of governance proposals
-fetch("https://api.compound.finance/api/v2/governance/proposals");
+fetch("https://api.compound.finance/api/v1/governance/proposals");
 
 // Retreives a list of governance proposal vote receipts
-fetch("https://api.compound.finance/api/v2/governance/proposal_vote_receipts");
+fetch("https://api.compound.finance/api/v1/governance/proposal_vote_receipts");
 
 // Retreives a list of COMP accounts
-fetch("https://api.compound.finance/api/v2/governance/accounts");
+fetch("https://api.compound.finance/api/v1/governance/accounts");
 ```
 
 #### GET: `/governance/proposals`
@@ -479,11 +479,11 @@ The Governance Account API returns a list of accounts that match the given filte
 | string | `balance` | The balance of COMP for the given account |
 | string | `votes` | The total votes delegated to the account |
 | string | `vote_weight` | The percentage of voting weight of the 10,000,000 total COMP |
-| uint32 | `proposals_created` | The number of proposals created in the Compound Governance System |
+| uint32 | `proposals_created` | The number of proposals created in the Bitlend Governance System |
 | DisplayCompAccount | `delegate` | The account this COMP account is delegating to (See DisplayCompAccount) |
 | uint32 | `rank` | Either `null` or the rank order of top 100 COMP accounts for votes |
 | CompAccountTransaction | `transactions` | Either `null` or a list of historical transactions for the account (See CompAccountTransaction) |
-| uint32 | `proposals_voted` | The number of proposals voted on in the Compound Governance System |
+| uint32 | `proposals_voted` | The number of proposals voted on in the Bitlend Governance System |
 | uint32 | `total_delegates` | The number of addresses delegating to this account |
 | CrowdProposal | `crowd_proposal` | Either `null` or a description of the crowd proposal the comp_moment represents (See CrowdProposal) |
 
@@ -553,11 +553,11 @@ The Governance Account API returns a list of accounts that match the given filte
 | string | `balance` | The balance of COMP for the given account |
 | string | `votes` | The total votes delegated to the account |
 | string | `vote_weight` | The percentage of voting weight of the 10,000,000 total COMP |
-| uint32 | `proposals_created` | The number of proposals created in the Compound Governance System |
+| uint32 | `proposals_created` | The number of proposals created in the Bitlend Governance System |
 | DisplayCompAccount | `delegate` | The account this COMP account is delegating to (See DisplayCompAccount) |
 | uint32 | `rank` | Either `null` or the rank order of top 100 COMP accounts for votes |
 | CompAccountTransaction | `transactions` | Either `null` or a list of historical transactions for the account (See CompAccountTransaction) |
-| uint32 | `proposals_voted` | The number of proposals voted on in the Compound Governance System |
+| uint32 | `proposals_voted` | The number of proposals voted on in the Bitlend Governance System |
 | uint32 | `total_delegates` | The number of addresses delegating to this account |
 | CrowdProposal | `crowd_proposal` | Either `null` or a description of the crowd proposal the comp_moment represents (See CrowdProposal) |
 
@@ -597,7 +597,7 @@ The Governance Account API returns a list of accounts that match the given filte
 
 #### GovernanceHistoryRequest
 
-The governance history API returns historical information about the Compound governance system.
+The governance history API returns historical information about the Bitlend governance system.
 
 #### GovernanceHistoryResponse
 
@@ -646,7 +646,7 @@ The governance history API response contains the values for votes delegate, tota
 
 #### GovernanceCompDistributionRequest
 
-The governance COMP distribution API returns COMP distribution information for markets in the Compound protocol.
+The governance COMP distribution API returns COMP distribution information for markets in the Bitlend protocol.
 
 | Type | Key | Description |
 |------|-----|-------------|
@@ -720,7 +720,7 @@ The governance COMP account distribution API response contains the values for CO
 
 #### GovernanceCompDistributionRequest
 
-The governance COMP distribution API returns COMP distribution information for markets in the Compound protocol.
+The governance COMP distribution API returns COMP distribution information for markets in the Bitlend protocol.
 
 | Type | Key | Description |
 |------|-----|-------------|

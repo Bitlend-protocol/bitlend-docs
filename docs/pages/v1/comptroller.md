@@ -1,8 +1,8 @@
 ---
 layout: docs-content
-title: Compound II | Docs - Comptroller
-permalink: /v2/comptroller/
-docs_version: v2
+title: Bitlend II | Docs - Comptroller
+permalink: /v1/comptroller/
+docs_version: v1
 
 ## Element ID: In-page Heading
 sidebar_nav_data:
@@ -26,10 +26,10 @@ sidebar_nav_data:
 
 ## Introduction
 
-The Comptroller is the risk management layer of the Compound protocol; it determines how much collateral a user is required to maintain, and whether (and by how much) a user can be liquidated. Each time a user interacts with a cToken, the Comptroller is asked to approve or deny the transaction.
+The Comptroller is the risk management layer of the Bitlend protocol; it determines how much collateral a user is required to maintain, and whether (and by how much) a user can be liquidated. Each time a user interacts with a cToken, the Comptroller is asked to approve or deny the transaction.
 
 The Comptroller maps user balances to prices (via the Price Oracle) to
-risk weights (called [Collateral Factors](/v2/comptroller#collateral-factor)) to make its determinations. Users explicitly list which assets they would like included in their risk scoring, by calling [Enter Markets](/v2/comptroller#enter-markets) and [Exit Market](/v2/comptroller#exit-market).
+risk weights (called [Collateral Factors](/v1/comptroller#collateral-factor)) to make its determinations. Users explicitly list which assets they would like included in their risk scoring, by calling [Enter Markets](/v1/comptroller#enter-markets) and [Exit Market](/v1/comptroller#exit-market).
 
 ## Architecture
 
@@ -47,7 +47,7 @@ function enterMarkets(address[] calldata cTokens) returns (uint[] memory)
 
 * `msg.sender`: The account which shall enter the given markets.
 * `cTokens`: The addresses of the cToken markets to enter.
-* `RETURN`: For each market, returns an error code indicating whether or not it was entered. Each is 0 on success, otherwise an [Error code](/v2/comptroller#error-codes).
+* `RETURN`: For each market, returns an error code indicating whether or not it was entered. Each is 0 on success, otherwise an [Error code](/v1/comptroller#error-codes).
 
 #### Solidity
 
@@ -79,7 +79,7 @@ function exitMarket(address cToken) returns (uint)
 
 * `msg.sender`: The account which shall exit the given market.
 * `cTokens`: The addresses of the cToken market to exit.
-* `RETURN`: 0 on success, otherwise an [Error code](/v2/comptroller#error-codes).
+* `RETURN`: 0 on success, otherwise an [Error code](/v1/comptroller#error-codes).
 
 #### Solidity
 
@@ -97,7 +97,7 @@ const errors = await troll.methods.exitMarket(CEther.at(0x3FDB...)).send({from: 
 
 ## Get Assets In
 
-Get the list of markets an account is currently entered into. In order to supply collateral or borrow in a market, it must be entered first. Entered markets count towards [account liquidity](/v2/comptroller#account-liquidity) calculations.
+Get the list of markets an account is currently entered into. In order to supply collateral or borrow in a market, it must be entered first. Entered markets count towards [account liquidity](/v1/comptroller#account-liquidity) calculations.
 
 #### Comptroller
 
@@ -129,7 +129,7 @@ A cToken's collateral factor can range from 0-90%, and represents the proportion
 Generally, large or liquid assets have high collateral factors, while small or illiquid assets have low collateral factors. If an asset has a 0% collateral factor, it can't be used as collateral (or seized in liquidation), though it can still be borrowed.
 
 <div class="notice">
-Collateral factors can be increased (or decreased) through Compound Governance, as market conditions change.
+Collateral factors can be increased (or decreased) through Bitlend Governance, as market conditions change.
 </div>
 
 #### Comptroller
@@ -161,9 +161,9 @@ const {0: isListed, 1: collateralFactorMantissa, 2: isComped} = result;
 
 Account Liquidity represents the USD value borrowable by a user, before it reaches liquidation. Users with a shortfall (negative liquidity) are subject to liquidation, and can’t withdraw or borrow assets until Account Liquidity is positive again.
 
-For each market the user has [entered](/v2/comptroller#enter-markets) into, their supplied balance is multiplied by the market’s [collateral factor](/v2/comptroller#collateral-factor), and summed; borrow balances are then subtracted, to equal Account Liquidity. Borrowing an asset reduces Account Liquidity for each USD borrowed; withdrawing an asset reduces Account Liquidity by the asset’s collateral factor times each USD withdrawn.
+For each market the user has [entered](/v1/comptroller#enter-markets) into, their supplied balance is multiplied by the market’s [collateral factor](/v1/comptroller#collateral-factor), and summed; borrow balances are then subtracted, to equal Account Liquidity. Borrowing an asset reduces Account Liquidity for each USD borrowed; withdrawing an asset reduces Account Liquidity by the asset’s collateral factor times each USD withdrawn.
 
-Because the Compound Protocol exclusively uses unsigned integers, Account Liquidity returns either a surplus or shortfall.
+Because the Bitlend Protocol exclusively uses unsigned integers, Account Liquidity returns either a surplus or shortfall.
 
 #### Comptroller
 
@@ -172,7 +172,7 @@ function getAccountLiquidity(address account) view returns (uint, uint, uint)
 ```
 
 * `account`: The account whose liquidity shall be calculated.
-* `RETURN`: Tuple of values (error, liquidity, shortfall). The error shall be 0 on success, otherwise an [error code](/v2/comptroller#error-codes). A non-zero liquidity value indicates the account has available [account liquidity](/v2/comptroller#account-liquidity). A non-zero shortfall value indicates the account is currently below his/her collateral requirement and is subject to liquidation. At most one of liquidity or shortfall shall be non-zero.
+* `RETURN`: Tuple of values (error, liquidity, shortfall). The error shall be 0 on success, otherwise an [error code](/v1/comptroller#error-codes). A non-zero liquidity value indicates the account has available [account liquidity](/v1/comptroller#account-liquidity). A non-zero shortfall value indicates the account is currently below his/her collateral requirement and is subject to liquidation. At most one of liquidity or shortfall shall be non-zero.
 
 #### Solidity
 
@@ -248,8 +248,8 @@ const closeFactor = await troll.methods.liquidationIncentiveMantissa().call();
 
 | Event | Description |
 |-------|-------------|
-| `MarketEntered(CToken cToken, address account)` | Emitted upon a successful [Enter Market](/v2/comptroller#enter-markets). |
-| `MarketExited(CToken cToken, address account)` | Emitted upon a successful [Exit Market](/v2/comptroller#exit-market). |
+| `MarketEntered(CToken cToken, address account)` | Emitted upon a successful [Enter Market](/v1/comptroller#enter-markets). |
+| `MarketExited(CToken cToken, address account)` | Emitted upon a successful [Exit Market](/v1/comptroller#exit-market). |
 {: .key-events-table }
 
 ## Error Codes
@@ -304,7 +304,7 @@ const closeFactor = await troll.methods.liquidationIncentiveMantissa().call();
 
 ### COMP Speed
 
-The "COMP speed" unique to each market is an unsigned integer that specifies the amount of COMP that is distributed, per block, to suppliers and borrowers in each market. This number can be changed for individual markets by calling the `_setCompSpeed` method through a successful Compound Governance proposal.
+The "COMP speed" unique to each market is an unsigned integer that specifies the amount of COMP that is distributed, per block, to suppliers and borrowers in each market. This number can be changed for individual markets by calling the `_setCompSpeed` method through a successful Bitlend Governance proposal.
 The following is the formula for calculating the rate that COMP is distributed to each supported market.
 
 ```solidity
@@ -387,7 +387,7 @@ const compSpeedPerDayTotal = compSpeedPerDay * 2;
 
 ## Claim COMP
 
-Every Compound user accrues COMP for each block they are supplying to or borrowing from the protocol. Users may call the Comptroller's `claimComp` method at any time to transfer COMP accrued to their address.
+Every Bitlend user accrues COMP for each block they are supplying to or borrowing from the protocol. Users may call the Comptroller's `claimComp` method at any time to transfer COMP accrued to their address.
 
 #### Comptroller
 

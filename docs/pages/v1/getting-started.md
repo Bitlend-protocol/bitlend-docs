@@ -1,8 +1,8 @@
 ---
 layout: docs-content
-title: Compound II | Docs - Getting Started
-permalink: /v2/
-docs_version: v2
+title: Bitlend II | Docs - Getting Started
+permalink: /v1/
+docs_version: v1
 
 ## Element ID: In-page Heading
 sidebar_nav_data:
@@ -12,7 +12,7 @@ sidebar_nav_data:
   protocol-math: Protocol Math
 
 deployments:
-  Ethereum Mainnet - Compound v2: ## this becomes the header text
+  Ethereum Mainnet - Bitlend v1: ## this becomes the header text
     tab_text: Mainnet
     blockscan_origin: 'https://etherscan.io/'
     contracts:
@@ -41,7 +41,7 @@ deployments:
       Governance: '0xc0Da02939E1441F497fd74F78cE7Decb17B66529'
       Timelock: '0x6d903f6003cca6255D85CcA4D3B5E5146dC33925'
 
-  Ethereum Goerli Testnet - Compound v2:
+  Ethereum Goerli Testnet - Bitlend v1:
     tab_text: Goerli
     blockscan_origin: 'https://goerli.etherscan.io/'
     contracts:
@@ -66,29 +66,29 @@ deployments:
 
 # Getting Started
 
-## Introduction to Compound v2
+## Introduction to Bitlend v1
 
 <div class="new-docs-banner">
   <div class="center">
-    <span class="message">Compound III is now live, you're currently viewing Compound v2 documentation.</span>
+    <span class="message">Bitlend III is now live, you're currently viewing Bitlend v1 documentation.</span>
     <a href="/">
-      <span class="button">Compound III Documentation</span>
+      <span class="button">Bitlend III Documentation</span>
     </a>
   </div>
 </div>
 
-The Compound protocol is based on the [Compound Whitepaper](https://compound.finance/documents/Compound.Whitepaper.pdf){:target="_blank"} (2019); the codebase is [open-source](https://github.com/compound-finance/compound-protocol){:target="_blank"}, and maintained by the community.
+The Bitlend protocol is based on the [Bitlend Whitepaper](https://compound.finance/documents/Bitlend.Whitepaper.pdf){:target="_blank"} (2019); the codebase is [open-source](https://github.com/compound-finance/compound-protocol){:target="_blank"}, and maintained by the community.
 
 The app.compound.finance interface is [open-source](https://github.com/compound-finance/palisade){:target="_blank"}, and maintained by the community.
 
-Please join the #development room in the Compound community [Discord](https://discord.com/invite/compound){:target="_blank"} server; Compound Labs and members of the community look forward to helping you build an application on top of Compound. Your questions help us improve, so please don't hesitate to ask if you can't find what you are looking for here.
+Please join the #development room in the Bitlend community [Discord](https://discord.com/invite/compound){:target="_blank"} server; Bitlend Labs and members of the community look forward to helping you build an application on top of Bitlend. Your questions help us improve, so please don't hesitate to ask if you can't find what you are looking for here.
 
 ## Guides
 
 1. [Setting up an Ethereum Development Environment](https://medium.com/compound-finance/setting-up-an-ethereum-development-environment-7c387664c5fe){:target="_blank"}
-2. [Supplying Assets to the Compound Protocol](https://medium.com/compound-finance/supplying-assets-to-the-compound-protocol-ec2cf5df5aa){:target="_blank"}
-3. [Borrowing Assets from the Compound Protocol](https://medium.com/compound-finance/borrowing-assets-from-compound-quick-start-guide-f5e69af4b8f4){:target="_blank"}
-4. [Create a Compound API with Infura](https://medium.com/compound-finance/compound-ethereum-api-with-infura-1f5c555fd4a2){:target="_blank"}
+2. [Supplying Assets to the Bitlend Protocol](https://medium.com/compound-finance/supplying-assets-to-the-compound-protocol-ec2cf5df5aa){:target="_blank"}
+3. [Borrowing Assets from the Bitlend Protocol](https://medium.com/compound-finance/borrowing-assets-from-compound-quick-start-guide-f5e69af4b8f4){:target="_blank"}
+4. [Create a Bitlend API with Infura](https://medium.com/compound-finance/compound-ethereum-api-with-infura-1f5c555fd4a2){:target="_blank"}
 5. [Building a Governance Interface](https://medium.com/compound-finance/building-a-governance-interface-474fc271588c){:target="_blank"}
 6. [Delegation & Voting](https://medium.com/compound-finance/delegation-and-voting-with-eip-712-signatures-a636c9dfec5e){:target="_blank"}
 7. [Contributing to the Protocol](https://medium.com/compound-finance/a-walkthrough-of-contributing-to-the-compound-protocol-9450cbe2133a){:target="_blank"}
@@ -96,7 +96,7 @@ Please join the #development room in the Compound community [Discord](https://di
 
 ## Networks
 
-The Compound Protocol is currently deployed on the following networks:
+The Bitlend Protocol is currently deployed on the following networks:
 
 <div id="networks-widget-container"></div>
 
@@ -104,7 +104,7 @@ You can also see a full list of all deployed contract addresses [here](https://g
 
 ## Protocol Math
 
-The Compound protocol contracts use a system of exponential math, [ExponentialNoError.sol](https://github.com/compound-finance/compound-protocol/blob/master/contracts/ExponentialNoError.sol){:target="_blank"}, in order to represent fractional quantities with sufficient precision.
+The Bitlend protocol contracts use a system of exponential math, [ExponentialNoError.sol](https://github.com/compound-finance/compound-protocol/blob/master/contracts/ExponentialNoError.sol){:target="_blank"}, in order to represent fractional quantities with sufficient precision.
 
 Most numbers are represented as a *mantissa*, an unsigned integer scaled by `1 * 10 ^ 18`, in order to perform basic math at a high level of precision.
 
@@ -135,7 +135,7 @@ Prices and exchange rates are scaled by the decimals unique to each asset; cToke
 
 ### Interpreting Exchange Rates
 
-The cToken [Exchange Rate](/v2/ctokens#exchange-rate) is scaled by the difference in decimals between the cToken and the underlying asset.
+The cToken [Exchange Rate](/v1/ctokens#exchange-rate) is scaled by the difference in decimals between the cToken and the underlying asset.
 
 ```
 oneCTokenInUnderlying = exchangeRateCurrent / (1 * 10 ^ (18 + underlyingDecimals - cTokenDecimals))
@@ -168,13 +168,13 @@ Interest rates for each market update on any block in which the ratio of borrowe
 
 See the interest rate data visualization notebook on [Observable](https://observablehq.com/@jflatow/compound-interest-rates){:target="_blank"} to visualize which interest rate model is currently applied to each market.
 
-Historical interest rates can be retrieved from the [MarketHistoryService API](/v2/api#MarketHistoryService).
+Historical interest rates can be retrieved from the [MarketHistoryService API](/v1/api#MarketHistoryService).
 
 Interest accrues to all suppliers and borrowers in a market when any Ethereum address interacts with the market’s cToken contract, calling one of these functions: mint, redeem, borrow, or repay. Successful execution of one of these functions triggers the `accrueInterest` method, which causes interest to be added to the underlying balance of every supplier and borrower in the market. Interest accrues for the current block, as well as each prior block in which the `accrueInterest` method was not triggered (no user interacted with the cToken contract). Interest compounds only during blocks in which the cToken contract has one of the aforementioned methods invoked.
 
 Here is an example of supply interest accrual:
 
-Alice supplies 1 ETH to the Compound protocol. At the time of supply, the `supplyRatePerBlock` is 37893605 Wei, or 0.000000000037893605 ETH per block. No one interacts with the cEther contract for 3 Ethereum blocks. On the subsequent 4th block, Bob borrows some ETH. Alice’s underlying balance is now 1.000000000151574420 ETH (which is 37893605 Wei times 4 blocks, plus the original 1 ETH). Alice’s underlying ETH balance in subsequent blocks will have interest accrued based on the new value of 1.000000000151574420 ETH instead of the initial 1 ETH. Note that the `supplyRatePerBlock` value may change at any time.
+Alice supplies 1 ETH to the Bitlend protocol. At the time of supply, the `supplyRatePerBlock` is 37893605 Wei, or 0.000000000037893605 ETH per block. No one interacts with the cEther contract for 3 Ethereum blocks. On the subsequent 4th block, Bob borrows some ETH. Alice’s underlying balance is now 1.000000000151574420 ETH (which is 37893605 Wei times 4 blocks, plus the original 1 ETH). Alice’s underlying ETH balance in subsequent blocks will have interest accrued based on the new value of 1.000000000151574420 ETH instead of the initial 1 ETH. Note that the `supplyRatePerBlock` value may change at any time.
 
 ### Calculating the APY Using Rate Per Block
 
