@@ -1,7 +1,7 @@
 ---
 layout: docs-content
 title: Bitlend II | Docs - API
-permalink: /v1/api/
+permalink: /api/
 docs_version: v1
 
 ## Element ID: In-page Heading
@@ -31,10 +31,10 @@ The Account API retrieves information for various accounts which have interacted
 
 ```js
 // Retreives list of accounts and related supply and borrow balances.
-fetch("https://api.compound.finance/api/v1/account");
+fetch("https://api.compound.finance/api/account");
 
 // Returns details for given account
-fetch("https://api.compound.finance/api/v1/account?addresses[]=0x00..");
+fetch("https://api.compound.finance/api/account?addresses[]=0x00..");
 ```
 
 #### GET: `/account`
@@ -239,7 +239,7 @@ The market history service retrieves historical information about a market. You 
 
 ```js
 // Returns 10 buckets of market data
-fetch("https://api.compound.finance/api/v1/market_history/graph?asset=0xf5dce57282a584d2746faf1593d3121fcac444dc&amp;min_block_timestamp=1556747900&amp;max_block_timestamp=1559339900&amp;num_buckets=10");
+fetch("https://api.compound.finance/api/market_history/graph?asset=0xf5dce57282a584d2746faf1593d3121fcac444dc&amp;min_block_timestamp=1556747900&amp;max_block_timestamp=1559339900&amp;num_buckets=10");
 ```
 
 #### GET: `/graph`
@@ -310,13 +310,13 @@ The Governance Service includes three endpoints to retrieve information about CO
 
 ```js
 // Retreives a list of governance proposals
-fetch("https://api.compound.finance/api/v1/governance/proposals");
+fetch("https://api.compound.finance/api/governance/proposals");
 
 // Retreives a list of governance proposal vote receipts
-fetch("https://api.compound.finance/api/v1/governance/proposal_vote_receipts");
+fetch("https://api.compound.finance/api/governance/proposal_vote_receipts");
 
 // Retreives a list of COMP accounts
-fetch("https://api.compound.finance/api/v1/governance/accounts");
+fetch("https://api.compound.finance/api/governance/accounts");
 ```
 
 #### GET: `/governance/proposals`

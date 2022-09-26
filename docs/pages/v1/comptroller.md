@@ -1,7 +1,7 @@
 ---
 layout: docs-content
 title: Bitlend | Docs - Comptroller
-permalink: /v1/comptroller/
+permalink: /comptroller/
 docs_version: v1
 
 ## Element ID: In-page Heading
@@ -29,7 +29,7 @@ sidebar_nav_data:
 The Comptroller is the risk management layer of the Bitlend protocol; it determines how much collateral a user is required to maintain, and whether (and by how much) a user can be liquidated. Each time a user interacts with a bToken, the Comptroller is asked to approve or deny the transaction.
 
 The Comptroller maps user balances to prices (via the Price Oracle) to
-risk weights (called [Collateral Factors](/v1/comptroller#collateral-factor)) to make its determinations. Users explicitly list which assets they would like included in their risk scoring, by calling [Enter Markets](/v1/comptroller#enter-markets) and [Exit Market](/v1/comptroller#exit-market).
+risk weights (called [Collateral Factors](/comptroller#collateral-factor)) to make its determinations. Users explicitly list which assets they would like included in their risk scoring, by calling [Enter Markets](/comptroller#enter-markets) and [Exit Market](/comptroller#exit-market).
 
 ## Architecture
 
@@ -47,7 +47,7 @@ function enterMarkets(address[] calldata bTokens) returns (uint[] memory)
 
 * `msg.sender`: The account which shall enter the given markets.
 * `bTokens`: The addresses of the bToken markets to enter.
-* `RETURN`: For each market, returns an error code indicating whether or not it was entered. Each is 0 on success, otherwise an [Error code](/v1/comptroller#error-codes).
+* `RETURN`: For each market, returns an error code indicating whether or not it was entered. Each is 0 on success, otherwise an [Error code](/comptroller#error-codes).
 
 #### Solidity
 
@@ -79,7 +79,7 @@ function exitMarket(address bToken) returns (uint)
 
 * `msg.sender`: The account which shall exit the given market.
 * `bTokens`: The addresses of the bToken market to exit.
-* `RETURN`: 0 on success, otherwise an [Error code](/v1/comptroller#error-codes).
+* `RETURN`: 0 on success, otherwise an [Error code](/comptroller#error-codes).
 
 #### Solidity
 
@@ -97,7 +97,7 @@ const errors = await troll.methods.exitMarket(CEther.at(0x3FDB...)).send({from: 
 
 ## Get Assets In
 
-Get the list of markets an account is currently entered into. In order to supply collateral or borrow in a market, it must be entered first. Entered markets count towards [account liquidity](/v1/comptroller#account-liquidity) calculations.
+Get the list of markets an account is currently entered into. In order to supply collateral or borrow in a market, it must be entered first. Entered markets count towards [account liquidity](/comptroller#account-liquidity) calculations.
 
 #### Comptroller
 
@@ -161,7 +161,7 @@ const {0: isListed, 1: collateralFactorMantissa, 2: isComped} = result;
 
 Account Liquidity represents the USD value borrowable by a user, before it reaches liquidation. Users with a shortfall (negative liquidity) are subject to liquidation, and can’t withdraw or borrow assets until Account Liquidity is positive again.
 
-For each market the user has [entered](/v1/comptroller#enter-markets) into, their supplied balance is multiplied by the market’s [collateral factor](/v1/comptroller#collateral-factor), and summed; borrow balances are then subtracted, to equal Account Liquidity. Borrowing an asset reduces Account Liquidity for each USD borrowed; withdrawing an asset reduces Account Liquidity by the asset’s collateral factor times each USD withdrawn.
+For each market the user has [entered](/comptroller#enter-markets) into, their supplied balance is multiplied by the market’s [collateral factor](/comptroller#collateral-factor), and summed; borrow balances are then subtracted, to equal Account Liquidity. Borrowing an asset reduces Account Liquidity for each USD borrowed; withdrawing an asset reduces Account Liquidity by the asset’s collateral factor times each USD withdrawn.
 
 Because the Bitlend Protocol exclusively uses unsigned integers, Account Liquidity returns either a surplus or shortfall.
 
@@ -172,7 +172,7 @@ function getAccountLiquidity(address account) view returns (uint, uint, uint)
 ```
 
 * `account`: The account whose liquidity shall be calculated.
-* `RETURN`: Tuple of values (error, liquidity, shortfall). The error shall be 0 on success, otherwise an [error code](/v1/comptroller#error-codes). A non-zero liquidity value indicates the account has available [account liquidity](/v1/comptroller#account-liquidity). A non-zero shortfall value indicates the account is currently below his/her collateral requirement and is subject to liquidation. At most one of liquidity or shortfall shall be non-zero.
+* `RETURN`: Tuple of values (error, liquidity, shortfall). The error shall be 0 on success, otherwise an [error code](/comptroller#error-codes). A non-zero liquidity value indicates the account has available [account liquidity](/comptroller#account-liquidity). A non-zero shortfall value indicates the account is currently below his/her collateral requirement and is subject to liquidation. At most one of liquidity or shortfall shall be non-zero.
 
 #### Solidity
 
@@ -248,8 +248,8 @@ const closeFactor = await troll.methods.liquidationIncentiveMantissa().call();
 
 | Event | Description |
 |-------|-------------|
-| `MarketEntered(BToken bToken, address account)` | Emitted upon a successful [Enter Market](/v1/comptroller#enter-markets). |
-| `MarketExited(BToken bToken, address account)` | Emitted upon a successful [Exit Market](/v1/comptroller#exit-market). |
+| `MarketEntered(BToken bToken, address account)` | Emitted upon a successful [Enter Market](/comptroller#enter-markets). |
+| `MarketExited(BToken bToken, address account)` | Emitted upon a successful [Exit Market](/comptroller#exit-market). |
 {: .key-events-table }
 
 ## Error Codes
@@ -415,7 +415,7 @@ await comptroller.methods.claimComp("0x1234...").send({ from: sender });
 
 ## Market Metadata
 
-The Comptroller contract has an array called `getAllMarkets` that contains the addresses of each bToken contract. Each address in the `getAllMarkets` array can be used to fetch a metadata struct in the Comptroller’s markets constant. See the [Comptroller Storage contract](https://github.com/compound-finance/compound-protocol/blob/master/contracts/ComptrollerStorage.sol){:target="_blank"} for the Market struct definition.
+The Comptroller contract has an array called `getAllMarkets` that contains the addresses of each bToken contract. Each address in the `getAllMarkets` array can be used to fetch a metadata struct in the Comptroller’s markets constant. See the [Comptroller Storage contract](https://github.com/Bitlend-protocol/compound-protocol/blob/master/contracts/ComptrollerStorage.sol){:target="_blank"} for the Market struct definition.
 
 #### Comptroller
 

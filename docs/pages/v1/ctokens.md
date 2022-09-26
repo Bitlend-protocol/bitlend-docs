@@ -1,7 +1,7 @@
 ---
 layout: docs-content
 title: Bitlend II | Docs - bTokens
-permalink: /v1/btokens/
+permalink: /btokens/
 docs_version: v1
 
 ## Element ID: In-page Heading
@@ -83,7 +83,7 @@ await bToken.methods.mint().send({from: myAccount, value: 50});
 
 ## Redeem
 
-The redeem function converts a specified quantity of bTokens into the underlying asset, and returns them to the user. The amount of underlying tokens received is equal to the quantity of bTokens redeemed, multiplied by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/v1/comptroller#account-liquidity) and the market's available liquidity.
+The redeem function converts a specified quantity of bTokens into the underlying asset, and returns them to the user. The amount of underlying tokens received is equal to the quantity of bTokens redeemed, multiplied by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/comptroller#account-liquidity) and the market's available liquidity.
 
 #### CErc20 / CEther
 
@@ -110,7 +110,7 @@ bToken.methods.redeem(1).send({from: ...});
 
 ## Redeem Underlying
 
-The redeem underlying function converts bTokens into a specified quantity of the underlying asset, and returns them to the user. The amount of bTokens redeemed is equal to the quantity of underlying tokens received, divided by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/v1/comptroller#account-liquidity) and the market's available liquidity.
+The redeem underlying function converts bTokens into a specified quantity of the underlying asset, and returns them to the user. The amount of bTokens redeemed is equal to the quantity of underlying tokens received, divided by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/comptroller#account-liquidity) and the market's available liquidity.
 
 #### CErc20 / CEther
 
@@ -137,7 +137,7 @@ bToken.methods.redeemUnderlying(10).send({from: ...});
 
 ## Borrow
 
-The borrow function transfers an asset from the protocol to the user, and creates a borrow balance which begins accumulating interest based on the [Borrow Rate](#borrow-rate) for the asset. The amount borrowed must be less than the user's [Account Liquidity](/v1/comptroller#account-liquidity) and the market's available liquidity. To borrow Ether, the borrower must be 'payable' (solidity).
+The borrow function transfers an asset from the protocol to the user, and creates a borrow balance which begins accumulating interest based on the [Borrow Rate](#borrow-rate) for the asset. The amount borrowed must be less than the user's [Account Liquidity](/comptroller#account-liquidity) and the market's available liquidity. To borrow Ether, the borrower must be 'payable' (solidity).
 
 #### CErc20 / CEther
 
@@ -244,7 +244,7 @@ await bToken.methods.repayBorrowBehalf(0xBorrower, 10000).send({from: 0xPayer});
 
 ## Transfer
 
-Transfer is an ERC-20 method that allows accounts to send tokens to other Ethereum addresses. A bToken transfer will fail if the account has [entered](/v1/comptroller#enter-markets) that bToken market and the transfer would have put the account into a state of negative [liquidity](/v1/comptroller#account-liquidity).
+Transfer is an ERC-20 method that allows accounts to send tokens to other Ethereum addresses. A bToken transfer will fail if the account has [entered](/comptroller#enter-markets) that bToken market and the transfer would have put the account into a state of negative [liquidity](/comptroller#account-liquidity).
 
 #### CErc20 / CEther
 
@@ -272,7 +272,7 @@ await bToken.methods.transfer(0xABCD..., 100000000000).send({from: 0xSender});
 
 ## Liquidate Borrow
 
-A user who has negative [account liquidity](/v1/comptroller#account-liquidity) is subject to [liquidation](#liquidate-borrow) by other users of the protocol to return his/her account liquidity back to positive (i.e. above the collateral requirement). When a liquidation occurs, a liquidator may repay some or all of an outstanding borrow on behalf of a borrower and in return receive a discounted amount of collateral held by the borrower; this discount is defined as the liquidation incentive.
+A user who has negative [account liquidity](/comptroller#account-liquidity) is subject to [liquidation](#liquidate-borrow) by other users of the protocol to return his/her account liquidity back to positive (i.e. above the collateral requirement). When a liquidation occurs, a liquidator may repay some or all of an outstanding borrow on behalf of a borrower and in return receive a discounted amount of collateral held by the borrower; this discount is defined as the liquidation incentive.
 A liquidator may close up to a certain fixed percentage (i.e. close factor) of any individual outstanding borrow of the underwater account. Unlike in v1, liquidators must interact with each bToken contract in which they wish to repay a borrow and seize another asset as collateral. When collateral is seized, the liquidator is transferred bTokens, which they may redeem the same as if they had supplied the asset themselves. Users must approve each bToken contract before calling liquidate (i.e. on the borrowed asset which they are repaying), as they are transferring funds into the contract.
 
 #### CErc20
@@ -282,7 +282,7 @@ function liquidateBorrow(address borrower, uint amount, address collateral) retu
 ```
 
 * `msg.sender`: The account which shall liquidate the borrower by repaying their debt and seizing their collateral.
-* `borrower`: The account with negative [account liquidity](/v1/comptroller#account-liquidity) that shall be liquidated.
+* `borrower`: The account with negative [account liquidity](/comptroller#account-liquidity) that shall be liquidated.
 * `repayAmount`: The amount of the borrowed asset to be repaid and converted into collateral, specified in units of the underlying borrowed asset.
 * `bTokenCollateral`: The address of the bToken currently held as collateral by a borrower, that the liquidator shall seize.
 * `RETURN`: 0 on success, otherwise an [Error code](#error-codes)
@@ -296,7 +296,7 @@ function liquidateBorrow(address borrower, address bTokenCollateral) payable
 
 * `msg.value`: The amount of ether to be repaid and converted into collateral, in wei.
 * `msg.sender`: The account which shall liquidate the borrower by repaying their debt and seizing their collateral.
-* `borrower`: The account with negative [account liquidity](/v1/comptroller#account-liquidity) that shall be liquidated.
+* `borrower`: The account with negative [account liquidity](/comptroller#account-liquidity) that shall be liquidated.
 * `bTokenCollateral`: The address of the bToken currently held as collateral by a borrower, that the liquidator shall seize.
 * `RETURN`: No return, reverts on error.
 

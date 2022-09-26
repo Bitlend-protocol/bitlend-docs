@@ -1,7 +1,7 @@
 ---
 layout: docs-content
 title: Bitlend | Docs - Security
-permalink: /v1/security/
+permalink: /security/
 docs_version: v1
 
 ## Element ID: In-page Heading
@@ -64,7 +64,7 @@ The primary scope of the bug bounty program is for vulnerabilities affecting the
 
 This list may change as new contracts are deployed, or as existing contracts are removed from usage. Vulnerabilities in contracts built on top of the Protocol by third-party developers (such as smart contract wallets) are not in-scope, nor are vulnerabilities that require ownership of an admin key.
 
-The secondary scope of the bug bounty program is for vulnerabilities affecting the Bitlend Interface hosted at app.compound.finance that could conceivably result in exploitation of user accounts.
+The secondary scope of the bug bounty program is for vulnerabilities affecting the Bitlend Interface hosted at app.bitlend.fi that could conceivably result in exploitation of user accounts.
 
 Finally, test contracts (Rinkeby and other testnets) and staging servers are out of scope, unless the discovered vulnerability also affects the Bitlend Protocol or Interface, or could otherwise be exploited in a way that risks user funds.
 

@@ -1,7 +1,7 @@
 ---
 layout: docs-content
 title: Bitlend | Docs - Getting Started
-permalink: /v1/
+permalink: /
 docs_version: v1
 
 ## Element ID: In-page Heading
@@ -12,86 +12,60 @@ sidebar_nav_data:
   protocol-math: Protocol Math
 
 deployments:
-  Ethereum Mainnet - Bitlend v1: ## this becomes the header text
+  Ethereum Mainnet - Bitlend: ## this becomes the header text
     tab_text: Mainnet
-    blockscan_origin: 'https://etherscan.io/'
+    blockscan_origin: 'https://bttcscan.io/'
     contracts:
-      cAAVE: '0xe65cdB6479BaC1e22340E4E755fAE7E509EcD06c'
-      cBAT: '0x6C8c6b02E7b2BE14d4fA6022Dfd6d75921D90E4E'
-      cCOMP: '0x70e36f6BF80a52b3B46b3aF8e106CC0ed743E8e4'
-      cDAI: '0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643'
-      cETH: '0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5'
-      cFEI: '0x7713DD9Ca933848F6819F38B8352D9A15EA73F67'
-      cLINK: '0xFAce851a4921ce59e912d19329929CE6da6EB0c7'
-      cMKR: '0x95b4eF2869eBD94BEb4eEE400a99824BF5DC325b'
-      cREP: '0x158079Ee67Fce2f58472A96584A73C7Ab9AC95c1'
-      cSAI: '0xF5DCe57282A584D2746FaF1593d3121Fcac444dC'
-      cSUSHI: '0x4B0181102A0112A2ef11AbEE5563bb4a3176c9d7'
-      cTUSD: '0x12392F67bdf24faE0AF363c24aC620a2f67DAd86'
-      cUNI: '0x35A18000230DA775CAc24873d00Ff85BccdeD550'
-      cUSDC: '0x39AA39c021dfbaE8faC545936693aC917d5E7563'
-      cUSDP: '0x041171993284df560249B57358F931D9eB7b925D'
-      cUSDT: '0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9'
-      cWBTC: '0xC11b1268C1A384e55C48c2391d8d480264A3A7F4'
-      cWBTC2: '0xccF4429DB6322D5C611ee964527D42E5d685DD6a'
-      cYFI: '0x80a2AE356fc9ef4305676f7a3E2Ed04e12C33946'
-      cZRX: '0xB3319f5D18Bc0D84dD1b4825Dcde5d5f7266d407'
-      COMP: '0xc00e94Cb662C3520282E6f5717214004A7f26888'
-      Comptroller: '0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B'
-      Governance: '0xc0Da02939E1441F497fd74F78cE7Decb17B66529'
-      Timelock: '0x6d903f6003cca6255D85CcA4D3B5E5146dC33925'
+      bUSDC: '0x0000000000000000000000000000000000000000'
+      bTRX: '0x0000000000000000000000000000000000000000'
+      bWBTC: '0x0000000000000000000000000000000000000000'
+      bWETH: '0x0000000000000000000000000000000000000000'
+      BLEND: '0x0000000000000000000000000000000000000000'
+      Comptroller: '0x0000000000000000000000000000000000000000'
+      Governance: '0x0000000000000000000000000000000000000000'
+      Timelock: '0x0000000000000000000000000000000000000000'
 
-  Ethereum Goerli Testnet - Bitlend v1:
-    tab_text: Goerli
-    blockscan_origin: 'https://goerli.etherscan.io/'
+  Ethereum Donau Testnet - Bitlend:
+    tab_text: Donau
+    blockscan_origin: 'https://testnet.bttcscan.io/'
     contracts:
-      cBAT: '0xCCaF265E7492c0d9b7C2f0018bf6382Ba7f0148D'
-      cDAI: '0x822397d9a55d0fefd20F5c4bCaB33C5F65bd28Eb'
-      cETH: '0x20572e4c090f15667cF7378e16FaD2eA0e2f3EfF'
-      cREP: '0x1d70B01A2C3e3B2e56FcdcEfe50d5c5d70109a5D'
-      cSAI: '0x5D4373F8C1AF21C391aD7eC755762D8dD3CCA809'
-      cUSDC: '0xCEC4a43eBB02f9B80916F1c718338169d6d5C1F0'
-      cWBTC: '0x6CE27497A64fFFb5517AA4aeE908b1E7EB63B9fF'
-      cZRX: '0xA253295eC2157B8b69C44b2cb35360016DAa25b1'
-      COMP: '0xe16C7165C8FeA64069802aE4c4c9C320783f2b6e'
-      Comptroller: '0x627EA49279FD0dE89186A58b8758aD02B6Be2867'
-      Timelock: '0x25e46957363e16C4e2D5F2854b062475F9f8d287'
-
-  Ethereum Sepolia Testnet - Deployment Coming Soon:
-    tab_text: Sepolia
-    blockscan_origin: 'https://sepolia.etherscan.io/'
-    contracts:
-      Contract: '0x'
+      bUSDC: '0x0000000000000000000000000000000000000000'
+      bTRX: '0x0000000000000000000000000000000000000000'
+      bWBTC: '0x0000000000000000000000000000000000000000'
+      bWETH: '0x0000000000000000000000000000000000000000'
+      BLEND: '0x0000000000000000000000000000000000000000'
+      Comptroller: '0x0000000000000000000000000000000000000000'
+      Governance: '0x0000000000000000000000000000000000000000'
+      Timelock: '0x0000000000000000000000000000000000000000'
 ---
 
 # Getting Started
 
-## Introduction to Bitlend v1
+## Introduction to Bitlend
 
 <div class="new-docs-banner">
   <div class="center">
-    <span class="message">Bitlend III is now live, you're currently viewing Bitlend v1 documentation.</span>
+    <span class="message">Bitlend is now live, you're currently viewing Bitlend documentation.</span>
     <a href="/">
-      <span class="button">Bitlend III Documentation</span>
+      <span class="button">Bitlend Documentation</span>
     </a>
   </div>
 </div>
 
-The Bitlend protocol is based on the [Bitlend Whitepaper](https://compound.finance/documents/Bitlend.Whitepaper.pdf){:target="_blank"} (2019); the codebase is [open-source](https://github.com/compound-finance/compound-protocol){:target="_blank"}, and maintained by the community.
+The Bitlend protocol is based on the [Bitlend Whitepaper](https://compound.finance/documents/Bitlend.Whitepaper.pdf){:target="_blank"} (2019); the codebase is [open-source](https://github.com/Bitlend-protocol/compound-protocol){:target="_blank"}, and maintained by the community.
 
-The app.compound.finance interface is [open-source](https://github.com/compound-finance/palisade){:target="_blank"}, and maintained by the community.
+The app.bitlend.fi interface is [open-source](https://github.com/Bitlend-protocol/palisade){:target="_blank"}, and maintained by the community.
 
 Please join the #development room in the Bitlend community [Discord](https://discord.com/invite/compound){:target="_blank"} server; Bitlend Labs and members of the community look forward to helping you build an application on top of Bitlend. Your questions help us improve, so please don't hesitate to ask if you can't find what you are looking for here.
 
 ## Guides
 
-1. [Setting up an Ethereum Development Environment](https://medium.com/compound-finance/setting-up-an-ethereum-development-environment-7c387664c5fe){:target="_blank"}
-2. [Supplying Assets to the Bitlend Protocol](https://medium.com/compound-finance/supplying-assets-to-the-compound-protocol-ec2cf5df5aa){:target="_blank"}
-3. [Borrowing Assets from the Bitlend Protocol](https://medium.com/compound-finance/borrowing-assets-from-compound-quick-start-guide-f5e69af4b8f4){:target="_blank"}
-4. [Create a Bitlend API with Infura](https://medium.com/compound-finance/compound-ethereum-api-with-infura-1f5c555fd4a2){:target="_blank"}
-5. [Building a Governance Interface](https://medium.com/compound-finance/building-a-governance-interface-474fc271588c){:target="_blank"}
-6. [Delegation & Voting](https://medium.com/compound-finance/delegation-and-voting-with-eip-712-signatures-a636c9dfec5e){:target="_blank"}
-7. [Contributing to the Protocol](https://medium.com/compound-finance/a-walkthrough-of-contributing-to-the-compound-protocol-9450cbe2133a){:target="_blank"}
+1. [Supplying Assets to the Bitlend Protocol](){:target="_blank"}
+2. [Borrowing Assets from the Bitlend Protocol](){:target="_blank"}
+3. [Create a Bitlend API with Infura](){:target="_blank"}
+4. [Building a Governance Interface](){:target="_blank"}
+5. [Delegation & Voting](){:target="_blank"}
+6. [Contributing to the Protocol](){:target="_blank"}
 {: .mega-ordered-list }
 
 ## Networks
@@ -100,11 +74,11 @@ The Bitlend Protocol is currently deployed on the following networks:
 
 <div id="networks-widget-container"></div>
 
-You can also see a full list of all deployed contract addresses [here](https://github.com/compound-finance/compound-config){:target="_blank"}.
+You can also see a full list of all deployed contract addresses [here](https://github.com/Bitlend-protocol/compound-config){:target="_blank"}.
 
 ## Protocol Math
 
-The Bitlend protocol contracts use a system of exponential math, [ExponentialNoError.sol](https://github.com/compound-finance/compound-protocol/blob/master/contracts/ExponentialNoError.sol){:target="_blank"}, in order to represent fractional quantities with sufficient precision.
+The Bitlend protocol contracts use a system of exponential math, [ExponentialNoError.sol](https://github.com/Bitlend-protocol/compound-protocol/blob/master/contracts/ExponentialNoError.sol){:target="_blank"}, in order to represent fractional quantities with sufficient precision.
 
 Most numbers are represented as a *mantissa*, an unsigned integer scaled by `1 * 10 ^ 18`, in order to perform basic math at a high level of precision.
 
@@ -114,28 +88,16 @@ Prices and exchange rates are scaled by the decimals unique to each asset; bToke
 
 | bToken | bToken Decimals | Underlying | Underlying Decimals |
 | ------ | --------------- | ---------- | ------------------- |
-| cETH   | 8               | ETH        | 18                  |
-| cAAVE  | 8               | AAVE       | 18                  |
-| cBAT   | 8               | BAT        | 18                  |
-| cCOMP  | 8               | COMP       | 18                  |
-| cDAI   | 8               | DAI        | 18                  |
-| cFEI   | 8               | FEI        | 18                  |
-| cLINK  | 8               | LINK       | 18                  |
-| cMKR   | 8               | MKR        | 18                  |
-| cSUSHI | 8               | SUSHI      | 18                  |
-| cTUSD  | 8               | TUSD       | 18                  |
-| cUNI   | 8               | UNI        | 18                  |
-| cUSDC  | 8               | USDC       | 6                   |
-| cUSDP  | 8               | USDP       | 18                  |
-| cUSDT  | 8               | USDT       | 6                   |
-| cWBTC  | 8               | WBTC       | 8                   |
-| cYFI   | 8               | YFI        | 18                  |
-| cZRX   | 8               | ZRX        | 18                  |
+| bBTT   | 8               | BTT        | 18                  |
+| bWETH  | 8               | WETH       | 18                  |
+| bWBTC  | 8               | WBTC       | 8                   |
+| bUSDC  | 8               | USDC       | 6                   |
+| bTRX   | 8               | TRX        | 6                   |
 {: .decimals-events-table }
 
 ### Interpreting Exchange Rates
 
-The bToken [Exchange Rate](/v1/btokens#exchange-rate) is scaled by the difference in decimals between the bToken and the underlying asset.
+The bToken [Exchange Rate](/btokens#exchange-rate) is scaled by the difference in decimals between the bToken and the underlying asset.
 
 ```
 oneBTokenInUnderlying = exchangeRateCurrent / (1 * 10 ^ (18 + underlyingDecimals - bTokenDecimals))
@@ -168,7 +130,7 @@ Interest rates for each market update on any block in which the ratio of borrowe
 
 See the interest rate data visualization notebook on [Observable](https://observablehq.com/@jflatow/compound-interest-rates){:target="_blank"} to visualize which interest rate model is currently applied to each market.
 
-Historical interest rates can be retrieved from the [MarketHistoryService API](/v1/api#MarketHistoryService).
+Historical interest rates can be retrieved from the [MarketHistoryService API](/api#MarketHistoryService).
 
 Interest accrues to all suppliers and borrowers in a market when any Ethereum address interacts with the market’s bToken contract, calling one of these functions: mint, redeem, borrow, or repay. Successful execution of one of these functions triggers the `accrueInterest` method, which causes interest to be added to the underlying balance of every supplier and borrower in the market. Interest accrues for the current block, as well as each prior block in which the `accrueInterest` method was not triggered (no user interacted with the bToken contract). Interest compounds only during blocks in which the bToken contract has one of the aforementioned methods invoked.
 

@@ -6,7 +6,7 @@ kramdown:
 
 # ## Page Name Anchor Text: Anchor HREF
 # v3_nav_data:
-#   # Bitlend III: / ## This is now a toggle switch between v1 and v3 docs
+#   # Bitlend: / ## This is now a toggle switch between v1 and v3 docs
 #   Interest Rates: /interest-rates/
 #   Collateral & Borrowing: /collateral-and-borrowing/
 #   Liquidation: /liquidation/
@@ -15,11 +15,12 @@ kramdown:
 #   Governance: /governance/
 #   Helper Functions: /helper-functions/
 
+## Page Name Anchor Text: Anchor HREF
 v1_nav_data:
-  bTokens: /v1/btokens/
-  Comptroller: /v1/comptroller/
-  Governance: /v1/governance/
-  Open Price Feed: /v1/prices/
-  # API: /v1/api/
-  # Bitlend.js: /v1/compound-js/
-  Security: /v1/security/
+  bTokens: /btokens/
+  Comptroller: /comptroller/
+  Governance: /governance/
+  Open Price Feed: /prices/
+  # API: /api/
+  # Bitlend.js: /compound-js/
+  Security: /security/

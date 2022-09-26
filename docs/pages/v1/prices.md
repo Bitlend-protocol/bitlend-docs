@@ -1,7 +1,7 @@
 ---
 layout: docs-content
 title: Bitlend | Docs - Open Price Feed
-permalink: /v1/prices/
+permalink: /prices/
 docs_version: v1
 
 ## Element ID: In-page Heading

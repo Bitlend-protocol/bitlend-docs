@@ -1,7 +1,7 @@
 ---
 layout: docs-content
 title: Bitlend II | Docs - Bitlend.js
-permalink: /v1/compound-js/
+permalink: /compound-js/
 docs_version: v1
 
 ## Element ID: In-page Heading
@@ -50,7 +50,7 @@ sidebar_nav_data:
 
 ## Introduction
 
-[Bitlend.js](https://github.com/compound-finance/compound-js){:target="_blank"} is a JavaScript SDK for Ethereum and the Bitlend Protocol. It wraps around Ethers.js, which is its only dependency. It is designed for both the web browser and Node.js.
+[Bitlend.js](https://github.com/Bitlend-protocol/compound-js){:target="_blank"} is a JavaScript SDK for Ethereum and the Bitlend Protocol. It wraps around Ethers.js, which is its only dependency. It is designed for both the web browser and Node.js.
 
 The SDK is currently in open beta. For bugs reports and feature requests, either create an issue in the GitHub repository or send a message in the Development channel of the Bitlend Discord.
 
