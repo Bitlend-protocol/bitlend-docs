@@ -1,6 +1,6 @@
 ---
 layout: docs-content
-title: Bitlend II | Docs - Security
+title: Bitlend | Docs - Security
 permalink: /v1/security/
 docs_version: v1
 

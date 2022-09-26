@@ -1,6 +1,6 @@
 ---
 layout: docs-content
-title: Bitlend II | Docs - Getting Started
+title: Bitlend | Docs - Getting Started
 permalink: /v1/
 docs_version: v1
 

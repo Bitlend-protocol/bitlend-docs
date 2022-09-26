@@ -1,6 +1,6 @@
 ---
 layout: docs-content
-title: Bitlend II | Docs - Open Price Feed
+title: Bitlend | Docs - Open Price Feed
 permalink: /v1/prices/
 docs_version: v1
 

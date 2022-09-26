@@ -1,6 +1,6 @@
 ---
 layout: docs-content
-title: Bitlend II | Docs - Comptroller
+title: Bitlend | Docs - Comptroller
 permalink: /v1/comptroller/
 docs_version: v1
 

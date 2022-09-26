@@ -1,6 +1,6 @@
 ---
 layout: docs-content
-title: Bitlend II | Docs - Governance
+title: Bitlend | Docs - Governance
 permalink: /v1/governance/
 docs_version: v1
 
