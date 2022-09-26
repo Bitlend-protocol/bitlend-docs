@@ -46,7 +46,7 @@ When a governance proposal is created, it enters a 2 day review period, after wh
 
 ## COMP
 
-COMP is an [ERC-20](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md){:target="_blank"} token that allows the owner to delegate voting rights to any address, including their own address. Changes to the owner’s token balance automatically adjust the voting rights of the delegate.
+COMP is an [BRC-20](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md){:target="_blank"} token that allows the owner to delegate voting rights to any address, including their own address. Changes to the owner’s token balance automatically adjust the voting rights of the delegate.
 
 ## Delegate
 

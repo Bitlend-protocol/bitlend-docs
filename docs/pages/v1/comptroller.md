@@ -54,8 +54,8 @@ function enterMarkets(address[] calldata bTokens) returns (uint[] memory)
 ```solidity
 Comptroller troll = Comptroller(0xABCD...);
 BToken[] memory bTokens = new BToken[](2);
-bTokens[0] = CErc20(0x3FDA...);
-bTokens[1] = CEther(0x3FDB...);
+bTokens[0] = BBrc20(0x3FDA...);
+bTokens[1] = BBtt(0x3FDB...);
 uint[] memory errors = troll.enterMarkets(bTokens);
 ```
 
@@ -63,7 +63,7 @@ uint[] memory errors = troll.enterMarkets(bTokens);
 
 ```js
 const troll = Comptroller.at(0xABCD...);
-const bTokens = [CErc20.at(0x3FDA...), CEther.at(0x3FDB...)];
+const bTokens = [BBrc20.at(0x3FDA...), BBtt.at(0x3FDB...)];
 const errors = await troll.methods.enterMarkets(bTokens).send({from: ...});
 ```
 
@@ -92,7 +92,7 @@ uint error = troll.exitMarket(BToken(0x3FDA...));
 
 ```js
 const troll = Comptroller.at(0xABCD...);
-const errors = await troll.methods.exitMarket(CEther.at(0x3FDB...)).send({from: ...});
+const errors = await troll.methods.exitMarket(BBtt.at(0x3FDB...)).send({from: ...});
 ```
 
 ## Get Assets In

@@ -84,7 +84,7 @@ Most numbers are represented as a *mantissa*, an unsigned integer scaled by `1 *
 
 ### bToken and Underlying Decimals
 
-Prices and exchange rates are scaled by the decimals unique to each asset; bTokens are ERC-20 tokens with 8 decimals, while their underlying tokens vary, and have a public member named *decimals*.
+Prices and exchange rates are scaled by the decimals unique to each asset; bTokens are BRC-20 tokens with 8 decimals, while their underlying tokens vary, and have a public member named *decimals*.
 
 | bToken | bToken Decimals | Underlying | Underlying Decimals |
 | ------ | --------------- | ---------- | ------------------- |
@@ -136,7 +136,7 @@ Interest accrues to all suppliers and borrowers in a market when any Ethereum ad
 
 Here is an example of supply interest accrual:
 
-Alice supplies 1 ETH to the Bitlend protocol. At the time of supply, the `supplyRatePerBlock` is 37893605 Wei, or 0.000000000037893605 ETH per block. No one interacts with the cEther contract for 3 Ethereum blocks. On the subsequent 4th block, Bob borrows some ETH. Alice’s underlying balance is now 1.000000000151574420 ETH (which is 37893605 Wei times 4 blocks, plus the original 1 ETH). Alice’s underlying ETH balance in subsequent blocks will have interest accrued based on the new value of 1.000000000151574420 ETH instead of the initial 1 ETH. Note that the `supplyRatePerBlock` value may change at any time.
+Alice supplies 1 ETH to the Bitlend protocol. At the time of supply, the `supplyRatePerBlock` is 37893605 Wei, or 0.000000000037893605 ETH per block. No one interacts with the bBtt contract for 3 Ethereum blocks. On the subsequent 4th block, Bob borrows some ETH. Alice’s underlying balance is now 1.000000000151574420 ETH (which is 37893605 Wei times 4 blocks, plus the original 1 ETH). Alice’s underlying ETH balance in subsequent blocks will have interest accrued based on the new value of 1.000000000151574420 ETH instead of the initial 1 ETH. Note that the `supplyRatePerBlock` value may change at any time.
 
 ### Calculating the APY Using Rate Per Block
 
