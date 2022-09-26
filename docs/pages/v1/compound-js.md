@@ -10,10 +10,10 @@ sidebar_nav_data:
   compound-constructor: Bitlend Constructor
   api-methods: API Methods
   account: Account
-  ctoken: cToken
+  btoken: bToken
   market-history: Market History
   governance: Governance
-  ctoken-methods: cToken Methods
+  btoken-methods: bToken Methods
   supply: Supply
   redeem: Redeem
   borrow: Borrow
@@ -116,9 +116,9 @@ Makes a request to the AccountService API. The Account API retrieves information
 })().catch(console.error);
 ```
 
-## cToken
+## bToken
 
-Makes a request to the CTokenService API. The cToken API retrieves information about cToken contract interaction. For more details, see the Bitlend API documentation.
+Makes a request to the BTokenService API. The bToken API retrieves information about bToken contract interaction. For more details, see the Bitlend API documentation.
 
 - `options` (object) A JavaScript object of API request parameters.
 - `RETURN` (object) Returns the HTTP response body or error.
@@ -126,7 +126,7 @@ Makes a request to the CTokenService API. The cToken API retrieves information a
 
 ```js
 (async function() {
-  const cDaiData = await Bitlend.api.cToken({
+  const cDaiData = await Bitlend.api.bToken({
     "addresses": Bitlend.util.getAddress(Bitlend.cDAI)
   });
 
@@ -174,9 +174,9 @@ Makes a request to the GovernanceService API. The Governance Service includes th
 })().catch(console.error);
 ```
 
-## cToken Methods
+## bToken Methods
 
-These methods facilitate interactions with the cToken smart contracts.
+These methods facilitate interactions with the bToken smart contracts.
 
 ## Supply
 
@@ -208,8 +208,8 @@ const compound = new Bitlend(window.ethereum);
 
 Redeems the user's Ethereum asset from the Bitlend Protocol.
 
-- `asset` (string) A string of the asset to redeem, or its cToken name.
-- `amount` (number \| string \| BigNumber) A string, number, or BigNumber object of the amount of an asset to redeem. Use the `mantissa` boolean in the `options` parameter to indicate if this value is scaled up (so there are no decimals) or in its natural scale. This can be an amount of cTokens or underlying asset (use the `asset` parameter to specify).
+- `asset` (string) A string of the asset to redeem, or its bToken name.
+- `amount` (number \| string \| BigNumber) A string, number, or BigNumber object of the amount of an asset to redeem. Use the `mantissa` boolean in the `options` parameter to indicate if this value is scaled up (so there are no decimals) or in its natural scale. This can be an amount of bTokens or underlying asset (use the `asset` parameter to specify).
 - `[options]` (CallOptions) Call options and Ethers.js overrides for the transaction.
 - `RETURN` (object) Returns an Ethers.js transaction object of the redeem transaction.
 
@@ -220,7 +220,7 @@ const compound = new Bitlend(window.ethereum);
 (async function() {
 
   console.log('Redeeming ETH...');
-  const trx = await compound.redeem(Bitlend.ETH, 1); // also accepts cToken args
+  const trx = await compound.redeem(Bitlend.ETH, 1); // also accepts bToken args
   console.log('Ethers.js transaction object', trx);
 
 })().catch(console.error);
@@ -632,7 +632,7 @@ These methods facilitate interactions with the Open Price Feed smart contracts.
 
 Gets an asset's price from the Bitlend Protocol open price feed. The price
    of the asset can be returned in any other supported asset value, including
-   all cTokens and underlyings.
+   all bTokens and underlyings.
 
 - `asset` (string) A string of a supported asset in which to find the current price.
 - `[inAsset]` (string) A string of a supported asset in which to express the `asset` parameter's price. This defaults to USD.
@@ -647,7 +647,7 @@ let price;
   price = await compound.getPrice(Bitlend.WBTC);
   console.log('WBTC in USD', price); // 6 decimals, see Open Price Feed docs
 
-  price = await compound.getPrice(Bitlend.BAT, Bitlend.USDC); // supports cTokens too
+  price = await compound.getPrice(Bitlend.BAT, Bitlend.USDC); // supports bTokens too
   console.log('BAT in USDC', price);
 
 })().catch(console.error);

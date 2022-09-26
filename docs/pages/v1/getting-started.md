@@ -108,11 +108,11 @@ The Bitlend protocol contracts use a system of exponential math, [ExponentialNoE
 
 Most numbers are represented as a *mantissa*, an unsigned integer scaled by `1 * 10 ^ 18`, in order to perform basic math at a high level of precision.
 
-### cToken and Underlying Decimals
+### bToken and Underlying Decimals
 
-Prices and exchange rates are scaled by the decimals unique to each asset; cTokens are ERC-20 tokens with 8 decimals, while their underlying tokens vary, and have a public member named *decimals*.
+Prices and exchange rates are scaled by the decimals unique to each asset; bTokens are ERC-20 tokens with 8 decimals, while their underlying tokens vary, and have a public member named *decimals*.
 
-| cToken | cToken Decimals | Underlying | Underlying Decimals |
+| bToken | bToken Decimals | Underlying | Underlying Decimals |
 | ------ | --------------- | ---------- | ------------------- |
 | cETH   | 8               | ETH        | 18                  |
 | cAAVE  | 8               | AAVE       | 18                  |
@@ -135,31 +135,31 @@ Prices and exchange rates are scaled by the decimals unique to each asset; cToke
 
 ### Interpreting Exchange Rates
 
-The cToken [Exchange Rate](/v1/ctokens#exchange-rate) is scaled by the difference in decimals between the cToken and the underlying asset.
+The bToken [Exchange Rate](/v1/btokens#exchange-rate) is scaled by the difference in decimals between the bToken and the underlying asset.
 
 ```
-oneCTokenInUnderlying = exchangeRateCurrent / (1 * 10 ^ (18 + underlyingDecimals - cTokenDecimals))
+oneBTokenInUnderlying = exchangeRateCurrent / (1 * 10 ^ (18 + underlyingDecimals - bTokenDecimals))
 ```
 
 Here is an example of finding the value of 1 cBAT in BAT with Web3.js JavaScript.
 
 ```js
-const cTokenDecimals = 8; // all cTokens have 8 decimal places
+const bTokenDecimals = 8; // all bTokens have 8 decimal places
 const underlying = new web3.eth.Contract(erc20Abi, batAddress);
-const cToken = new web3.eth.Contract(cTokenAbi, cBatAddress);
+const bToken = new web3.eth.Contract(bTokenAbi, cBatAddress);
 const underlyingDecimals = await underlying.methods.decimals().call();
-const exchangeRateCurrent = await cToken.methods.exchangeRateCurrent().call();
-const mantissa = 18 + parseInt(underlyingDecimals) - cTokenDecimals;
-const oneCTokenInUnderlying = exchangeRateCurrent / Math.pow(10, mantissa);
-console.log('1 cBAT can be redeemed for', oneCTokenInUnderlying, 'BAT');
+const exchangeRateCurrent = await bToken.methods.exchangeRateCurrent().call();
+const mantissa = 18 + parseInt(underlyingDecimals) - bTokenDecimals;
+const oneBTokenInUnderlying = exchangeRateCurrent / Math.pow(10, mantissa);
+console.log('1 cBAT can be redeemed for', oneBTokenInUnderlying, 'BAT');
 ```
 
 There is no underlying contract for ETH, so to do this with cETH, set `underlyingDecimals` to 18.
 
-To find the number of underlying tokens that can be redeemed for cTokens, multiply the number of cTokens by the above value `oneCTokenInUnderlying`.
+To find the number of underlying tokens that can be redeemed for bTokens, multiply the number of bTokens by the above value `oneBTokenInUnderlying`.
 
 ```
-underlyingTokens = cTokenAmount * oneCTokenInUnderlying
+underlyingTokens = bTokenAmount * oneBTokenInUnderlying
 ```
 
 ### Calculating Accrued Interest
@@ -170,7 +170,7 @@ See the interest rate data visualization notebook on [Observable](https://observ
 
 Historical interest rates can be retrieved from the [MarketHistoryService API](/v1/api#MarketHistoryService).
 
-Interest accrues to all suppliers and borrowers in a market when any Ethereum address interacts with the market’s cToken contract, calling one of these functions: mint, redeem, borrow, or repay. Successful execution of one of these functions triggers the `accrueInterest` method, which causes interest to be added to the underlying balance of every supplier and borrower in the market. Interest accrues for the current block, as well as each prior block in which the `accrueInterest` method was not triggered (no user interacted with the cToken contract). Interest compounds only during blocks in which the cToken contract has one of the aforementioned methods invoked.
+Interest accrues to all suppliers and borrowers in a market when any Ethereum address interacts with the market’s bToken contract, calling one of these functions: mint, redeem, borrow, or repay. Successful execution of one of these functions triggers the `accrueInterest` method, which causes interest to be added to the underlying balance of every supplier and borrower in the market. Interest accrues for the current block, as well as each prior block in which the `accrueInterest` method was not triggered (no user interacted with the bToken contract). Interest compounds only during blocks in which the bToken contract has one of the aforementioned methods invoked.
 
 Here is an example of supply interest accrual:
 
@@ -181,7 +181,7 @@ Alice supplies 1 ETH to the Bitlend protocol. At the time of supply, the `supply
 The Annual Percentage Yield (APY) for supplying or borrowing in each market can be calculated using the value of `supplyRatePerBlock` (for supply APY) or `borrowRatePerBlock` (for borrow APY) in this formula:
 
 ```
-Rate = cToken.supplyRatePerBlock(); // Integer
+Rate = bToken.supplyRatePerBlock(); // Integer
 Rate = 37893566
 ETH Mantissa = 1 * 10 ^ 18 (ETH has 18 decimal places)
 Blocks Per Day = 6570 (13.15 seconds per block)
@@ -197,9 +197,9 @@ const ethMantissa = 1e18;
 const blocksPerDay = 6570; // 13.15 seconds per block
 const daysPerYear = 365;
 
-const cToken = new web3.eth.Contract(cEthAbi, cEthAddress);
-const supplyRatePerBlock = await cToken.methods.supplyRatePerBlock().call();
-const borrowRatePerBlock = await cToken.methods.borrowRatePerBlock().call();
+const bToken = new web3.eth.Contract(cEthAbi, cEthAddress);
+const supplyRatePerBlock = await bToken.methods.supplyRatePerBlock().call();
+const borrowRatePerBlock = await bToken.methods.borrowRatePerBlock().call();
 const supplyApy = (((Math.pow((supplyRatePerBlock / ethMantissa * blocksPerDay) + 1, daysPerYear))) - 1) * 100;
 const borrowApy = (((Math.pow((borrowRatePerBlock / ethMantissa * blocksPerDay) + 1, daysPerYear))) - 1) * 100;
 console.log(`Supply APY for ETH ${supplyApy} %`);

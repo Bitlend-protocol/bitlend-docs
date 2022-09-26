@@ -8,7 +8,7 @@ docs_version: v1
 sidebar_nav_data:
   compound-api: Bitlend API
   account-service: AccountService
-  ctoken-service: CTokenService
+  btoken-service: BTokenService
   market-history-service: MarketHistoryService
   governance-service: GovernanceService
   shared-data-types: Shared Data Types
@@ -73,11 +73,11 @@ The account API returns an overall picture of accounts matching the filters on B
 | Error | `error` | If set and non-zero, indicates an error returning data. `NO_ERROR = 0; INTERNAL_ERROR = 1; INVALID_PAGE_NUMBER = 2; INVALID_PAGE_SIZE = 3;` |
 | AccountRequest | `request` | The request parameters are echoed in the response. |
 | PaginationSummary | `pagination_summary` | For example | `{ "page_number": 1, "page_size": 100, "total_entries": 83, "total_pages": 1 }` |
-| Account | `accounts` |The list of accounts (see Account below) matching the requested filter, with the associated account and cToken data. |
+| Account | `accounts` |The list of accounts (see Account below) matching the requested filter, with the associated account and bToken data. |
 
 #### Account
 
-This includes a list of cTokens contextualized to each account.
+This includes a list of bTokens contextualized to each account.
 
 ```js
 {
@@ -100,15 +100,15 @@ This includes a list of cTokens contextualized to each account.
 | Type | Key | Description |
 |------|-----|-------------|
 | bytes | `address` | The public Ethereum address of the account
-| Precise | `total_collateral_value_in_eth` | The value of all collateral supplied by the account. Calculated as cTokens held • exchange rate • collateral factor. Note: assets can be supplied and gain interest without being counted as collateral.
+| Precise | `total_collateral_value_in_eth` | The value of all collateral supplied by the account. Calculated as bTokens held • exchange rate • collateral factor. Note: assets can be supplied and gain interest without being counted as collateral.
 | Precise | `total_borrow_value_in_eth` | The value of all outstanding borrows with accumulated interest.
 | Precise | `health` |  `total_collateral_value_in_eth / total_borrow_value_in_eth`. If this value is less than 1.0, the account is subject to liquidation.
 | int32 | `block_updated` | 
-| AccountCToken | `tokens`| A list of tokens held by this account, see `AccountCToken` below for details.|
+| AccountBToken | `tokens`| A list of tokens held by this account, see `AccountBToken` below for details.|
 
-#### AccountCToken
+#### AccountBToken
 
-An account's supply, borrow, and interest information for a particular cToken.
+An account's supply, borrow, and interest information for a particular bToken.
 
 ```js
 {
@@ -122,22 +122,22 @@ An account's supply, borrow, and interest information for a particular cToken.
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the cToken |
-| string | `symbol` | The symbol of the cToken |
-| Precise | `supply_balance_underlying` | The cToken balance converted to underlying `tokenscTokens held • exchange rate` |
-| Precise | `borrow_balance_underlying` | The borrow balance (this is denominated in the underlying token, not in cTokens) |
-| Precise | `lifetime_supply_interest_accrued` | The amount of supply interest accrued for the lifetime of this account-cToken pair. |
-| Precise | `lifetime_borrow_interest_accrued` | The amount of borrow interest accrued for the lifetime of this account-cToken pair. |
+| bytes | `address` | The address of the bToken |
+| string | `symbol` | The symbol of the bToken |
+| Precise | `supply_balance_underlying` | The bToken balance converted to underlying `tokensbTokens held • exchange rate` |
+| Precise | `borrow_balance_underlying` | The borrow balance (this is denominated in the underlying token, not in bTokens) |
+| Precise | `lifetime_supply_interest_accrued` | The amount of supply interest accrued for the lifetime of this account-bToken pair. |
+| Precise | `lifetime_borrow_interest_accrued` | The amount of borrow interest accrued for the lifetime of this account-bToken pair. |
 | Precise | `safe_withdraw_amount_underlying` | The amount of supply that can be withdrawn such that the user's health remains at 1.25 or higher. |
 
-## CTokenService
-{:id='ctoken-service'}
+## BTokenService
+{:id='btoken-service'}
 
-#### GET: `/ctoken`
+#### GET: `/btoken`
 
-#### CTokenRequest
+#### BTokenRequest
 
-The request to the cToken API can specify a number filters, such as which tokens to retrieve information about or moment in time. The following shows an example set of request parameters in JSON:
+The request to the bToken API can specify a number filters, such as which tokens to retrieve information about or moment in time. The following shows an example set of request parameters in JSON:
 
 ```js
 {
@@ -153,24 +153,24 @@ The request to the cToken API can specify a number filters, such as which tokens
 | uint32 | `block_timestamp` | Only one of block_number or block timestamp should be provided. If provided, API returns data for given block timestamp from our historical data. Otherwise, API defaults to returning the latest information. (Optional) |
 | bool | `meta` | Pass true to get metadata for the token addresses specified. (Optional) |
 
-#### CTokenResponse
+#### BTokenResponse
 
-The cToken API returns an overall picture of cTokens matching the filter.
+The bToken API returns an overall picture of bTokens matching the filter.
 
 | Type | Key | Description |
 |------|-----|-------------|
 | Error | `error` | |
-| CTokenRequest | `request` | The request parameters are echoed in the response. |
-| CToken | `cToken` | The list of cToken (see `CToken` below) matching the requested filter. |
-| CTokenMeta | `meta` | Metadata for all CTokens specified |
+| BTokenRequest | `request` | The request parameters are echoed in the response. |
+| BToken | `bToken` | The list of bToken (see `BToken` below) matching the requested filter. |
+| BTokenMeta | `meta` | Metadata for all BTokens specified |
 
-#### CToken
+#### BToken
 
-This includes a list of cTokens contextualized to the full market.
+This includes a list of bTokens contextualized to the full market.
 
 ```js
 {
- "cToken": [{
+ "bToken": [{
    "borrow_rate": {"value": "0.051453109785093843"},
    "cash": {"value": "514.078443"},
    "collateral_factor": {"value": "0.80000000000000000"},
@@ -202,21 +202,21 @@ This includes a list of cTokens contextualized to the full market.
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `token_address` | The public Ethereum address of the cToken |
-| Precise | `total_supply` |  The number of cTokens in existence |
-| Precise | `total_borrows` | The amount of underlying tokens borrowed from the cToken |
+| bytes | `token_address` | The public Ethereum address of the bToken |
+| Precise | `total_supply` |  The number of bTokens in existence |
+| Precise | `total_borrows` | The amount of underlying tokens borrowed from the bToken |
 | Precise | `reserves` |  The amount of underylying tokens held by reserves |
-| Precise | `cash` |  The current liquidity of the cToken |
-| Precise | `exchange_rate` | The cToken / underlying exchange rate. This rate increases over time as supply interest accrues. |
+| Precise | `cash` |  The current liquidity of the bToken |
+| Precise | `exchange_rate` | The bToken / underlying exchange rate. This rate increases over time as supply interest accrues. |
 | Precise | `supply_rate` | The floating supply interest rate |
 | Precise | `borrow_rate` | The floating borrow interest rate |
 | Precise | `collateral_factor` | The amount of the value of the underlying token that will count as collateral. eg. cEth with collataral factor 0.75 means 1 eth of supply allows 0.75 eth of borrowing. |
-| uint32 |  `number_of_suppliers` | The number of accounts holding this cToken |
+| uint32 |  `number_of_suppliers` | The number of accounts holding this bToken |
 | uint32 |  `number_of_borrowers` | The number of accounts with oustanding borrows |
 | Precise | `underlying_price` |  The price of the underlying token in eth |
 | bytes | `underlying_address` |  The address of the underlying token |
-| string |  `symbol` |  The symbol of the ctoken |
-| string |  `name` |  The name of the ctoken |
+| string |  `symbol` |  The symbol of the btoken |
+| string |  `name` |  The name of the btoken |
 | string |  `underlying_symbol` | The symbol of the underlying token |
 | string |  `underlying_name` | The name of the underlying token |
 | bytes | `interest_rate_model_address` | The address of the interest rate model |
@@ -225,7 +225,7 @@ This includes a list of cTokens contextualized to the full market.
 | Precise | `comp_borrow_apy` | The floating comp apy for borrowing this token |
 | Precise | `borrow_cap` |  The maximum size of total borrows for this market, beyond which no new borrows will be given |
 
-#### CTokenMeta
+#### BTokenMeta
 
 | Type | Key | Description |
 |------|-----|-------------|
@@ -663,18 +663,18 @@ The governance COMP distribution API response contains the values for COMP alloc
 | string | `daily_comp` | The number of COMP allocated to all markets per day assuming a given block time |
 | string | `total_comp_allocated` | The number of COMP allocated to all markets, including COMP not yet transferred to users |
 | string | `total_comp_distributed` | The number of total COMP actually transferred to users |
-| MarketCompDistribution | `markets` | A list of all cToken markets receiving COMP |
+| MarketCompDistribution | `markets` | A list of all bToken markets receiving COMP |
 
 #### MarketCompDistribution
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the cToken market |
-| string | `name` | The name of the cToken market |
-| string | `symbol` | The symbol of the cToken market |
-| bytes | `underlying_address` | The address of undelrying token of the cToken market |
-| string | `underlying_name` | The name of the underlying token of the cToken market |
-| string | `underlying_symbol` | The symbol of the underlying token of the cToken market |
+| bytes | `address` | The address of the bToken market |
+| string | `name` | The name of the bToken market |
+| string | `symbol` | The symbol of the bToken market |
+| bytes | `underlying_address` | The address of undelrying token of the bToken market |
+| string | `underlying_name` | The name of the underlying token of the bToken market |
+| string | `underlying_symbol` | The symbol of the underlying token of the bToken market |
 | string | `supplier_daily_comp` | The projected daily comp distribution to suppliers of the market given the current distribution rate for the market |
 | string | `borrower_daily_comp` | The projected daily comp distribution to borrowers of the market given the current distribution rate for the market |
 | string | `comp_allocated` | The number of COMP allocated to the market, including COMP not yet transferred to borrowers/suppliers of the market |
@@ -700,18 +700,18 @@ The governance COMP account distribution API response contains the values for CO
 | Type | Key | Description |
 |------|-----|-------------|
 | GovernanceCompDistributionRequest | `request` | The request parameters are echoed in the response. |
-| AccountCompDistribution | `markets` | A list of all cToken markets the account has been allocated COMP |
+| AccountCompDistribution | `markets` | A list of all bToken markets the account has been allocated COMP |
 
 #### AccountCompDistribution
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the cToken market |
-| string | `name` | The name of the cToken market |
-| string | `symbol` | The symbol of the cToken market |
-| bytes | `underlying_address` | The address of undelrying token of the cToken market |
-| string | `underlying_name` | The name of the underlying token of the cToken market |
-| string | `underlying_symbol` | The symbol of the underlying token of the cToken market |
+| bytes | `address` | The address of the bToken market |
+| string | `name` | The name of the bToken market |
+| string | `symbol` | The symbol of the bToken market |
+| bytes | `underlying_address` | The address of undelrying token of the bToken market |
+| string | `underlying_name` | The name of the underlying token of the bToken market |
+| string | `underlying_symbol` | The symbol of the underlying token of the bToken market |
 | string | `daily_comp` | The projected daily comp distribution to the account |
 | string | `comp_allocated` | The number of COMP allocated to the account, including COMP not yet transferred to the account |
 | string | `comp_borrow_index` | The index used to calculate how much COMP the account should receive based on it's borrows from the market |

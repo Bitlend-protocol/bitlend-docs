@@ -16,7 +16,7 @@ kramdown:
 #   Helper Functions: /helper-functions/
 
 v1_nav_data:
-  cTokens: /v1/ctokens/
+  bTokens: /v1/btokens/
   Comptroller: /v1/comptroller/
   Governance: /v1/governance/
   Open Price Feed: /v1/prices/

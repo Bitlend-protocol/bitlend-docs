@@ -37,7 +37,7 @@ sidebar_nav_data:
 
 ## Introduction
 
-The Bitlend protocol is governed and upgraded by COMP token-holders, using three distinct components; the [COMP](https://etherscan.io/token/0xc00e94cb662c3520282e6f5717214004a7f26888){:target="_blank"} token, governance module ([Governor Bravo](https://etherscan.io/address/0xc0da02939e1441f497fd74f78ce7decb17b66529){:target="_blank"}), and [Timelock](https://etherscan.io/address/0x6d903f6003cca6255d85cca4d3b5e5146dc33925#code){:target="_blank"}. Together, these contracts allow the community to propose, vote, and implement changes through the administrative functions of a cToken or the Comptroller. Proposals can modify system parameters, support new markets, or add entirely new functionality to the protocol.
+The Bitlend protocol is governed and upgraded by COMP token-holders, using three distinct components; the [COMP](https://etherscan.io/token/0xc00e94cb662c3520282e6f5717214004a7f26888){:target="_blank"} token, governance module ([Governor Bravo](https://etherscan.io/address/0xc0da02939e1441f497fd74f78ce7decb17b66529){:target="_blank"}), and [Timelock](https://etherscan.io/address/0x6d903f6003cca6255d85cca4d3b5e5146dc33925#code){:target="_blank"}. Together, these contracts allow the community to propose, vote, and implement changes through the administrative functions of a bToken or the Comptroller. Proposals can modify system parameters, support new markets, or add entirely new functionality to the protocol.
 
 COMP token-holders can delegate their voting rights to themselves, or an address of their choice. Addresses delegated at least  25,000 COMP can create governance proposals; any address can lock 100 COMP to create an Autonomous Proposal, which becomes a governance proposal after being delegated 25,000 COMP.
 
@@ -300,7 +300,7 @@ const blocks = await gov.methods.votingPeriod().call();
 
 ## Propose
 
-Create a Proposal to change the protocol. E.g., A proposal can set a cToken's interest rate model or risk parameters on the Comptroller.
+Create a Proposal to change the protocol. E.g., A proposal can set a bToken's interest rate model or risk parameters on the Comptroller.
 Proposals will be voted on by delegated voters. If there is sufficient support before the voting period ends, the proposal shall be automatically enacted. Enacted proposals are queued and executed in the Bitlend Timelock contract.
 
 The sender must hold more COMP than the current proposal threshold (`proposalThreshold()`) as of the immediately previous block. If the threshold is 25,000 COMP, the sender must have been delegated more than 1% of all COMP in order to create a proposal. The proposal can have up to 10 actions (based on `proposalMaxOperations()`).
