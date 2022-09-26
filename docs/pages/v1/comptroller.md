@@ -1,8 +1,8 @@
 ---
 layout: docs-content
-title: Compound II | Docs - Comptroller
-permalink: /v2/comptroller/
-docs_version: v2
+title: Bitlend | Docs - Comptroller
+permalink: /comptroller/
+docs_version: v1
 
 ## Element ID: In-page Heading
 sidebar_nav_data:
@@ -26,10 +26,10 @@ sidebar_nav_data:
 
 ## Introduction
 
-The Comptroller is the risk management layer of the Compound protocol; it determines how much collateral a user is required to maintain, and whether (and by how much) a user can be liquidated. Each time a user interacts with a cToken, the Comptroller is asked to approve or deny the transaction.
+The Comptroller is the risk management layer of the Bitlend protocol; it determines how much collateral a user is required to maintain, and whether (and by how much) a user can be liquidated. Each time a user interacts with a bToken, the Comptroller is asked to approve or deny the transaction.
 
 The Comptroller maps user balances to prices (via the Price Oracle) to
-risk weights (called [Collateral Factors](/v2/comptroller#collateral-factor)) to make its determinations. Users explicitly list which assets they would like included in their risk scoring, by calling [Enter Markets](/v2/comptroller#enter-markets) and [Exit Market](/v2/comptroller#exit-market).
+risk weights (called [Collateral Factors](/comptroller#collateral-factor)) to make its determinations. Users explicitly list which assets they would like included in their risk scoring, by calling [Enter Markets](/comptroller#enter-markets) and [Exit Market](/comptroller#exit-market).
 
 ## Architecture
 
@@ -42,29 +42,29 @@ Enter into a list of markets - it is not an error to enter the same market more 
 #### Comptroller
 
 ```solidity
-function enterMarkets(address[] calldata cTokens) returns (uint[] memory)
+function enterMarkets(address[] calldata bTokens) returns (uint[] memory)
 ```
 
 * `msg.sender`: The account which shall enter the given markets.
-* `cTokens`: The addresses of the cToken markets to enter.
-* `RETURN`: For each market, returns an error code indicating whether or not it was entered. Each is 0 on success, otherwise an [Error code](/v2/comptroller#error-codes).
+* `bTokens`: The addresses of the bToken markets to enter.
+* `RETURN`: For each market, returns an error code indicating whether or not it was entered. Each is 0 on success, otherwise an [Error code](/comptroller#error-codes).
 
 #### Solidity
 
 ```solidity
 Comptroller troll = Comptroller(0xABCD...);
-CToken[] memory cTokens = new CToken[](2);
-cTokens[0] = CErc20(0x3FDA...);
-cTokens[1] = CEther(0x3FDB...);
-uint[] memory errors = troll.enterMarkets(cTokens);
+BToken[] memory bTokens = new BToken[](2);
+bTokens[0] = CErc20(0x3FDA...);
+bTokens[1] = CEther(0x3FDB...);
+uint[] memory errors = troll.enterMarkets(bTokens);
 ```
 
 #### Web3 1.0
 
 ```js
 const troll = Comptroller.at(0xABCD...);
-const cTokens = [CErc20.at(0x3FDA...), CEther.at(0x3FDB...)];
-const errors = await troll.methods.enterMarkets(cTokens).send({from: ...});
+const bTokens = [CErc20.at(0x3FDA...), CEther.at(0x3FDB...)];
+const errors = await troll.methods.enterMarkets(bTokens).send({from: ...});
 ```
 
 ## Exit Market
@@ -74,18 +74,18 @@ Exit a market - it is not an error to exit a market which is not currently enter
 #### Comptroller
 
 ```solidity
-function exitMarket(address cToken) returns (uint)
+function exitMarket(address bToken) returns (uint)
 ```
 
 * `msg.sender`: The account which shall exit the given market.
-* `cTokens`: The addresses of the cToken market to exit.
-* `RETURN`: 0 on success, otherwise an [Error code](/v2/comptroller#error-codes).
+* `bTokens`: The addresses of the bToken market to exit.
+* `RETURN`: 0 on success, otherwise an [Error code](/comptroller#error-codes).
 
 #### Solidity
 
 ```solidity
 Comptroller troll = Comptroller(0xABCD...);
-uint error = troll.exitMarket(CToken(0x3FDA...));
+uint error = troll.exitMarket(BToken(0x3FDA...));
 ```
 
 #### Web3 1.0
@@ -97,7 +97,7 @@ const errors = await troll.methods.exitMarket(CEther.at(0x3FDB...)).send({from: 
 
 ## Get Assets In
 
-Get the list of markets an account is currently entered into. In order to supply collateral or borrow in a market, it must be entered first. Entered markets count towards [account liquidity](/v2/comptroller#account-liquidity) calculations.
+Get the list of markets an account is currently entered into. In order to supply collateral or borrow in a market, it must be entered first. Entered markets count towards [account liquidity](/comptroller#account-liquidity) calculations.
 
 #### Comptroller
 
@@ -120,26 +120,26 @@ address[] memory markets = troll.getAssetsIn(0xMyAccount);
 
 ```js
 const troll = Comptroller.at(0xABCD...);
-const markets = await troll.methods.getAssetsIn(cTokens).call();
+const markets = await troll.methods.getAssetsIn(bTokens).call();
 ```
 
 ## Collateral Factor
 
-A cToken's collateral factor can range from 0-90%, and represents the proportionate increase in liquidity (borrow limit) that an account receives by minting the cToken.
+A bToken's collateral factor can range from 0-90%, and represents the proportionate increase in liquidity (borrow limit) that an account receives by minting the bToken.
 Generally, large or liquid assets have high collateral factors, while small or illiquid assets have low collateral factors. If an asset has a 0% collateral factor, it can't be used as collateral (or seized in liquidation), though it can still be borrowed.
 
 <div class="notice">
-Collateral factors can be increased (or decreased) through Compound Governance, as market conditions change.
+Collateral factors can be increased (or decreased) through Bitlend Governance, as market conditions change.
 </div>
 
 #### Comptroller
 
 ```solidity
-function markets(address cTokenAddress) view returns (bool, uint, bool)
+function markets(address bTokenAddress) view returns (bool, uint, bool)
 ```
 
-* `cTokenAddress`: The address of the cToken to check if listed and get the collateral factor for.
-* `RETURN`: Tuple of values (isListed, collateralFactorMantissa, isComped); isListed represents whether the comptroller recognizes this cToken; collateralFactorMantissa, scaled by 1e18, is multiplied by a supply balance to determine how much value can be borrowed. The isComped boolean indicates whether or not suppliers and borrowers are distributed COMP tokens.
+* `bTokenAddress`: The address of the bToken to check if listed and get the collateral factor for.
+* `RETURN`: Tuple of values (isListed, collateralFactorMantissa, isComped); isListed represents whether the comptroller recognizes this bToken; collateralFactorMantissa, scaled by 1e18, is multiplied by a supply balance to determine how much value can be borrowed. The isComped boolean indicates whether or not suppliers and borrowers are distributed COMP tokens.
 
 #### Solidity
 
@@ -161,9 +161,9 @@ const {0: isListed, 1: collateralFactorMantissa, 2: isComped} = result;
 
 Account Liquidity represents the USD value borrowable by a user, before it reaches liquidation. Users with a shortfall (negative liquidity) are subject to liquidation, and can’t withdraw or borrow assets until Account Liquidity is positive again.
 
-For each market the user has [entered](/v2/comptroller#enter-markets) into, their supplied balance is multiplied by the market’s [collateral factor](/v2/comptroller#collateral-factor), and summed; borrow balances are then subtracted, to equal Account Liquidity. Borrowing an asset reduces Account Liquidity for each USD borrowed; withdrawing an asset reduces Account Liquidity by the asset’s collateral factor times each USD withdrawn.
+For each market the user has [entered](/comptroller#enter-markets) into, their supplied balance is multiplied by the market’s [collateral factor](/comptroller#collateral-factor), and summed; borrow balances are then subtracted, to equal Account Liquidity. Borrowing an asset reduces Account Liquidity for each USD borrowed; withdrawing an asset reduces Account Liquidity by the asset’s collateral factor times each USD withdrawn.
 
-Because the Compound Protocol exclusively uses unsigned integers, Account Liquidity returns either a surplus or shortfall.
+Because the Bitlend Protocol exclusively uses unsigned integers, Account Liquidity returns either a surplus or shortfall.
 
 #### Comptroller
 
@@ -172,7 +172,7 @@ function getAccountLiquidity(address account) view returns (uint, uint, uint)
 ```
 
 * `account`: The account whose liquidity shall be calculated.
-* `RETURN`: Tuple of values (error, liquidity, shortfall). The error shall be 0 on success, otherwise an [error code](/v2/comptroller#error-codes). A non-zero liquidity value indicates the account has available [account liquidity](/v2/comptroller#account-liquidity). A non-zero shortfall value indicates the account is currently below his/her collateral requirement and is subject to liquidation. At most one of liquidity or shortfall shall be non-zero.
+* `RETURN`: Tuple of values (error, liquidity, shortfall). The error shall be 0 on success, otherwise an [error code](/comptroller#error-codes). A non-zero liquidity value indicates the account has available [account liquidity](/comptroller#account-liquidity). A non-zero shortfall value indicates the account is currently below his/her collateral requirement and is subject to liquidation. At most one of liquidity or shortfall shall be non-zero.
 
 #### Solidity
 
@@ -220,7 +220,7 @@ const closeFactor = await troll.methods.closeFactorMantissa().call();
 
 ## Liquidation Incentive
 
-The additional collateral given to liquidators as an incentive to perform liquidation of underwater accounts. A portion of this is given to the collateral cToken reserves as determined by the seize share. The seize share is assumed to be 0 if the cToken does not have a `protocolSeizeShareMantissa` constant. For example, if the liquidation incentive is 1.08, and the collateral's seize share is 1.028, liquidators receive an extra 5.2% of the borrower's collateral for every unit they close, and the remaining 2.8% is added to the cToken's reserves.
+The additional collateral given to liquidators as an incentive to perform liquidation of underwater accounts. A portion of this is given to the collateral bToken reserves as determined by the seize share. The seize share is assumed to be 0 if the bToken does not have a `protocolSeizeShareMantissa` constant. For example, if the liquidation incentive is 1.08, and the collateral's seize share is 1.028, liquidators receive an extra 5.2% of the borrower's collateral for every unit they close, and the remaining 2.8% is added to the bToken's reserves.
 
 #### Comptroller
 
@@ -248,8 +248,8 @@ const closeFactor = await troll.methods.liquidationIncentiveMantissa().call();
 
 | Event | Description |
 |-------|-------------|
-| `MarketEntered(CToken cToken, address account)` | Emitted upon a successful [Enter Market](/v2/comptroller#enter-markets). |
-| `MarketExited(CToken cToken, address account)` | Emitted upon a successful [Exit Market](/v2/comptroller#exit-market). |
+| `MarketEntered(BToken bToken, address account)` | Emitted upon a successful [Enter Market](/comptroller#enter-markets). |
+| `MarketExited(BToken bToken, address account)` | Emitted upon a successful [Exit Market](/comptroller#exit-market). |
 {: .key-events-table }
 
 ## Error Codes
@@ -304,11 +304,11 @@ const closeFactor = await troll.methods.liquidationIncentiveMantissa().call();
 
 ### COMP Speed
 
-The "COMP speed" unique to each market is an unsigned integer that specifies the amount of COMP that is distributed, per block, to suppliers and borrowers in each market. This number can be changed for individual markets by calling the `_setCompSpeed` method through a successful Compound Governance proposal.
+The "COMP speed" unique to each market is an unsigned integer that specifies the amount of COMP that is distributed, per block, to suppliers and borrowers in each market. This number can be changed for individual markets by calling the `_setCompSpeed` method through a successful Bitlend Governance proposal.
 The following is the formula for calculating the rate that COMP is distributed to each supported market.
 
 ```solidity
-utility = cTokenTotalBorrows * assetPrice
+utility = bTokenTotalBorrows * assetPrice
 utilityFraction = utility / sumOfAllCOMPedMarketUtilities
 marketCompSpeed = compRate * utilityFraction
 ```
@@ -350,7 +350,7 @@ const compRatePerDayTotal = compRatePerDay * 2;
 
 ### COMP Distributed Per Block (Single Market)
 
-The Comptroller contract has a mapping called `compSpeeds`. It maps cToken addresses to an integer of each market’s COMP distribution per Ethereum block. The integer indicates the rate at which the protocol distributes COMP to markets’ suppliers or borrowers. The value is the amount of COMP (in wei), per block, allocated for the market. Note that not every market has COMP distributed to its participants (see Market Metadata).
+The Comptroller contract has a mapping called `compSpeeds`. It maps bToken addresses to an integer of each market’s COMP distribution per Ethereum block. The integer indicates the rate at which the protocol distributes COMP to markets’ suppliers or borrowers. The value is the amount of COMP (in wei), per block, allocated for the market. Note that not every market has COMP distributed to its participants (see Market Metadata).
 The speed indicates how much COMP goes to the suppliers or the borrowers, so doubling this number shows how much COMP goes to market suppliers and borrowers combined. The code examples implement reading the amount of COMP distributed, per Ethereum block, to a single market.
 
 #### Comptroller
@@ -363,9 +363,9 @@ mapping(address => uint) public compSpeeds;
 
 ```solidity
 Comptroller troll = Comptroller(0x123...);
-address cToken = 0xabc...;
+address bToken = 0xabc...;
 // COMP issued per block to suppliers OR borrowers * (1 * 10 ^ 18)
-uint compSpeed = troll.compSpeeds(cToken);
+uint compSpeed = troll.compSpeeds(bToken);
 // Approximate COMP issued per day to suppliers OR borrowers * (1 * 10 ^ 18)
 uint compSpeedPerDay = compSpeed * 4 * 60 * 24;
 // Approximate COMP issued per day to suppliers AND borrowers * (1 * 10 ^ 18)
@@ -375,9 +375,9 @@ uint compSpeedPerDayTotal = compSpeedPerDay * 2;
 #### Web3 1.2.6
 
 ```js
-const cTokenAddress = '0xabc...';
+const bTokenAddress = '0xabc...';
 const comptroller = new web3.eth.Contract(comptrollerAbi, comptrollerAddress);
-let compSpeed = await comptroller.methods.compSpeeds(cTokenAddress).call();
+let compSpeed = await comptroller.methods.compSpeeds(bTokenAddress).call();
 compSpeed = compSpeed / 1e18;
 // COMP issued to suppliers OR borrowers
 const compSpeedPerDay = compSpeed * 4 * 60 * 24;
@@ -387,7 +387,7 @@ const compSpeedPerDayTotal = compSpeedPerDay * 2;
 
 ## Claim COMP
 
-Every Compound user accrues COMP for each block they are supplying to or borrowing from the protocol. Users may call the Comptroller's `claimComp` method at any time to transfer COMP accrued to their address.
+Every Bitlend user accrues COMP for each block they are supplying to or borrowing from the protocol. Users may call the Comptroller's `claimComp` method at any time to transfer COMP accrued to their address.
 
 #### Comptroller
 
@@ -395,9 +395,9 @@ Every Compound user accrues COMP for each block they are supplying to or borrowi
 // Claim all the COMP accrued by holder in all markets
 function claimComp(address holder) public
 // Claim all the COMP accrued by holder in specific markets
-function claimComp(address holder, CToken[] memory cTokens) public
+function claimComp(address holder, BToken[] memory bTokens) public
 // Claim all the COMP accrued by specific holders in specific markets for their supplies and/or borrows
-function claimComp(address[] memory holders, CToken[] memory cTokens, bool borrowers, bool suppliers) public
+function claimComp(address[] memory holders, BToken[] memory bTokens, bool borrowers, bool suppliers) public
 ```
 #### Solidity
 
@@ -415,25 +415,25 @@ await comptroller.methods.claimComp("0x1234...").send({ from: sender });
 
 ## Market Metadata
 
-The Comptroller contract has an array called `getAllMarkets` that contains the addresses of each cToken contract. Each address in the `getAllMarkets` array can be used to fetch a metadata struct in the Comptroller’s markets constant. See the [Comptroller Storage contract](https://github.com/compound-finance/compound-protocol/blob/master/contracts/ComptrollerStorage.sol){:target="_blank"} for the Market struct definition.
+The Comptroller contract has an array called `getAllMarkets` that contains the addresses of each bToken contract. Each address in the `getAllMarkets` array can be used to fetch a metadata struct in the Comptroller’s markets constant. See the [Comptroller Storage contract](https://github.com/Bitlend-protocol/compound-protocol/blob/master/contracts/ComptrollerStorage.sol){:target="_blank"} for the Market struct definition.
 
 #### Comptroller
 
 ```solidity
-CToken[] public getAllMarkets;
+BToken[] public getAllMarkets;
 ```
 
 #### Solidity
 
 ```solidity
 Comptroller troll = Comptroller(0xABCD...);
-CToken cTokens[] = troll.getAllMarkets();
+BToken bTokens[] = troll.getAllMarkets();
 ```
 
 #### Web3 1.2.6
 
 ```js
 const comptroller = new web3.eth.Contract(comptrollerAbi, comptrollerAddress);
-const cTokens = await comptroller.methods.getAllMarkets().call();
-const cToken = cTokens[0]; // address of a cToken
+const bTokens = await comptroller.methods.getAllMarkets().call();
+const bToken = bTokens[0]; // address of a bToken
 ```

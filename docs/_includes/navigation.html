@@ -186,38 +186,39 @@
 
 <nav id="nav" class="desktop-only">
   <div class="container">
-    <div class="doc-version-switcher">
+    <!-- <div class="doc-version-switcher">
 
       <div id="switch-button" class="switch-button">
         {% if page.docs_version == 'v3' %}
-        <span>Compound III</span>
-        {% elsif page.docs_version == 'v2' %}
-        <span>Compound II</span>
+        <span>Bitlend</span>
+        {% elsif page.docs_version == 'v1' %}
+        <span>Bitlend II</span>
         {% endif %}
       </div>
       <ul id="switch-drop-menu">
         <li>
           <a href="/">
-            <span>Compound III</span>
+            <span>Bitlend</span>
           </a>
         </li>
         <li>
-          <a href="/v2/">
-            <span>Compound II</span>
+          <a href="/">
+            <span>Bitlend II</span>
           </a>
         </li>
       </ul>
 
-    </div>
+    </div> -->
 
     <!-- SITE WIDE nav_data IS SET IN ROOT _config.yml -->
 
-    {% if page.docs_version == 'v3' %}
+    <!-- {% if page.docs_version == 'v3' %}
       {% assign nav_data = site.v3_nav_data %}
-    {% elsif page.docs_version == 'v2' %}
-      {% assign nav_data = site.v2_nav_data %}
-    {% endif %}
+    {% elsif page.docs_version == 'v1' %}
+      {% assign nav_data = site.v1_nav_data %}
+    {% endif %} -->
 
+    {% assign nav_data = site.v1_nav_data %}
     {% for link in nav_data %}
     {% assign page_name = link[0] %}
     {% assign relative_path = link[1] %}

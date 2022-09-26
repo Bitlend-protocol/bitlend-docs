@@ -1,8 +1,8 @@
 ---
 layout: docs-content
-title: Compound II | Docs - Open Price Feed
-permalink: /v2/prices/
-docs_version: v2
+title: Bitlend | Docs - Open Price Feed
+permalink: /prices/
+docs_version: v1
 
 ## Element ID: In-page Heading
 sidebar_nav_data:
@@ -16,7 +16,7 @@ sidebar_nav_data:
 
 ## Introduction
 
-The Open Price Feed accounts price data for the Compound protocol. The protocol's Comptroller contract uses it as a source 
+The Open Price Feed accounts price data for the Bitlend protocol. The protocol's Comptroller contract uses it as a source 
 of truth for prices. Prices are updated by [Band Standard Dataset](https://docs.bandchain.org/band-standard-dataset/).
 
 

@@ -1,8 +1,8 @@
 ---
 layout: docs-content
-title: Compound II | Docs - Governance
-permalink: /v2/governance/
-docs_version: v2
+title: Bitlend | Docs - Governance
+permalink: /governance/
+docs_version: v1
 
 ## Element ID: In-page Heading
 sidebar_nav_data:
@@ -37,7 +37,7 @@ sidebar_nav_data:
 
 ## Introduction
 
-The Compound protocol is governed and upgraded by COMP token-holders, using three distinct components; the [COMP](https://etherscan.io/token/0xc00e94cb662c3520282e6f5717214004a7f26888){:target="_blank"} token, governance module ([Governor Bravo](https://etherscan.io/address/0xc0da02939e1441f497fd74f78ce7decb17b66529){:target="_blank"}), and [Timelock](https://etherscan.io/address/0x6d903f6003cca6255d85cca4d3b5e5146dc33925#code){:target="_blank"}. Together, these contracts allow the community to propose, vote, and implement changes through the administrative functions of a cToken or the Comptroller. Proposals can modify system parameters, support new markets, or add entirely new functionality to the protocol.
+The Bitlend protocol is governed and upgraded by COMP token-holders, using three distinct components; the [COMP](https://bttcscan.io/token/0xc00e94cb662c3520282e6f5717214004a7f26888){:target="_blank"} token, governance module ([Governor Bravo](https://bttcscan.io/address/0xc0da02939e1441f497fd74f78ce7decb17b66529){:target="_blank"}), and [Timelock](https://bttcscan.io/address/0x6d903f6003cca6255d85cca4d3b5e5146dc33925#code){:target="_blank"}. Together, these contracts allow the community to propose, vote, and implement changes through the administrative functions of a bToken or the Comptroller. Proposals can modify system parameters, support new markets, or add entirely new functionality to the protocol.
 
 COMP token-holders can delegate their voting rights to themselves, or an address of their choice. Addresses delegated at least  25,000 COMP can create governance proposals; any address can lock 100 COMP to create an Autonomous Proposal, which becomes a governance proposal after being delegated 25,000 COMP.
 
@@ -77,7 +77,7 @@ const tx = await comp.methods.delegate(delegateeAddress).send({ from: sender });
 
 ## Delegate By Signature
 
-Delegate votes from the signatory to the delegatee. This method has the same purpose as Delegate but it instead enables offline signatures to participate in Compound governance vote delegation. For more details on how to create an offline signature, review [EIP-712](https://eips.ethereum.org/EIPS/eip-712){:target="_blank"}.
+Delegate votes from the signatory to the delegatee. This method has the same purpose as Delegate but it instead enables offline signatures to participate in Bitlend governance vote delegation. For more details on how to create an offline signature, review [EIP-712](https://eips.ethereum.org/EIPS/eip-712){:target="_blank"}.
 
 #### COMP
 
@@ -164,13 +164,13 @@ const priorVotes = await comp.methods.getPriorVotes(account, blockNumber).call()
 
 | Event | Description |
 |-------|-------------|
-| `DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)` | An event thats emitted when an account changes its [delegate](/v2/governance#delegate). |
+| `DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)` | An event thats emitted when an account changes its [delegate](/governance#delegate). |
 | `DelegateVotesChanged(address indexed delegate, uint previousBalance, uint newBalance)` | An event thats emitted when a delegate account's vote balance changes. |
-| `ProposalCreated(uint id, address proposer, address[] targets, uint[] values, string[] signatures, bytes[] calldatas, uint startBlock, uint endBlock, string description)` | An event emitted when a new [proposal](/v2/governance#propose) is created. |
-| `VoteCast(address voter, uint proposalId, bool support, uint votes)` | An event emitted when a [vote has been cast](/v2/governance#cast-vote) on a proposal. |
-| `ProposalCanceled(uint id)` | An event emitted when a proposal has been [canceled](/v2/governance#cancel). |
-| `ProposalQueued(uint id, uint eta)` | An event emitted when a proposal has been [queued](/v2/governance#queue) in the [Timelock](/v2/governance#timelock). |
-| `ProposalExecuted(uint id)` | An event emitted when a proposal has been [executed](/v2/governance#execute) in the [Timelock](/v2/governance#timelock). |
+| `ProposalCreated(uint id, address proposer, address[] targets, uint[] values, string[] signatures, bytes[] calldatas, uint startBlock, uint endBlock, string description)` | An event emitted when a new [proposal](/governance#propose) is created. |
+| `VoteCast(address voter, uint proposalId, bool support, uint votes)` | An event emitted when a [vote has been cast](/governance#cast-vote) on a proposal. |
+| `ProposalCanceled(uint id)` | An event emitted when a proposal has been [canceled](/governance#cancel). |
+| `ProposalQueued(uint id, uint eta)` | An event emitted when a proposal has been [queued](/governance#queue) in the [Timelock](/governance#timelock). |
+| `ProposalExecuted(uint id)` | An event emitted when a proposal has been [executed](/governance#execute) in the [Timelock](/governance#timelock). |
 {: .key-events-table }
 
 ## Governor Bravo
@@ -300,8 +300,8 @@ const blocks = await gov.methods.votingPeriod().call();
 
 ## Propose
 
-Create a Proposal to change the protocol. E.g., A proposal can set a cToken's interest rate model or risk parameters on the Comptroller.
-Proposals will be voted on by delegated voters. If there is sufficient support before the voting period ends, the proposal shall be automatically enacted. Enacted proposals are queued and executed in the Compound Timelock contract.
+Create a Proposal to change the protocol. E.g., A proposal can set a bToken's interest rate model or risk parameters on the Comptroller.
+Proposals will be voted on by delegated voters. If there is sufficient support before the voting period ends, the proposal shall be automatically enacted. Enacted proposals are queued and executed in the Bitlend Timelock contract.
 
 The sender must hold more COMP than the current proposal threshold (`proposalThreshold()`) as of the immediately previous block. If the threshold is 25,000 COMP, the sender must have been delegated more than 1% of all COMP in order to create a proposal. The proposal can have up to 10 actions (based on `proposalMaxOperations()`).
 
@@ -335,7 +335,7 @@ const tx = gov.methods.propose(targets, values, signatures, calldatas, descripti
 
 ## Queue
 
-After a proposal has succeeded, it is moved into the [Timelock](/v2/governance#timelock) waiting period using this function. The waiting period (e.g. 2 days) begins when this function is called.
+After a proposal has succeeded, it is moved into the [Timelock](/governance#timelock) waiting period using this function. The waiting period (e.g. 2 days) begins when this function is called.
 The queue function can be called by any Ethereum address.
 
 #### Governor Bravo
@@ -361,7 +361,7 @@ const tx = gov.methods.queue(proposalId).send({ from: sender });
 
 ## Execute
 
-After the [Timelock](/v2/governance#timelock) waiting period has elapsed, a proposal can be executed using this function, which applies the proposal changes to the target contracts. This will invoke each of the actions described in the proposal.
+After the [Timelock](/governance#timelock) waiting period has elapsed, a proposal can be executed using this function, which applies the proposal changes to the target contracts. This will invoke each of the actions described in the proposal.
 The execute function can be called by any Ethereum address.
 Note: this function is *payable*, so the Timelock contract can invoke payable functions that were selected in the proposal.
 
@@ -389,7 +389,7 @@ const tx = gov.methods.execute(proposalId).send({ from: sender, value: 1 });
 
 ## Cancel
 
-A proposal is eligible to be cancelled at any time prior to its execution, including while queued in the [Timelock](/v2/governance#timelock), using this function.
+A proposal is eligible to be cancelled at any time prior to its execution, including while queued in the [Timelock](/governance#timelock), using this function.
 
 The cancel function can be called by the proposal creator, or any Ethereum address, if the proposal creator fails to maintain more delegated votes than the proposal threshold (e.g. 25,000).
 
@@ -562,7 +562,7 @@ const tx = gov.methods.castVoteWithReason(proposalId, 0, "I think...").send({ fr
 
 ## Cast Vote By Signature
 
-Cast a vote on a proposal. The account's voting weight is determined by the number of votes the account had delegated at the time that proposal state became active. This method has the same purpose as Cast Vote but it instead enables offline signatures to participate in Compound governance voting. For more details on how to create an offline signature, review [EIP-712](https://eips.ethereum.org/EIPS/eip-712){:target="_blank"}.
+Cast a vote on a proposal. The account's voting weight is determined by the number of votes the account had delegated at the time that proposal state became active. This method has the same purpose as Cast Vote but it instead enables offline signatures to participate in Bitlend governance voting. For more details on how to create an offline signature, review [EIP-712](https://eips.ethereum.org/EIPS/eip-712){:target="_blank"}.
 
 #### Governor Bravo
 
@@ -598,4 +598,4 @@ The Timelock contract queues and executes proposals that have passed a Governanc
 ## Pause Guardian
 
 The Comptroller contract designates a Pause Guardian address capable of disabling protocol functionality. Used only in the event of an unforeseen vulnerability, the Pause Guardian has one and only one ability: to disable a select set of functions: Mint, Borrow, Transfer, and Liquidate. The Pause Guardian cannot unpause an action, nor can it ever prevent users from calling Redeem, or Repay Borrow to close positions and exit the protocol.
-COMP token-holders designate the Pause Guardian address, which is held by the [Community Multi-Sig](https://etherscan.io/address/0xbbf3f1421d886e9b2c5d716b5192ac998af2012c){:target="_blank"}.
+COMP token-holders designate the Pause Guardian address, which is held by the [Community Multi-Sig](https://bttcscan.io/address/0xbbf3f1421d886e9b2c5d716b5192ac998af2012c){:target="_blank"}.

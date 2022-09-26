@@ -1,12 +1,12 @@
 ---
 layout: docs-content
-title: Compound II | Docs - cTokens
-permalink: /v2/ctokens/
-docs_version: v2
+title: Bitlend II | Docs - bTokens
+permalink: /btokens/
+docs_version: v1
 
 ## Element ID: In-page Heading
 sidebar_nav_data:
-  ctokens: cTokens
+  btokens: bTokens
   mint: Mint
   redeem: Redeem
   redeem-underlying: Redeem Underlying
@@ -29,33 +29,33 @@ sidebar_nav_data:
   reserve-factor: Reserve Factor
 ---
 
-# cTokens
+# bTokens
 
 ## Introduction
 
-Each asset supported by the Compound Protocol is integrated through a cToken contract, which is an [EIP-20](https://eips.ethereum.org/EIPS/eip-20){:target="_blank"} compliant representation of balances supplied to the protocol. By minting cTokens, users (1) earn interest through the cToken's exchange rate, which increases in value relative to the underlying asset, and (2) gain the ability to use cTokens as collateral.
+Each asset supported by the Bitlend Protocol is integrated through a bToken contract, which is an [EIP-20](https://eips.ethereum.org/EIPS/eip-20){:target="_blank"} compliant representation of balances supplied to the protocol. By minting bTokens, users (1) earn interest through the bToken's exchange rate, which increases in value relative to the underlying asset, and (2) gain the ability to use bTokens as collateral.
 
-cTokens are the primary means of interacting with the Compound Protocol; when a user mints, redeems, borrows, repays a borrow, liquidates a borrow, or transfers cTokens, she will do so using the cToken contract.
+bTokens are the primary means of interacting with the Bitlend Protocol; when a user mints, redeems, borrows, repays a borrow, liquidates a borrow, or transfers bTokens, she will do so using the bToken contract.
 
-There are currently two types of cTokens: CErc20 and CEther. Though both types expose the EIP-20 interface, CErc20 wraps an underlying ERC-20 asset, while CEther simply wraps Ether itself. As such, the core functions which involve transferring an asset into the protocol have slightly different interfaces depending on the type, each of which is shown below.
+There are currently two types of bTokens: CErc20 and CEther. Though both types expose the EIP-20 interface, CErc20 wraps an underlying ERC-20 asset, while CEther simply wraps Ether itself. As such, the core functions which involve transferring an asset into the protocol have slightly different interfaces depending on the type, each of which is shown below.
 
-<div class="ctoken-faq">
-  {% include ctoken-faq.html %}
+<div class="btoken-faq">
+  {% include btoken-faq.html %}
 </div>
 
 ## Mint
 
-The mint function transfers an asset into the protocol, which begins accumulating interest based on the current [Supply Rate](#supply-rate) for the asset. The user receives a quantity of cTokens equal to the underlying tokens supplied, divided by the current [Exchange Rate](#exchange-rate).
+The mint function transfers an asset into the protocol, which begins accumulating interest based on the current [Supply Rate](#supply-rate) for the asset. The user receives a quantity of bTokens equal to the underlying tokens supplied, divided by the current [Exchange Rate](#exchange-rate).
 
 #### CErc20
 
 ```solidity
 function mint(uint mintAmount) returns (uint)
 ```
-* `msg.sender`: The account which shall supply the asset, and own the minted cTokens.
+* `msg.sender`: The account which shall supply the asset, and own the minted bTokens.
 * `mintAmount`: The amount of the asset to be supplied, in units of the underlying asset.
 * `RETURN`: 0 on success, otherwise an [Error code](#error-codes)
-Before supplying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the cToken to access their token balance.
+Before supplying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the bToken to access their token balance.
 
 #### CEther
 
@@ -63,27 +63,27 @@ Before supplying an asset, users must first [approve](https://eips.ethereum.org/
 function mint() payable
 ```
 * `msg.value`: The amount of ether to be supplied, in wei.
-* `msg.sender`: The account which shall supply the ether, and own the minted cTokens.
+* `msg.sender`: The account which shall supply the ether, and own the minted bTokens.
 * `RETURN`: No return, reverts on error.
 
 #### Solidity
 
 ```solidity
 Erc20 underlying = Erc20(0xToken...);     // get a handle for the underlying asset contract
-CErc20 cToken = CErc20(0x3FDA...);        // get a handle for the corresponding cToken contract
-underlying.approve(address(cToken), 100); // approve the transfer
-assert(cToken.mint(100) == 0);            // mint the cTokens and assert there is no error
+CErc20 bToken = CErc20(0x3FDA...);        // get a handle for the corresponding bToken contract
+underlying.approve(address(bToken), 100); // approve the transfer
+assert(bToken.mint(100) == 0);            // mint the bTokens and assert there is no error
 ```
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-await cToken.methods.mint().send({from: myAccount, value: 50});
+const bToken = CEther.at(0x3FDB...);
+await bToken.methods.mint().send({from: myAccount, value: 50});
 ```
 
 ## Redeem
 
-The redeem function converts a specified quantity of cTokens into the underlying asset, and returns them to the user. The amount of underlying tokens received is equal to the quantity of cTokens redeemed, multiplied by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/v2/comptroller#account-liquidity) and the market's available liquidity.
+The redeem function converts a specified quantity of bTokens into the underlying asset, and returns them to the user. The amount of underlying tokens received is equal to the quantity of bTokens redeemed, multiplied by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/comptroller#account-liquidity) and the market's available liquidity.
 
 #### CErc20 / CEther
 
@@ -91,26 +91,26 @@ The redeem function converts a specified quantity of cTokens into the underlying
 function redeem(uint redeemTokens) returns (uint)
 ```
 * `msg.sender`: The account to which redeemed funds shall be transferred.
-* `redeemTokens`: The number of cTokens to be redeemed.
+* `redeemTokens`: The number of bTokens to be redeemed.
 * `RETURN`: 0 on success, otherwise an [Error code](#error-codes)
 
 #### Solidity
 
 ```solidity
-CEther cToken = CEther(0x3FDB...);
-require(cToken.redeem(7) == 0, "something went wrong");
+CEther bToken = CEther(0x3FDB...);
+require(bToken.redeem(7) == 0, "something went wrong");
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CErc20.at(0x3FDA...);
-cToken.methods.redeem(1).send({from: ...});
+const bToken = CErc20.at(0x3FDA...);
+bToken.methods.redeem(1).send({from: ...});
 ```
 
 ## Redeem Underlying
 
-The redeem underlying function converts cTokens into a specified quantity of the underlying asset, and returns them to the user. The amount of cTokens redeemed is equal to the quantity of underlying tokens received, divided by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/v2/comptroller#account-liquidity) and the market's available liquidity.
+The redeem underlying function converts bTokens into a specified quantity of the underlying asset, and returns them to the user. The amount of bTokens redeemed is equal to the quantity of underlying tokens received, divided by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/comptroller#account-liquidity) and the market's available liquidity.
 
 #### CErc20 / CEther
 
@@ -124,20 +124,20 @@ function redeemUnderlying(uint redeemAmount) returns (uint)
 #### Solidity
 
 ```solidity
-CEther cToken = CEther(0x3FDB...);
-require(cToken.redeemUnderlying(50) == 0, "something went wrong");
+CEther bToken = CEther(0x3FDB...);
+require(bToken.redeemUnderlying(50) == 0, "something went wrong");
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CErc20.at(0x3FDA...);
-cToken.methods.redeemUnderlying(10).send({from: ...});
+const bToken = CErc20.at(0x3FDA...);
+bToken.methods.redeemUnderlying(10).send({from: ...});
 ```
 
 ## Borrow
 
-The borrow function transfers an asset from the protocol to the user, and creates a borrow balance which begins accumulating interest based on the [Borrow Rate](#borrow-rate) for the asset. The amount borrowed must be less than the user's [Account Liquidity](/v2/comptroller#account-liquidity) and the market's available liquidity. To borrow Ether, the borrower must be 'payable' (solidity).
+The borrow function transfers an asset from the protocol to the user, and creates a borrow balance which begins accumulating interest based on the [Borrow Rate](#borrow-rate) for the asset. The amount borrowed must be less than the user's [Account Liquidity](/comptroller#account-liquidity) and the market's available liquidity. To borrow Ether, the borrower must be 'payable' (solidity).
 
 #### CErc20 / CEther
 
@@ -152,15 +152,15 @@ function borrow(uint borrowAmount) returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 cToken = CErc20(0x3FDA...);
-require(cToken.borrow(100) == 0, "got collateral?");
+CErc20 bToken = CErc20(0x3FDA...);
+require(bToken.borrow(100) == 0, "got collateral?");
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-await cToken.methods.borrow(50).send({from: 0xMyAccount});
+const bToken = CEther.at(0x3FDB...);
+await bToken.methods.borrow(50).send({from: 0xMyAccount});
 ```
 
 ## Repay Borrow
@@ -176,7 +176,7 @@ function repayBorrow(uint repayAmount) returns (uint)
 * `msg.sender`: The account which borrowed the asset, and shall repay the borrow.
 * `repayAmount`: The amount of the underlying borrowed asset to be repaid. A value of -1 (i.e. `2^256` - 1) can be used to repay the full amount.
 * `RETURN`: 0 on success, otherwise an [Error code](#error-codes)
-Before repaying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the cToken to access their token balance.
+Before repaying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the bToken to access their token balance.
 
 #### CEther
 
@@ -191,15 +191,15 @@ function repayBorrow() payable
 #### Solidity
 
 ```solidity
-CEther cToken = CEther(0x3FDB...);
-require(cToken.repayBorrow.value(100)() == 0, "transfer approved?");
+CEther bToken = CEther(0x3FDB...);
+require(bToken.repayBorrow.value(100)() == 0, "transfer approved?");
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CErc20.at(0x3FDA...);
-cToken.methods.repayBorrow(10000).send({from: ...});
+const bToken = CErc20.at(0x3FDA...);
+bToken.methods.repayBorrow(10000).send({from: ...});
 ```
 
 ## Repay Borrow Behalf
@@ -216,7 +216,7 @@ function repayBorrowBehalf(address borrower, uint repayAmount) returns (uint)
 * `borrower`: The account which borrowed the asset to be repaid.
 * `repayAmount`: The amount of the underlying borrowed asset to be repaid. A value of -1 (i.e. `2^256` - 1) can be used to repay the full amount.
 * `RETURN`: 0 on success, otherwise an [Error code](#error-codes)
-Before repaying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the cToken to access their token balance.
+Before repaying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the bToken to access their token balance.
 
 #### CEther
 
@@ -231,20 +231,20 @@ function repayBorrowBehalf(address borrower) payable
 #### Solidity
 
 ```solidity
-CEther cToken = CEther(0x3FDB...);
-require(cToken.repayBorrowBehalf.value(100)(0xBorrower) == 0, "transfer approved?");
+CEther bToken = CEther(0x3FDB...);
+require(bToken.repayBorrowBehalf.value(100)(0xBorrower) == 0, "transfer approved?");
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CErc20.at(0x3FDA...);
-await cToken.methods.repayBorrowBehalf(0xBorrower, 10000).send({from: 0xPayer});
+const bToken = CErc20.at(0x3FDA...);
+await bToken.methods.repayBorrowBehalf(0xBorrower, 10000).send({from: 0xPayer});
 ```
 
 ## Transfer
 
-Transfer is an ERC-20 method that allows accounts to send tokens to other Ethereum addresses. A cToken transfer will fail if the account has [entered](/v2/comptroller#enter-markets) that cToken market and the transfer would have put the account into a state of negative [liquidity](/v2/comptroller#account-liquidity).
+Transfer is an ERC-20 method that allows accounts to send tokens to other Ethereum addresses. A bToken transfer will fail if the account has [entered](/comptroller#enter-markets) that bToken market and the transfer would have put the account into a state of negative [liquidity](/comptroller#account-liquidity).
 
 #### CErc20 / CEther
 
@@ -253,27 +253,27 @@ function transfer(address recipient, uint256 amount) returns (bool)
 ```
 
 * `recipient`: The transfer recipient address.
-* `amount`: The amount of cTokens to transfer.
+* `amount`: The amount of bTokens to transfer.
 * `RETURN`: Returns a boolean value indicating whether or not the operation succeeded.
 
 #### Solidity
 
 ```solidity
-CEther cToken = CEther(0x3FDB...);
-cToken.transfer(0xABCD..., 100000000000);
+CEther bToken = CEther(0x3FDB...);
+bToken.transfer(0xABCD..., 100000000000);
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CErc20.at(0x3FDA...);
-await cToken.methods.transfer(0xABCD..., 100000000000).send({from: 0xSender});
+const bToken = CErc20.at(0x3FDA...);
+await bToken.methods.transfer(0xABCD..., 100000000000).send({from: 0xSender});
 ```
 
 ## Liquidate Borrow
 
-A user who has negative [account liquidity](/v2/comptroller#account-liquidity) is subject to [liquidation](#liquidate-borrow) by other users of the protocol to return his/her account liquidity back to positive (i.e. above the collateral requirement). When a liquidation occurs, a liquidator may repay some or all of an outstanding borrow on behalf of a borrower and in return receive a discounted amount of collateral held by the borrower; this discount is defined as the liquidation incentive.
-A liquidator may close up to a certain fixed percentage (i.e. close factor) of any individual outstanding borrow of the underwater account. Unlike in v1, liquidators must interact with each cToken contract in which they wish to repay a borrow and seize another asset as collateral. When collateral is seized, the liquidator is transferred cTokens, which they may redeem the same as if they had supplied the asset themselves. Users must approve each cToken contract before calling liquidate (i.e. on the borrowed asset which they are repaying), as they are transferring funds into the contract.
+A user who has negative [account liquidity](/comptroller#account-liquidity) is subject to [liquidation](#liquidate-borrow) by other users of the protocol to return his/her account liquidity back to positive (i.e. above the collateral requirement). When a liquidation occurs, a liquidator may repay some or all of an outstanding borrow on behalf of a borrower and in return receive a discounted amount of collateral held by the borrower; this discount is defined as the liquidation incentive.
+A liquidator may close up to a certain fixed percentage (i.e. close factor) of any individual outstanding borrow of the underwater account. Unlike in v1, liquidators must interact with each bToken contract in which they wish to repay a borrow and seize another asset as collateral. When collateral is seized, the liquidator is transferred bTokens, which they may redeem the same as if they had supplied the asset themselves. Users must approve each bToken contract before calling liquidate (i.e. on the borrowed asset which they are repaying), as they are transferring funds into the contract.
 
 #### CErc20
 
@@ -282,38 +282,38 @@ function liquidateBorrow(address borrower, uint amount, address collateral) retu
 ```
 
 * `msg.sender`: The account which shall liquidate the borrower by repaying their debt and seizing their collateral.
-* `borrower`: The account with negative [account liquidity](/v2/comptroller#account-liquidity) that shall be liquidated.
+* `borrower`: The account with negative [account liquidity](/comptroller#account-liquidity) that shall be liquidated.
 * `repayAmount`: The amount of the borrowed asset to be repaid and converted into collateral, specified in units of the underlying borrowed asset.
-* `cTokenCollateral`: The address of the cToken currently held as collateral by a borrower, that the liquidator shall seize.
+* `bTokenCollateral`: The address of the bToken currently held as collateral by a borrower, that the liquidator shall seize.
 * `RETURN`: 0 on success, otherwise an [Error code](#error-codes)
-Before supplying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the cToken to access their token balance.
+Before supplying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the bToken to access their token balance.
 
 #### CEther
 
 ```solidity
-function liquidateBorrow(address borrower, address cTokenCollateral) payable
+function liquidateBorrow(address borrower, address bTokenCollateral) payable
 ```
 
 * `msg.value`: The amount of ether to be repaid and converted into collateral, in wei.
 * `msg.sender`: The account which shall liquidate the borrower by repaying their debt and seizing their collateral.
-* `borrower`: The account with negative [account liquidity](/v2/comptroller#account-liquidity) that shall be liquidated.
-* `cTokenCollateral`: The address of the cToken currently held as collateral by a borrower, that the liquidator shall seize.
+* `borrower`: The account with negative [account liquidity](/comptroller#account-liquidity) that shall be liquidated.
+* `bTokenCollateral`: The address of the bToken currently held as collateral by a borrower, that the liquidator shall seize.
 * `RETURN`: No return, reverts on error.
 
 #### Solidity
 
 ```solidity
-CEther cToken = CEther(0x3FDB...);
-CErc20 cTokenCollateral = CErc20(0x3FDA...);
-require(cToken.liquidateBorrow.value(100)(0xBorrower, cTokenCollateral) == 0, "borrower underwater??");
+CEther bToken = CEther(0x3FDB...);
+CErc20 bTokenCollateral = CErc20(0x3FDA...);
+require(bToken.liquidateBorrow.value(100)(0xBorrower, bTokenCollateral) == 0, "borrower underwater??");
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CErc20.at(0x3FDA...);
-const cTokenCollateral = CEther.at(0x3FDB...);
-await cToken.methods.liquidateBorrow(0xBorrower, 33, cTokenCollateral).send({from: 0xLiquidator});
+const bToken = CErc20.at(0x3FDA...);
+const bTokenCollateral = CEther.at(0x3FDB...);
+await bToken.methods.liquidateBorrow(0xBorrower, 33, bTokenCollateral).send({from: 0xLiquidator});
 ```
 
 ## Key Events
@@ -324,7 +324,7 @@ await cToken.methods.liquidateBorrow(0xBorrower, 33, cTokenCollateral).send({fro
 | `Redeem(address redeemer, uint redeemAmount, uint redeemTokens)` | Emitted upon a successful [Redeem](#redeem). |
 | `Borrow(address borrower, uint borrowAmount, uint accountBorrows, uint totalBorrows)` | Emitted upon a successful [Borrow](#borrow). |
 | `RepayBorrow(address payer, address borrower, uint repayAmount, uint accountBorrows, uint totalBorrows)` | Emitted upon a successful [Repay Borrow](#repay-borrow). |
-| `LiquidateBorrow(address liquidator, address borrower, uint repayAmount, address cTokenCollateral, uint seizeTokens)` | Emitted upon a successful [Liquidate Borrow](#liquidate-borrow). |
+| `LiquidateBorrow(address liquidator, address borrower, uint repayAmount, address bTokenCollateral, uint seizeTokens)` | Emitted upon a successful [Liquidate Borrow](#liquidate-borrow). |
 {: .key-events-table }
 
 ## Error Codes
@@ -435,7 +435,7 @@ await cToken.methods.liquidateBorrow(0xBorrower, 33, cTokenCollateral).send({fro
 
 ## Exchange Rate
 
-Each cToken is convertible into an ever increasing quantity of the underlying asset, as interest accrues in the market. The exchange rate between a cToken and the underlying asset is equal to:
+Each bToken is convertible into an ever increasing quantity of the underlying asset, as interest accrues in the market. The exchange rate between a bToken and the underlying asset is equal to:
 
 ```solidity
 exchangeRate = (getCash() + totalBorrows() - totalReserves()) / totalSupply()
@@ -451,22 +451,22 @@ function exchangeRateCurrent() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 cToken = CToken(0x3FDA...);
-uint exchangeRateMantissa = cToken.exchangeRateCurrent();
+CErc20 bToken = BToken(0x3FDA...);
+uint exchangeRateMantissa = bToken.exchangeRateCurrent();
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-const exchangeRate = (await cToken.methods.exchangeRateCurrent().call()) / 1e18;
+const bToken = CEther.at(0x3FDB...);
+const exchangeRate = (await bToken.methods.exchangeRateCurrent().call()) / 1e18;
 ```
 
 Tip: note the use of `call` vs. `send` to invoke the function from off-chain without incurring gas costs.
 
 ## Get Cash
 
-Cash is the amount of underlying balance owned by this cToken contract. One may query the total amount of cash currently available to this market.
+Cash is the amount of underlying balance owned by this bToken contract. One may query the total amount of cash currently available to this market.
 
 #### CErc20 / CEther
 
@@ -479,15 +479,15 @@ function getCash() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 cToken = CToken(0x3FDA...);
-uint cash = cToken.getCash();
+CErc20 bToken = BToken(0x3FDA...);
+uint cash = bToken.getCash();
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-const cash = (await cToken.methods.getCash().call());
+const bToken = CEther.at(0x3FDB...);
+const cash = (await bToken.methods.getCash().call());
 ```
 
 ## Total Borrows
@@ -505,15 +505,15 @@ function totalBorrowsCurrent() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 cToken = CToken(0x3FDA...);
-uint borrows = cToken.totalBorrowsCurrent();
+CErc20 bToken = BToken(0x3FDA...);
+uint borrows = bToken.totalBorrowsCurrent();
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-const borrows = (await cToken.methods.totalBorrowsCurrent().call());
+const bToken = CEther.at(0x3FDB...);
+const borrows = (await bToken.methods.totalBorrowsCurrent().call());
 ```
 
 ## Borrow Balance
@@ -532,15 +532,15 @@ function borrowBalanceCurrent(address account) returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 cToken = CToken(0x3FDA...);
-uint borrows = cToken.borrowBalanceCurrent(msg.caller);
+CErc20 bToken = BToken(0x3FDA...);
+uint borrows = bToken.borrowBalanceCurrent(msg.caller);
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-const borrows = await cToken.methods.borrowBalanceCurrent(account).call();
+const bToken = CEther.at(0x3FDB...);
+const borrows = await bToken.methods.borrowBalanceCurrent(account).call();
 ```
 
 ## Borrow Rate
@@ -558,20 +558,20 @@ function borrowRatePerBlock() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 cToken = CToken(0x3FDA...);
-uint borrowRateMantissa = cToken.borrowRatePerBlock();
+CErc20 bToken = BToken(0x3FDA...);
+uint borrowRateMantissa = bToken.borrowRatePerBlock();
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-const borrowRate = (await cToken.methods.borrowRatePerBlock().call()) / 1e18;
+const bToken = CEther.at(0x3FDB...);
+const borrowRate = (await bToken.methods.borrowRatePerBlock().call()) / 1e18;
 ```
 
 ## Total Supply
 
-Total Supply is the number of tokens currently in circulation in this cToken market. It is part of the EIP-20 interface of the cToken contract.
+Total Supply is the number of tokens currently in circulation in this bToken market. It is part of the EIP-20 interface of the bToken contract.
 
 #### CErc20 / CEther
 
@@ -584,20 +584,20 @@ function totalSupply() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 cToken = CToken(0x3FDA...);
-uint tokens = cToken.totalSupply();
+CErc20 bToken = BToken(0x3FDA...);
+uint tokens = bToken.totalSupply();
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-const tokens = (await cToken.methods.totalSupply().call());
+const bToken = CEther.at(0x3FDB...);
+const tokens = (await bToken.methods.totalSupply().call());
 ```
 
 ## Underlying Balance
 
-The user's underlying balance, representing their assets in the protocol, is equal to the user's cToken balance multiplied by the [Exchange Rate](#exchange-rate).
+The user's underlying balance, representing their assets in the protocol, is equal to the user's bToken balance multiplied by the [Exchange Rate](#exchange-rate).
 
 #### CErc20 / CEther
 
@@ -610,15 +610,15 @@ function balanceOfUnderlying(address account) returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 cToken = CToken(0x3FDA...);
-uint tokens = cToken.balanceOfUnderlying(msg.caller);
+CErc20 bToken = BToken(0x3FDA...);
+uint tokens = bToken.balanceOfUnderlying(msg.caller);
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-const tokens = await cToken.methods.balanceOfUnderlying(account).call();
+const bToken = CEther.at(0x3FDB...);
+const tokens = await bToken.methods.balanceOfUnderlying(account).call();
 ```
 
 ## Supply Rate
@@ -635,20 +635,20 @@ function supplyRatePerBlock() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 cToken = CToken(0x3FDA...);
-uint supplyRateMantissa = cToken.supplyRatePerBlock();
+CErc20 bToken = BToken(0x3FDA...);
+uint supplyRateMantissa = bToken.supplyRatePerBlock();
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-const supplyRate = (await cToken.methods.supplyRatePerBlock().call()) / 1e18;
+const bToken = CEther.at(0x3FDB...);
+const supplyRate = (await bToken.methods.supplyRatePerBlock().call()) / 1e18;
 ```
 
 ## Total Reserves
 
-Reserves are an accounting entry in each cToken contract that represents a portion of historical interest set aside as [cash](#cash) which can be withdrawn or transferred through the protocol's governance. A small portion of borrower interest accrues into the protocol, determined by the [reserve factor](#reserve-factor).
+Reserves are an accounting entry in each bToken contract that represents a portion of historical interest set aside as [cash](#cash) which can be withdrawn or transferred through the protocol's governance. A small portion of borrower interest accrues into the protocol, determined by the [reserve factor](#reserve-factor).
 
 #### CErc20 / CEther
 
@@ -661,15 +661,15 @@ function totalReserves() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 cToken = CToken(0x3FDA...);
-uint reserves = cToken.totalReserves();
+CErc20 bToken = BToken(0x3FDA...);
+uint reserves = bToken.totalReserves();
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-const reserves = (await cToken.methods.totalReserves().call());
+const bToken = CEther.at(0x3FDB...);
+const reserves = (await bToken.methods.totalReserves().call());
 ```
 
 ## Reserve Factor
@@ -687,13 +687,13 @@ function reserveFactorMantissa() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 cToken = CToken(0x3FDA...);
-uint reserveFactorMantissa = cToken.reserveFactorMantissa();
+CErc20 bToken = BToken(0x3FDA...);
+uint reserveFactorMantissa = bToken.reserveFactorMantissa();
 ```
 
 #### Web3 1.0
 
 ```js
-const cToken = CEther.at(0x3FDB...);
-const reserveFactor = (await cToken.methods.reserveFactorMantissa().call()) / 1e18;
+const bToken = CEther.at(0x3FDB...);
+const reserveFactor = (await bToken.methods.reserveFactorMantissa().call()) / 1e18;
 ```

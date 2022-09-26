@@ -1,0 +1,205 @@
+<style type="text/css">
+  .btoken-faq {
+    margin: 15px 0px;
+  }
+
+  .btoken-faq-contents > div.item {
+    min-height: 115px;
+    font-size: 23px;
+    line-height: 23px;
+    font-weight: bold;
+    font-family: "Haas Grot Disp R";
+    color: #141E27;
+    border-bottom: 1px solid #d1d6db;
+    transition: border-bottom 0.7s;
+  }
+
+  .btoken-faq-contents > div.item:hover {
+    border-bottom: 1px solid #00D395;
+    transition: border-bottom 0.7s;
+  }
+
+  .btoken-faq-contents > div.item:first-child {
+    border-top: 1px solid #d1d6db;
+  }
+
+  .btoken-faq .btoken-faq-contents .button,
+  .btoken-faq .btoken-faq-contents .button label {
+    cursor: pointer;
+  }
+
+  .btoken-faq .question {
+    display: block;
+    padding: 46px 46px 46px 0px;
+  }
+
+  .markdown-content .container .btoken-faq div p,
+  .markdown-content .container .btoken-faq div li {
+    font-family: "Haas Grot Text R", sans-serif;
+    color: #657786;
+    font-weight: normal;
+  }
+
+  .markdown-content .container .btoken-faq div p:last-child, 
+  .markdown-content .container .btoken-faq div ul:last-child {
+    margin-bottom: 46px;
+  }
+
+  .btoken-faq .faq-content.hidden {
+    display: none;
+  }
+
+  .btoken-faq .plus {
+    display: block;
+    height: 2rem;
+    width: 2rem;
+    float: right;
+    position: relative;
+    top: -74px;
+  }
+
+  .btoken-faq .plus span:first-of-type {
+    top: 0%;
+    bottom: 0%;
+    width: 10%;
+    left: 45%;
+  }
+
+  .btoken-faq .plus span:last-of-type {
+    left: 0%;
+    right: 0%;
+    height: 10%;
+    top: 45%;
+  }
+
+  .btoken-faq .plus.active span:first-of-type{
+    transform: rotate(90deg);
+  }
+
+  .btoken-faq .plus.active span:last-of-type {
+    left: 50%;
+    right: 50%;
+  }
+
+  .btoken-faq .plus span {
+    position: absolute;
+    background: #00D395;
+    transition: 0.3s;
+  }
+
+</style>
+<div class="btoken-faq-contents">
+  <div class="item">
+    <div class="button">
+      <label class="question">How Do bTokens earn interest?</label>
+
+      <div class="plus">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="faq-content hidden">
+      <p>Each <a href="https://app.bitlend.fi/#/markets">market</a> has its own Supply interest rate (APR). Interest isn't distributed; instead, simply by holding bTokens, you'll earn interest.</p>
+
+      <p>bTokens accumulates interest through their exchange rate — over time, each bToken becomes convertible into an increasing amount of it's underlying asset, even while the number of bTokens in your wallet stays the same.</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="button">
+      <label class="question">Do I need to calculate the bToken exchange rate?</label>
+
+      <div class="plus">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="faq-content hidden">
+      <p>When a market is launched, the bToken exchange rate (how much ETH one cETH is worth) begins at 0.020000 — and increases at a rate equal to the compounding market interest rate. For example, after one year, the exchange rate might equal 0.021591.</p>
+
+      <p>Each user has the same bToken exchange rate; there’s nothing unique to your wallet that you have to worry about.</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="button">
+      <label class="question">Can you walk me through an example?</label>
+
+      <div class="plus">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="faq-content hidden">
+      <p>Let’s say you supply 1,000 DAI to the Bitlend protocol, when the exchange rate is 0.020070; you would receive 49,825.61 cDAI (1,000/0.020070).</p>
+
+      <p>A few months later, you decide it’s time to withdraw your DAI from the protocol; the exchange rate is now 0.021591:</p>
+
+      <ul>
+        <li>Your 49,825.61 cDAI is now equal to 1,075.78 DAI (49,825.61 * 0.021591)</li>
+        <li>You could withdraw 1,075.78 DAI, which would redeem all 49,825.61 cDAI</li>
+        <li>Or, you could withdraw a portion, such as your original 1,000 DAI, which would redeem 46,315.59 cDAI (keeping 3,510.01 cDAI in your wallet)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="button">
+      <label class="question">How do I view my bTokens?</label>
+
+      <div class="plus">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="faq-content hidden">
+      <p>Each bToken is visible on <a href="https://bttcscan.io/tokens/label/compound" target="_blank">bttcscan</a>, and you should be able to view them in the list of tokens associated with your address</p>
+
+      <p>bToken balances have been integrated into <a href="https://itunes.apple.com/us/app/coinbase-wallet/id1278383455" target="_blank">Coinbase Wallet</a> and MetaMask; other wallets may add bToken support</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="button">
+      <label class="question">Can I transfer bTokens?</label>
+
+      <div class="plus">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="faq-content hidden">
+      <p>Yes, but exercise caution! By transferring bTokens, you’re transferring your balance of the underlying asset inside the Bitlend protocol. If you send a bToken to your friend, your balance (viewable in the <a href="https://app.app.bitlend.fi/#/">Bitlend Interface</a>) will decline, and your friend will see their balance increase.</p>
+
+      <p>A bToken transfer will fail if the account has <a href="/comptroller#enter-markets">entered</a> that bToken market and the transfer would have put the account into a state of negative <a href="/comptroller#account-liquidity">liquidity</a>.</p>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const bTokenFaqPlusButtons = document.querySelectorAll('.btoken-faq .item .button .plus');
+    const bTokenFaqButtons = document.querySelectorAll('.btoken-faq .item .button');
+    const bTokenFaqContents = document.querySelectorAll('.btoken-faq .item .faq-content');
+
+    const hidden = 'hidden';
+    const active = 'active';
+
+    for (let i = 0; i < bTokenFaqButtons.length; i++) {
+      bTokenFaqButtons[i].addEventListener('click', () => {
+        if (bTokenFaqContents[i].classList.contains(hidden)) {
+          bTokenFaqPlusButtons[i].classList.add(active);
+          bTokenFaqContents[i].classList.remove(hidden);
+        } else {
+          bTokenFaqPlusButtons[i].classList.remove(active);
+          bTokenFaqContents[i].classList.add(hidden);
+        }
+      });
+    }
+  });
+</script>

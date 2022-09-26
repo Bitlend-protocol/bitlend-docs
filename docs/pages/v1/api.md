@@ -1,40 +1,40 @@
 ---
 layout: docs-content
-title: Compound II | Docs - API
-permalink: /v2/api/
-docs_version: v2
+title: Bitlend II | Docs - API
+permalink: /api/
+docs_version: v1
 
 ## Element ID: In-page Heading
 sidebar_nav_data:
-  compound-api: Compound API
+  compound-api: Bitlend API
   account-service: AccountService
-  ctoken-service: CTokenService
+  btoken-service: BTokenService
   market-history-service: MarketHistoryService
   governance-service: GovernanceService
   shared-data-types: Shared Data Types
 ---
 
-# Compound API
+# Bitlend API
 
 ## Introduction
 
-The Compound API input and output formats are specified by [Protocol Buffers](https://developers.google.com/protocol-buffers/){:target="_blank"}, known colloquially as protobufs. Unlike typical protobufs endpoints, the Compound endpoints support JSON for input and output in addition to the protobufs binary format. To use JSON in both the input and the output, specify the headers `"Content-Type: application/json"` and `"Accept: application/json"` in the request.
+The Bitlend API input and output formats are specified by [Protocol Buffers](https://developers.google.com/protocol-buffers/){:target="_blank"}, known colloquially as protobufs. Unlike typical protobufs endpoints, the Bitlend endpoints support JSON for input and output in addition to the protobufs binary format. To use JSON in both the input and the output, specify the headers `"Content-Type: application/json"` and `"Accept: application/json"` in the request.
 
-The Compound API no longer supports the Ethereum testnets.
+The Bitlend API no longer supports the Ethereum testnets.
 
 It is a possibility that in the future, API keys will be required to access the API.
 
 ## AccountService
 {:id='account-service'}
 
-The Account API retrieves information for various accounts which have interacted with Compound. You can use this API to pull data about a specific account by address, or alternatively, pull data for a list of unhealthy accounts (that is, accounts which are approaching under-collateralization).
+The Account API retrieves information for various accounts which have interacted with Bitlend. You can use this API to pull data about a specific account by address, or alternatively, pull data for a list of unhealthy accounts (that is, accounts which are approaching under-collateralization).
 
 ```js
 // Retreives list of accounts and related supply and borrow balances.
-fetch("https://api.compound.finance/api/v2/account");
+fetch("https://api.compound.finance/api/account");
 
 // Returns details for given account
-fetch("https://api.compound.finance/api/v2/account?addresses[]=0x00..");
+fetch("https://api.compound.finance/api/account?addresses[]=0x00..");
 ```
 
 #### GET: `/account`
@@ -66,18 +66,18 @@ The request to the account API can specify a number filters, such as which addre
 
 #### AccountResponse
 
-The account API returns an overall picture of accounts matching the filters on Compound.
+The account API returns an overall picture of accounts matching the filters on Bitlend.
 
 | Type | Key | Description |
 |------|-----|-------------|
 | Error | `error` | If set and non-zero, indicates an error returning data. `NO_ERROR = 0; INTERNAL_ERROR = 1; INVALID_PAGE_NUMBER = 2; INVALID_PAGE_SIZE = 3;` |
 | AccountRequest | `request` | The request parameters are echoed in the response. |
 | PaginationSummary | `pagination_summary` | For example | `{ "page_number": 1, "page_size": 100, "total_entries": 83, "total_pages": 1 }` |
-| Account | `accounts` |The list of accounts (see Account below) matching the requested filter, with the associated account and cToken data. |
+| Account | `accounts` |The list of accounts (see Account below) matching the requested filter, with the associated account and bToken data. |
 
 #### Account
 
-This includes a list of cTokens contextualized to each account.
+This includes a list of bTokens contextualized to each account.
 
 ```js
 {
@@ -100,15 +100,15 @@ This includes a list of cTokens contextualized to each account.
 | Type | Key | Description |
 |------|-----|-------------|
 | bytes | `address` | The public Ethereum address of the account
-| Precise | `total_collateral_value_in_eth` | The value of all collateral supplied by the account. Calculated as cTokens held • exchange rate • collateral factor. Note: assets can be supplied and gain interest without being counted as collateral.
+| Precise | `total_collateral_value_in_eth` | The value of all collateral supplied by the account. Calculated as bTokens held • exchange rate • collateral factor. Note: assets can be supplied and gain interest without being counted as collateral.
 | Precise | `total_borrow_value_in_eth` | The value of all outstanding borrows with accumulated interest.
 | Precise | `health` |  `total_collateral_value_in_eth / total_borrow_value_in_eth`. If this value is less than 1.0, the account is subject to liquidation.
 | int32 | `block_updated` | 
-| AccountCToken | `tokens`| A list of tokens held by this account, see `AccountCToken` below for details.|
+| AccountBToken | `tokens`| A list of tokens held by this account, see `AccountBToken` below for details.|
 
-#### AccountCToken
+#### AccountBToken
 
-An account's supply, borrow, and interest information for a particular cToken.
+An account's supply, borrow, and interest information for a particular bToken.
 
 ```js
 {
@@ -122,22 +122,22 @@ An account's supply, borrow, and interest information for a particular cToken.
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the cToken |
-| string | `symbol` | The symbol of the cToken |
-| Precise | `supply_balance_underlying` | The cToken balance converted to underlying `tokenscTokens held • exchange rate` |
-| Precise | `borrow_balance_underlying` | The borrow balance (this is denominated in the underlying token, not in cTokens) |
-| Precise | `lifetime_supply_interest_accrued` | The amount of supply interest accrued for the lifetime of this account-cToken pair. |
-| Precise | `lifetime_borrow_interest_accrued` | The amount of borrow interest accrued for the lifetime of this account-cToken pair. |
+| bytes | `address` | The address of the bToken |
+| string | `symbol` | The symbol of the bToken |
+| Precise | `supply_balance_underlying` | The bToken balance converted to underlying `tokensbTokens held • exchange rate` |
+| Precise | `borrow_balance_underlying` | The borrow balance (this is denominated in the underlying token, not in bTokens) |
+| Precise | `lifetime_supply_interest_accrued` | The amount of supply interest accrued for the lifetime of this account-bToken pair. |
+| Precise | `lifetime_borrow_interest_accrued` | The amount of borrow interest accrued for the lifetime of this account-bToken pair. |
 | Precise | `safe_withdraw_amount_underlying` | The amount of supply that can be withdrawn such that the user's health remains at 1.25 or higher. |
 
-## CTokenService
-{:id='ctoken-service'}
+## BTokenService
+{:id='btoken-service'}
 
-#### GET: `/ctoken`
+#### GET: `/btoken`
 
-#### CTokenRequest
+#### BTokenRequest
 
-The request to the cToken API can specify a number filters, such as which tokens to retrieve information about or moment in time. The following shows an example set of request parameters in JSON:
+The request to the bToken API can specify a number filters, such as which tokens to retrieve information about or moment in time. The following shows an example set of request parameters in JSON:
 
 ```js
 {
@@ -153,30 +153,30 @@ The request to the cToken API can specify a number filters, such as which tokens
 | uint32 | `block_timestamp` | Only one of block_number or block timestamp should be provided. If provided, API returns data for given block timestamp from our historical data. Otherwise, API defaults to returning the latest information. (Optional) |
 | bool | `meta` | Pass true to get metadata for the token addresses specified. (Optional) |
 
-#### CTokenResponse
+#### BTokenResponse
 
-The cToken API returns an overall picture of cTokens matching the filter.
+The bToken API returns an overall picture of bTokens matching the filter.
 
 | Type | Key | Description |
 |------|-----|-------------|
 | Error | `error` | |
-| CTokenRequest | `request` | The request parameters are echoed in the response. |
-| CToken | `cToken` | The list of cToken (see `CToken` below) matching the requested filter. |
-| CTokenMeta | `meta` | Metadata for all CTokens specified |
+| BTokenRequest | `request` | The request parameters are echoed in the response. |
+| BToken | `bToken` | The list of bToken (see `BToken` below) matching the requested filter. |
+| BTokenMeta | `meta` | Metadata for all BTokens specified |
 
-#### CToken
+#### BToken
 
-This includes a list of cTokens contextualized to the full market.
+This includes a list of bTokens contextualized to the full market.
 
 ```js
 {
- "cToken": [{
+ "bToken": [{
    "borrow_rate": {"value": "0.051453109785093843"},
    "cash": {"value": "514.078443"},
    "collateral_factor": {"value": "0.80000000000000000"},
    "exchange_rate": {"value": "0.020024242770802729"},
    "interest_rate_model_address": "0x1a43bfd39b15dcf444e17ab408c4b5be32deb7f5",
-   "name": "Compound USD Coin",
+   "name": "Bitlend USD Coin",
    "number_of_borrowers": 3,
    "number_of_suppliers": 34,
    "reserves": {"value": "0"},
@@ -202,21 +202,21 @@ This includes a list of cTokens contextualized to the full market.
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `token_address` | The public Ethereum address of the cToken |
-| Precise | `total_supply` |  The number of cTokens in existence |
-| Precise | `total_borrows` | The amount of underlying tokens borrowed from the cToken |
+| bytes | `token_address` | The public Ethereum address of the bToken |
+| Precise | `total_supply` |  The number of bTokens in existence |
+| Precise | `total_borrows` | The amount of underlying tokens borrowed from the bToken |
 | Precise | `reserves` |  The amount of underylying tokens held by reserves |
-| Precise | `cash` |  The current liquidity of the cToken |
-| Precise | `exchange_rate` | The cToken / underlying exchange rate. This rate increases over time as supply interest accrues. |
+| Precise | `cash` |  The current liquidity of the bToken |
+| Precise | `exchange_rate` | The bToken / underlying exchange rate. This rate increases over time as supply interest accrues. |
 | Precise | `supply_rate` | The floating supply interest rate |
 | Precise | `borrow_rate` | The floating borrow interest rate |
 | Precise | `collateral_factor` | The amount of the value of the underlying token that will count as collateral. eg. cEth with collataral factor 0.75 means 1 eth of supply allows 0.75 eth of borrowing. |
-| uint32 |  `number_of_suppliers` | The number of accounts holding this cToken |
+| uint32 |  `number_of_suppliers` | The number of accounts holding this bToken |
 | uint32 |  `number_of_borrowers` | The number of accounts with oustanding borrows |
 | Precise | `underlying_price` |  The price of the underlying token in eth |
 | bytes | `underlying_address` |  The address of the underlying token |
-| string |  `symbol` |  The symbol of the ctoken |
-| string |  `name` |  The name of the ctoken |
+| string |  `symbol` |  The symbol of the btoken |
+| string |  `name` |  The name of the btoken |
 | string |  `underlying_symbol` | The symbol of the underlying token |
 | string |  `underlying_name` | The name of the underlying token |
 | bytes | `interest_rate_model_address` | The address of the interest rate model |
@@ -225,7 +225,7 @@ This includes a list of cTokens contextualized to the full market.
 | Precise | `comp_borrow_apy` | The floating comp apy for borrowing this token |
 | Precise | `borrow_cap` |  The maximum size of total borrows for this market, beyond which no new borrows will be given |
 
-#### CTokenMeta
+#### BTokenMeta
 
 | Type | Key | Description |
 |------|-----|-------------|
@@ -239,7 +239,7 @@ The market history service retrieves historical information about a market. You 
 
 ```js
 // Returns 10 buckets of market data
-fetch("https://api.compound.finance/api/v2/market_history/graph?asset=0xf5dce57282a584d2746faf1593d3121fcac444dc&amp;min_block_timestamp=1556747900&amp;max_block_timestamp=1559339900&amp;num_buckets=10");
+fetch("https://api.compound.finance/api/market_history/graph?asset=0xf5dce57282a584d2746faf1593d3121fcac444dc&amp;min_block_timestamp=1556747900&amp;max_block_timestamp=1559339900&amp;num_buckets=10");
 ```
 
 #### GET: `/graph`
@@ -306,17 +306,17 @@ The market history graph API response contains the rates for both suppliers and 
 ## GovernanceService
 {:id='governance-service'}
 
-The Governance Service includes three endpoints to retrieve information about COMP accounts, governance proposals, and proposal vote receipts. You can use the APIs below to pull data about the Compound governance system:
+The Governance Service includes three endpoints to retrieve information about COMP accounts, governance proposals, and proposal vote receipts. You can use the APIs below to pull data about the Bitlend governance system:
 
 ```js
 // Retreives a list of governance proposals
-fetch("https://api.compound.finance/api/v2/governance/proposals");
+fetch("https://api.compound.finance/api/governance/proposals");
 
 // Retreives a list of governance proposal vote receipts
-fetch("https://api.compound.finance/api/v2/governance/proposal_vote_receipts");
+fetch("https://api.compound.finance/api/governance/proposal_vote_receipts");
 
 // Retreives a list of COMP accounts
-fetch("https://api.compound.finance/api/v2/governance/accounts");
+fetch("https://api.compound.finance/api/governance/accounts");
 ```
 
 #### GET: `/governance/proposals`
@@ -479,11 +479,11 @@ The Governance Account API returns a list of accounts that match the given filte
 | string | `balance` | The balance of COMP for the given account |
 | string | `votes` | The total votes delegated to the account |
 | string | `vote_weight` | The percentage of voting weight of the 10,000,000 total COMP |
-| uint32 | `proposals_created` | The number of proposals created in the Compound Governance System |
+| uint32 | `proposals_created` | The number of proposals created in the Bitlend Governance System |
 | DisplayCompAccount | `delegate` | The account this COMP account is delegating to (See DisplayCompAccount) |
 | uint32 | `rank` | Either `null` or the rank order of top 100 COMP accounts for votes |
 | CompAccountTransaction | `transactions` | Either `null` or a list of historical transactions for the account (See CompAccountTransaction) |
-| uint32 | `proposals_voted` | The number of proposals voted on in the Compound Governance System |
+| uint32 | `proposals_voted` | The number of proposals voted on in the Bitlend Governance System |
 | uint32 | `total_delegates` | The number of addresses delegating to this account |
 | CrowdProposal | `crowd_proposal` | Either `null` or a description of the crowd proposal the comp_moment represents (See CrowdProposal) |
 
@@ -553,11 +553,11 @@ The Governance Account API returns a list of accounts that match the given filte
 | string | `balance` | The balance of COMP for the given account |
 | string | `votes` | The total votes delegated to the account |
 | string | `vote_weight` | The percentage of voting weight of the 10,000,000 total COMP |
-| uint32 | `proposals_created` | The number of proposals created in the Compound Governance System |
+| uint32 | `proposals_created` | The number of proposals created in the Bitlend Governance System |
 | DisplayCompAccount | `delegate` | The account this COMP account is delegating to (See DisplayCompAccount) |
 | uint32 | `rank` | Either `null` or the rank order of top 100 COMP accounts for votes |
 | CompAccountTransaction | `transactions` | Either `null` or a list of historical transactions for the account (See CompAccountTransaction) |
-| uint32 | `proposals_voted` | The number of proposals voted on in the Compound Governance System |
+| uint32 | `proposals_voted` | The number of proposals voted on in the Bitlend Governance System |
 | uint32 | `total_delegates` | The number of addresses delegating to this account |
 | CrowdProposal | `crowd_proposal` | Either `null` or a description of the crowd proposal the comp_moment represents (See CrowdProposal) |
 
@@ -597,7 +597,7 @@ The Governance Account API returns a list of accounts that match the given filte
 
 #### GovernanceHistoryRequest
 
-The governance history API returns historical information about the Compound governance system.
+The governance history API returns historical information about the Bitlend governance system.
 
 #### GovernanceHistoryResponse
 
@@ -646,7 +646,7 @@ The governance history API response contains the values for votes delegate, tota
 
 #### GovernanceCompDistributionRequest
 
-The governance COMP distribution API returns COMP distribution information for markets in the Compound protocol.
+The governance COMP distribution API returns COMP distribution information for markets in the Bitlend protocol.
 
 | Type | Key | Description |
 |------|-----|-------------|
@@ -663,18 +663,18 @@ The governance COMP distribution API response contains the values for COMP alloc
 | string | `daily_comp` | The number of COMP allocated to all markets per day assuming a given block time |
 | string | `total_comp_allocated` | The number of COMP allocated to all markets, including COMP not yet transferred to users |
 | string | `total_comp_distributed` | The number of total COMP actually transferred to users |
-| MarketCompDistribution | `markets` | A list of all cToken markets receiving COMP |
+| MarketCompDistribution | `markets` | A list of all bToken markets receiving COMP |
 
 #### MarketCompDistribution
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the cToken market |
-| string | `name` | The name of the cToken market |
-| string | `symbol` | The symbol of the cToken market |
-| bytes | `underlying_address` | The address of undelrying token of the cToken market |
-| string | `underlying_name` | The name of the underlying token of the cToken market |
-| string | `underlying_symbol` | The symbol of the underlying token of the cToken market |
+| bytes | `address` | The address of the bToken market |
+| string | `name` | The name of the bToken market |
+| string | `symbol` | The symbol of the bToken market |
+| bytes | `underlying_address` | The address of undelrying token of the bToken market |
+| string | `underlying_name` | The name of the underlying token of the bToken market |
+| string | `underlying_symbol` | The symbol of the underlying token of the bToken market |
 | string | `supplier_daily_comp` | The projected daily comp distribution to suppliers of the market given the current distribution rate for the market |
 | string | `borrower_daily_comp` | The projected daily comp distribution to borrowers of the market given the current distribution rate for the market |
 | string | `comp_allocated` | The number of COMP allocated to the market, including COMP not yet transferred to borrowers/suppliers of the market |
@@ -700,18 +700,18 @@ The governance COMP account distribution API response contains the values for CO
 | Type | Key | Description |
 |------|-----|-------------|
 | GovernanceCompDistributionRequest | `request` | The request parameters are echoed in the response. |
-| AccountCompDistribution | `markets` | A list of all cToken markets the account has been allocated COMP |
+| AccountCompDistribution | `markets` | A list of all bToken markets the account has been allocated COMP |
 
 #### AccountCompDistribution
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the cToken market |
-| string | `name` | The name of the cToken market |
-| string | `symbol` | The symbol of the cToken market |
-| bytes | `underlying_address` | The address of undelrying token of the cToken market |
-| string | `underlying_name` | The name of the underlying token of the cToken market |
-| string | `underlying_symbol` | The symbol of the underlying token of the cToken market |
+| bytes | `address` | The address of the bToken market |
+| string | `name` | The name of the bToken market |
+| string | `symbol` | The symbol of the bToken market |
+| bytes | `underlying_address` | The address of undelrying token of the bToken market |
+| string | `underlying_name` | The name of the underlying token of the bToken market |
+| string | `underlying_symbol` | The symbol of the underlying token of the bToken market |
 | string | `daily_comp` | The projected daily comp distribution to the account |
 | string | `comp_allocated` | The number of COMP allocated to the account, including COMP not yet transferred to the account |
 | string | `comp_borrow_index` | The index used to calculate how much COMP the account should receive based on it's borrows from the market |
@@ -720,7 +720,7 @@ The governance COMP account distribution API response contains the values for CO
 
 #### GovernanceCompDistributionRequest
 
-The governance COMP distribution API returns COMP distribution information for markets in the Compound protocol.
+The governance COMP distribution API returns COMP distribution information for markets in the Bitlend protocol.
 
 | Type | Key | Description |
 |------|-----|-------------|

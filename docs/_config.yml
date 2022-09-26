@@ -1,25 +1,26 @@
-title: Compound III Documentation Site
+title: Bitlend Documentation Site
 markdown: kramdown
 kramdown:
   syntax_highlighter_opts:
     disable: true
 
-## Page Name Anchor Text: Anchor HREF
-v3_nav_data:
-  # Compound III: / ## This is now a toggle switch between v2 and v3 docs
-  Interest Rates: /interest-rates/
-  Collateral & Borrowing: /collateral-and-borrowing/
-  Liquidation: /liquidation/
-  Account Management: /account-management/
-  Protocol Rewards: /protocol-rewards/
-  Governance: /governance/
-  Helper Functions: /helper-functions/
+# ## Page Name Anchor Text: Anchor HREF
+# v3_nav_data:
+#   # Bitlend: / ## This is now a toggle switch between v1 and v3 docs
+#   Interest Rates: /interest-rates/
+#   Collateral & Borrowing: /collateral-and-borrowing/
+#   Liquidation: /liquidation/
+#   Account Management: /account-management/
+#   Protocol Rewards: /protocol-rewards/
+#   Governance: /governance/
+#   Helper Functions: /helper-functions/
 
-v2_nav_data:
-  cTokens: /v2/ctokens/
-  Comptroller: /v2/comptroller/
-  Governance: /v2/governance/
-  Open Price Feed: /v2/prices/
-  API: /v2/api/
-  Compound.js: /v2/compound-js/
-  Security: /v2/security/
+## Page Name Anchor Text: Anchor HREF
+v1_nav_data:
+  bTokens: /btokens/
+  Comptroller: /comptroller/
+  Governance: /governance/
+  Open Price Feed: /prices/
+  # API: /api/
+  # Bitlend.js: /compound-js/
+  Security: /security/
