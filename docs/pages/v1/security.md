@@ -25,15 +25,15 @@ We believe that size, visibility, and time are the true test for the security of
 
 The Bitlend protocol has been reviewed & audited by [Trail of Bits](https://www.trailofbits.com/){:target="_blank"} and [OpenZeppelin](https://openzeppelin.com/){:target="_blank"}.
 
-1. [Trail of Bits - April 2019](https://github.com/trailofbits/publications/blob/master/reviews/bitlend-2.pdf){:target="_blank"}
-2. [OpenZeppelin - August 2019](https://blog.openzeppelin.com/bitlend-audit/){:target="_blank"}
-3. [Trail of Bits - August 2019](https://github.com/trailofbits/publications/blob/master/reviews/bitlend-3.pdf){:target="_blank"}
-4. [OpenZeppelin - Timelock & Pause Guardian](https://blog.openzeppelin.com/bitlend-finance-patch-audit){:target="_blank"}
-5. [OpenZeppelin - cDAI](https://blog.openzeppelin.com/bitlend-finance-mcd-dsr-integration/){:target="_blank"}
-6. [OpenZeppelin - COMP & Governance](https://blog.openzeppelin.com/bitlend-alpha-governance-system-audit/){:target="_blank"}
-7. [Trail of Bits - February 2020](https://github.com/trailofbits/publications/blob/master/reviews/bitlend-governance.pdf){:target="_blank"}
-8. [OpenZeppelin - Tether](https://blog.openzeppelin.com/bitlend-tether-integration-audit/){:target="_blank"}
-9. [OpenZeppelin - COMP Distribution](https://blog.openzeppelin.com/bitlend-comp-distribution-system-audit/){:target="_blank"}
+1. [Trail of Bits - April 2019](https://github.com/trailofbits/publications/blob/master/reviews/compound-2.pdf){:target="_blank"}
+2. [OpenZeppelin - August 2019](https://blog.openzeppelin.com/compound-audit/){:target="_blank"}
+3. [Trail of Bits - August 2019](https://github.com/trailofbits/publications/blob/master/reviews/compound-3.pdf){:target="_blank"}
+4. [OpenZeppelin - Timelock & Pause Guardian](https://blog.openzeppelin.com/compound-finance-patch-audit){:target="_blank"}
+5. [OpenZeppelin - cDAI](https://blog.openzeppelin.com/compound-finance-mcd-dsr-integration/){:target="_blank"}
+6. [OpenZeppelin - BLEND & Governance](https://blog.openzeppelin.com/compound-alpha-governance-system-audit/){:target="_blank"}
+7. [Trail of Bits - February 2020](https://github.com/trailofbits/publications/blob/master/reviews/compound-governance.pdf){:target="_blank"}
+8. [OpenZeppelin - Tether](https://blog.openzeppelin.com/compound-tether-integration-audit/){:target="_blank"}
+9. [OpenZeppelin - BLEND Distribution](https://blog.openzeppelin.com/compound-comp-distribution-system-audit/){:target="_blank"}
 {: .mega-ordered-list }
 
 ## Formal Verification

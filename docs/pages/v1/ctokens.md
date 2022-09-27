@@ -1,6 +1,6 @@
 ---
 layout: docs-content
-title: Bitlend II | Docs - bTokens
+title: Bitlend | Docs - bTokens
 permalink: /btokens/
 docs_version: v1
 

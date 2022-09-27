@@ -1,6 +1,6 @@
 ---
 layout: docs-content
-title: Bitlend II | Docs - API
+title: Bitlend | Docs - API
 permalink: /api/
 docs_version: v1
 
@@ -306,7 +306,7 @@ The market history graph API response contains the rates for both suppliers and 
 ## GovernanceService
 {:id='governance-service'}
 
-The Governance Service includes three endpoints to retrieve information about COMP accounts, governance proposals, and proposal vote receipts. You can use the APIs below to pull data about the Bitlend governance system:
+The Governance Service includes three endpoints to retrieve information about BLEND accounts, governance proposals, and proposal vote receipts. You can use the APIs below to pull data about the Bitlend governance system:
 
 ```js
 // Retreives a list of governance proposals
@@ -315,7 +315,7 @@ fetch("https://api.bitlend.finance/api/governance/proposals");
 // Retreives a list of governance proposal vote receipts
 fetch("https://api.bitlend.finance/api/governance/proposal_vote_receipts");
 
-// Retreives a list of COMP accounts
+// Retreives a list of BLEND accounts
 fetch("https://api.bitlend.finance/api/governance/accounts");
 ```
 
@@ -348,10 +348,10 @@ The Proposal API returns a list of proposals that match the given filters on the
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the given COMP account |
+| bytes | `address` | The address of the given BLEND account |
 | string | `display_name`  | A human readable name that describes who owns the account |
 | string | `image_url` | A url to retrieve an account image |
-| string | `account_url` | A url for the organization/user of the COMP account |
+| string | `account_url` | A url for the organization/user of the BLEND account |
 
 #### Proposal
 
@@ -415,10 +415,10 @@ The Proposal Vote Receipt API returns a list of proposal vote receipts that matc
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the given COMP account |
+| bytes | `address` | The address of the given BLEND account |
 | string | `display_name` | A human readable name that describes who owns the account |
 | string | `image_url` | A url to retrieve an account image |
-| string | `account_url` | A url for the organization/user of the COMP account |
+| string | `account_url` | A url for the organization/user of the BLEND account |
 
 #### Proposal
 
@@ -472,16 +472,16 @@ The Governance Account API returns a list of accounts that match the given filte
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes  | `address` | The address of the given COMP account |
+| bytes  | `address` | The address of the given BLEND account |
 | string | `display_name` | A human readable name that describes who owns the account |
 | string | `image_url` | A url to retrieve an account image |
-| string | `account_url` | A url for the organization/user of the COMP account |
-| string | `balance` | The balance of COMP for the given account |
+| string | `account_url` | A url for the organization/user of the BLEND account |
+| string | `balance` | The balance of BLEND for the given account |
 | string | `votes` | The total votes delegated to the account |
-| string | `vote_weight` | The percentage of voting weight of the 10,000,000 total COMP |
+| string | `vote_weight` | The percentage of voting weight of the 10,000,000 total BLEND |
 | uint32 | `proposals_created` | The number of proposals created in the Bitlend Governance System |
-| DisplayCompAccount | `delegate` | The account this COMP account is delegating to (See DisplayCompAccount) |
-| uint32 | `rank` | Either `null` or the rank order of top 100 COMP accounts for votes |
+| DisplayCompAccount | `delegate` | The account this BLEND account is delegating to (See DisplayCompAccount) |
+| uint32 | `rank` | Either `null` or the rank order of top 100 BLEND accounts for votes |
 | CompAccountTransaction | `transactions` | Either `null` or a list of historical transactions for the account (See CompAccountTransaction) |
 | uint32 | `proposals_voted` | The number of proposals voted on in the Bitlend Governance System |
 | uint32 | `total_delegates` | The number of addresses delegating to this account |
@@ -494,13 +494,13 @@ The Governance Account API returns a list of accounts that match the given filte
 | string | title | A human readable title representing the transaction |
 | uint32 | timestamp | The timestamp the transaction occurred |
 | string | trx_hash | The transaction hash of the transaction |
-| string | delta | The change in value on the Comp Account |
+| string | delta | The change in value on the Blend Account |
 
 #### CrowdProposal
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `proposal_address` | The address of the given COMP Crowd Proposal |
+| bytes | `proposal_address` | The address of the given BLEND Crowd Proposal |
 | string | `title` | The title that describes the proposal |
 | string | `description` | A description of the actions the proposal will take if successful |
 | DisplayCompAccount | `author` | An object with data about the author of the proposal (See DisplayCompAccount). |
@@ -514,10 +514,10 @@ The Governance Account API returns a list of accounts that match the given filte
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the given COMP account |
+| bytes | `address` | The address of the given BLEND account |
 | string  | `display_name` | A human readable name that describes who owns the account |
 | string  | `image_url` | A url to retrieve an account image |
-| string  | `account_url` | A url for the organization/user of the COMP account |
+| string  | `account_url` | A url for the organization/user of the BLEND account |
 
 #### GET: `/governance/accounts/search`
 
@@ -546,16 +546,16 @@ The Governance Account API returns a list of accounts that match the given filte
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the given COMP account |
+| bytes | `address` | The address of the given BLEND account |
 | string | `display_name` | A human readable name that describes who owns the account |
 | string | `image_url` | A url to retrieve an account image |
-| string | `account_url` | A url for the organization/user of the COMP account |
-| string | `balance` | The balance of COMP for the given account |
+| string | `account_url` | A url for the organization/user of the BLEND account |
+| string | `balance` | The balance of BLEND for the given account |
 | string | `votes` | The total votes delegated to the account |
-| string | `vote_weight` | The percentage of voting weight of the 10,000,000 total COMP |
+| string | `vote_weight` | The percentage of voting weight of the 10,000,000 total BLEND |
 | uint32 | `proposals_created` | The number of proposals created in the Bitlend Governance System |
-| DisplayCompAccount | `delegate` | The account this COMP account is delegating to (See DisplayCompAccount) |
-| uint32 | `rank` | Either `null` or the rank order of top 100 COMP accounts for votes |
+| DisplayCompAccount | `delegate` | The account this BLEND account is delegating to (See DisplayCompAccount) |
+| uint32 | `rank` | Either `null` or the rank order of top 100 BLEND accounts for votes |
 | CompAccountTransaction | `transactions` | Either `null` or a list of historical transactions for the account (See CompAccountTransaction) |
 | uint32 | `proposals_voted` | The number of proposals voted on in the Bitlend Governance System |
 | uint32 | `total_delegates` | The number of addresses delegating to this account |
@@ -568,13 +568,13 @@ The Governance Account API returns a list of accounts that match the given filte
 | string | `title` | A human readable title representing the transaction |
 | uint32 | `timestamp` | The timestamp the transaction occurred |
 | string | `trx_hash` | The transaction hash of the transaction |
-| string | `delta` | The change in value on the Comp Account |
+| string | `delta` | The change in value on the Blend Account |
 
 #### CrowdProposal
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `proposal_address` | The address of the given COMP Crowd Proposal |
+| bytes | `proposal_address` | The address of the given BLEND Crowd Proposal |
 | string | `title` | The title that describes the proposal |
 | string | `description` | A description of the actions the proposal will take if successful |
 | DisplayCompAccount | `author` | An object with data about the author of the proposal (See DisplayCompAccount). |
@@ -588,10 +588,10 @@ The Governance Account API returns a list of accounts that match the given filte
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the given COMP account |
+| bytes | `address` | The address of the given BLEND account |
 | string | `display_name` | A human readable name that describes who owns the account |
 | string | `image_url` | A url to retrieve an account image |
-| string | `account_url` | A url for the organization/user of the COMP account |
+| string | `account_url` | A url for the organization/user of the BLEND account |
 
 #### GET: `/governance/history`
 
@@ -607,10 +607,10 @@ The governance history API response contains the values for votes delegate, tota
 |------|-----|-------------|
 | Error | `error` | If set and non-zero, indicates an error returning data. `NO_ERROR = 0; INTERNAL_ERROR = 1; INVALID_REQUEST = 2;` |
 | string | `votes_delegated` | The number of votes delegated |
-| uint32 | `token_holders` | The number of addresses with a COMP balance greater than 0 |
+| uint32 | `token_holders` | The number of addresses with a BLEND balance greater than 0 |
 | uint32 | `voting_addresses` | The number of addresses that have votes greater than 0 |
 | uint32 | `proposals_created` | The number of proposals created |
-| string | `total_comp_allocated` | The number of COMP allocated to all markets, including COMP not yet transferred to users |
+| string | `total_comp_allocated` | The number of BLEND allocated to all markets, including BLEND not yet transferred to users |
 
 #### POST: `/governance/profile`
 
@@ -637,16 +637,16 @@ The governance history API response contains the values for votes delegate, tota
 
 | Type | Key | Description |
 |------|-----|-------------|
-| bytes | `address` | The address of the given COMP account |
+| bytes | `address` | The address of the given BLEND account |
 | string | `display_name` | A human readable name that describes who owns the account |
 | string | `image_url` | A url to retrieve an account image |
-| string | `account_url` | A url for the organization/user of the COMP account |
+| string | `account_url` | A url for the organization/user of the BLEND account |
 
 #### GET: `/governance/comp`
 
 #### GovernanceCompDistributionRequest
 
-The governance COMP distribution API returns COMP distribution information for markets in the Bitlend protocol.
+The governance BLEND distribution API returns BLEND distribution information for markets in the Bitlend protocol.
 
 | Type | Key | Description |
 |------|-----|-------------|
@@ -654,16 +654,16 @@ The governance COMP distribution API returns COMP distribution information for m
 
 #### GovernanceCompDistributionResponse
 
-The governance COMP distribution API response contains the values for COMP allocated, COMP borrow index, COMP distributed, COMP speed, and COMP supply index for each market.
+The governance BLEND distribution API response contains the values for BLEND allocated, BLEND borrow index, BLEND distributed, BLEND speed, and BLEND supply index for each market.
 
 | Type | Key | Description |
 |------|-----|-------------|
 | GovernanceCompDistributionRequest | `request` | The request parameters are echoed in the response. |
-| string | `comp_rate` | The number of COMP allocated to all markets per block |
-| string | `daily_comp` | The number of COMP allocated to all markets per day assuming a given block time |
-| string | `total_comp_allocated` | The number of COMP allocated to all markets, including COMP not yet transferred to users |
-| string | `total_comp_distributed` | The number of total COMP actually transferred to users |
-| MarketCompDistribution | `markets` | A list of all bToken markets receiving COMP |
+| string | `comp_rate` | The number of BLEND allocated to all markets per block |
+| string | `daily_comp` | The number of BLEND allocated to all markets per day assuming a given block time |
+| string | `total_comp_allocated` | The number of BLEND allocated to all markets, including BLEND not yet transferred to users |
+| string | `total_comp_distributed` | The number of total BLEND actually transferred to users |
+| MarketCompDistribution | `markets` | A list of all bToken markets receiving BLEND |
 
 #### MarketCompDistribution
 
@@ -677,17 +677,17 @@ The governance COMP distribution API response contains the values for COMP alloc
 | string | `underlying_symbol` | The symbol of the underlying token of the bToken market |
 | string | `supplier_daily_comp` | The projected daily comp distribution to suppliers of the market given the current distribution rate for the market |
 | string | `borrower_daily_comp` | The projected daily comp distribution to borrowers of the market given the current distribution rate for the market |
-| string | `comp_allocated` | The number of COMP allocated to the market, including COMP not yet transferred to borrowers/suppliers of the market |
-| string | `comp_borrow_index` | The index used to calculate how much COMP an individual borrower should receive |
-| string | `comp_distributed` | The number of COMP already transferred to the borrowers/suppliers of the market |
-| string | `comp_speed` | The number of COMP allocated to the market each block |
-| string | `comp_supply_index` | The index used to calculate how much COMP an individual supplier should receive |
+| string | `comp_allocated` | The number of BLEND allocated to the market, including BLEND not yet transferred to borrowers/suppliers of the market |
+| string | `comp_borrow_index` | The index used to calculate how much BLEND an individual borrower should receive |
+| string | `comp_distributed` | The number of BLEND already transferred to the borrowers/suppliers of the market |
+| string | `comp_speed` | The number of BLEND allocated to the market each block |
+| string | `comp_supply_index` | The index used to calculate how much BLEND an individual supplier should receive |
 
 #### GET: `/governance/comp/account`
 
 #### GovernanceAccountCompDistributionRequest
 
-The governance COMP account distribution API returns COMP distribution information across all markets for a given account
+The governance BLEND account distribution API returns BLEND distribution information across all markets for a given account
 
 | Type | Key | Description |
 |------|-----|-------------|
@@ -695,12 +695,12 @@ The governance COMP account distribution API returns COMP distribution informati
 
 #### GovernanceAccountCompDistributionResponse
 
-The governance COMP account distribution API response contains the values for COMP allocated, COMP borrow index, COMP distributed, daily COMP, and COMP supply index for each market.
+The governance BLEND account distribution API response contains the values for BLEND allocated, BLEND borrow index, BLEND distributed, daily BLEND, and BLEND supply index for each market.
 
 | Type | Key | Description |
 |------|-----|-------------|
 | GovernanceCompDistributionRequest | `request` | The request parameters are echoed in the response. |
-| AccountCompDistribution | `markets` | A list of all bToken markets the account has been allocated COMP |
+| AccountCompDistribution | `markets` | A list of all bToken markets the account has been allocated BLEND |
 
 #### AccountCompDistribution
 
@@ -713,14 +713,14 @@ The governance COMP account distribution API response contains the values for CO
 | string | `underlying_name` | The name of the underlying token of the bToken market |
 | string | `underlying_symbol` | The symbol of the underlying token of the bToken market |
 | string | `daily_comp` | The projected daily comp distribution to the account |
-| string | `comp_allocated` | The number of COMP allocated to the account, including COMP not yet transferred to the account |
-| string | `comp_borrow_index` | The index used to calculate how much COMP the account should receive based on it's borrows from the market |
-| string | `comp_distributed` | The number of COMP already transferred to the the account |
-| string | `comp_supply_index` | The index used to calculate how much COMP the account should receive based on it's supply to market |
+| string | `comp_allocated` | The number of BLEND allocated to the account, including BLEND not yet transferred to the account |
+| string | `comp_borrow_index` | The index used to calculate how much BLEND the account should receive based on it's borrows from the market |
+| string | `comp_distributed` | The number of BLEND already transferred to the the account |
+| string | `comp_supply_index` | The index used to calculate how much BLEND the account should receive based on it's supply to market |
 
 #### GovernanceCompDistributionRequest
 
-The governance COMP distribution API returns COMP distribution information for markets in the Bitlend protocol.
+The governance BLEND distribution API returns BLEND distribution information for markets in the Bitlend protocol.
 
 | Type | Key | Description |
 |------|-----|-------------|
