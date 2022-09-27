@@ -22,5 +22,5 @@ v1_nav_data:
   Governance: /governance/
   Open Price Feed: /prices/
   # API: /api/
-  # Bitlend.js: /compound-js/
+  # Bitlend.js: /bitlend-js/
   Security: /security/

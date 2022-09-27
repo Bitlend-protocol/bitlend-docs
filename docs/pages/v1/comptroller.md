@@ -415,7 +415,7 @@ await comptroller.methods.claimComp("0x1234...").send({ from: sender });
 
 ## Market Metadata
 
-The Comptroller contract has an array called `getAllMarkets` that contains the addresses of each bToken contract. Each address in the `getAllMarkets` array can be used to fetch a metadata struct in the Comptroller’s markets constant. See the [Comptroller Storage contract](https://github.com/Bitlend-protocol/compound-protocol/blob/master/contracts/ComptrollerStorage.sol){:target="_blank"} for the Market struct definition.
+The Comptroller contract has an array called `getAllMarkets` that contains the addresses of each bToken contract. Each address in the `getAllMarkets` array can be used to fetch a metadata struct in the Comptroller’s markets constant. See the [Comptroller Storage contract](https://github.com/Bitlend-protocol/bitlend-protocol/blob/master/contracts/ComptrollerStorage.sol){:target="_blank"} for the Market struct definition.
 
 #### Comptroller
 

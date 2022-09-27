@@ -52,11 +52,11 @@ deployments:
   </div>
 </div>
 
-The Bitlend protocol is based on the [Bitlend Whitepaper](https://compound.finance/documents/Bitlend.Whitepaper.pdf){:target="_blank"} (2019); the codebase is [open-source](https://github.com/Bitlend-protocol/compound-protocol){:target="_blank"}, and maintained by the community.
+The Bitlend protocol is based on the [Bitlend Whitepaper](https://bitlend.finance/documents/Bitlend.Whitepaper.pdf){:target="_blank"} (2019); the codebase is [open-source](https://github.com/Bitlend-protocol/bitlend-protocol){:target="_blank"}, and maintained by the community.
 
 The app.bitlend.fi interface is [open-source](https://github.com/Bitlend-protocol/palisade){:target="_blank"}, and maintained by the community.
 
-Please join the #development room in the Bitlend community [Discord](https://discord.com/invite/compound){:target="_blank"} server; Bitlend Labs and members of the community look forward to helping you build an application on top of Bitlend. Your questions help us improve, so please don't hesitate to ask if you can't find what you are looking for here.
+Please join the #development room in the Bitlend community [Discord](https://discord.com/invite/bitlend){:target="_blank"} server; Bitlend Labs and members of the community look forward to helping you build an application on top of Bitlend. Your questions help us improve, so please don't hesitate to ask if you can't find what you are looking for here.
 
 ## Guides
 
@@ -74,11 +74,11 @@ The Bitlend Protocol is currently deployed on the following networks:
 
 <div id="networks-widget-container"></div>
 
-You can also see a full list of all deployed contract addresses [here](https://github.com/Bitlend-protocol/compound-config){:target="_blank"}.
+You can also see a full list of all deployed contract addresses [here](https://github.com/Bitlend-protocol/bitlend-config){:target="_blank"}.
 
 ## Protocol Math
 
-The Bitlend protocol contracts use a system of exponential math, [ExponentialNoError.sol](https://github.com/Bitlend-protocol/compound-protocol/blob/master/contracts/ExponentialNoError.sol){:target="_blank"}, in order to represent fractional quantities with sufficient precision.
+The Bitlend protocol contracts use a system of exponential math, [ExponentialNoError.sol](https://github.com/Bitlend-protocol/bitlend-protocol/blob/master/contracts/ExponentialNoError.sol){:target="_blank"}, in order to represent fractional quantities with sufficient precision.
 
 Most numbers are represented as a *mantissa*, an unsigned integer scaled by `1 * 10 ^ 18`, in order to perform basic math at a high level of precision.
 
@@ -128,11 +128,11 @@ underlyingTokens = bTokenAmount * oneBTokenInUnderlying
 
 Interest rates for each market update on any block in which the ratio of borrowed assets to supplied assets in the market has changed. The amount interest rates are changed depends on the interest rate model smart contract implemented for the market, and the amount of change in the ratio of borrowed assets to supplied assets in the market.
 
-See the interest rate data visualization notebook on [Observable](https://observablehq.com/@jflatow/compound-interest-rates){:target="_blank"} to visualize which interest rate model is currently applied to each market.
+See the interest rate data visualization notebook on [Observable](https://observablehq.com/@jflatow/bitlend-interest-rates){:target="_blank"} to visualize which interest rate model is currently applied to each market.
 
 Historical interest rates can be retrieved from the [MarketHistoryService API](/api#MarketHistoryService).
 
-Interest accrues to all suppliers and borrowers in a market when any Ethereum address interacts with the market’s bToken contract, calling one of these functions: mint, redeem, borrow, or repay. Successful execution of one of these functions triggers the `accrueInterest` method, which causes interest to be added to the underlying balance of every supplier and borrower in the market. Interest accrues for the current block, as well as each prior block in which the `accrueInterest` method was not triggered (no user interacted with the bToken contract). Interest compounds only during blocks in which the bToken contract has one of the aforementioned methods invoked.
+Interest accrues to all suppliers and borrowers in a market when any Ethereum address interacts with the market’s bToken contract, calling one of these functions: mint, redeem, borrow, or repay. Successful execution of one of these functions triggers the `accrueInterest` method, which causes interest to be added to the underlying balance of every supplier and borrower in the market. Interest accrues for the current block, as well as each prior block in which the `accrueInterest` method was not triggered (no user interacted with the bToken contract). Interest bitlends only during blocks in which the bToken contract has one of the aforementioned methods invoked.
 
 Here is an example of supply interest accrual:
 

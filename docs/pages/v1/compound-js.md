@@ -1,13 +1,13 @@
 ---
 layout: docs-content
 title: Bitlend II | Docs - Bitlend.js
-permalink: /compound-js/
+permalink: /bitlend-js/
 docs_version: v1
 
 ## Element ID: In-page Heading
 sidebar_nav_data:
-  compoundjs: Bitlend.js
-  compound-constructor: Bitlend Constructor
+  bitlendjs: Bitlend.js
+  bitlend-constructor: Bitlend Constructor
   api-methods: API Methods
   account: Account
   btoken: bToken
@@ -50,7 +50,7 @@ sidebar_nav_data:
 
 ## Introduction
 
-[Bitlend.js](https://github.com/Bitlend-protocol/compound-js){:target="_blank"} is a JavaScript SDK for Ethereum and the Bitlend Protocol. It wraps around Ethers.js, which is its only dependency. It is designed for both the web browser and Node.js.
+[Bitlend.js](https://github.com/Bitlend-protocol/bitlend-js){:target="_blank"} is a JavaScript SDK for Ethereum and the Bitlend Protocol. It wraps around Ethers.js, which is its only dependency. It is designed for both the web browser and Node.js.
 
 The SDK is currently in open beta. For bugs reports and feature requests, either create an issue in the GitHub repository or send a message in the Development channel of the Bitlend Discord.
 
@@ -63,21 +63,21 @@ Creates an instance of the Bitlend.js SDK.
 - `RETURN` (object) Returns an instance of the Bitlend.js SDK.
 
 ```js
-var compound = new Bitlend(window.ethereum); // web browser
+var bitlend = new Bitlend(window.ethereum); // web browser
 
-var compound = new Bitlend('http://127.0.0.1:8545'); // HTTP provider
+var bitlend = new Bitlend('http://127.0.0.1:8545'); // HTTP provider
 
-var compound = new Bitlend(); // Uses Ethers.js fallback mainnet (for testing only)
+var bitlend = new Bitlend(); // Uses Ethers.js fallback mainnet (for testing only)
 
-var compound = new Bitlend('ropsten'); // Uses Ethers.js fallback (for testing only)
+var bitlend = new Bitlend('ropsten'); // Uses Ethers.js fallback (for testing only)
 
 // Init with private key (server side)
-var compound = new Bitlend('https://mainnet.infura.io/v3/_your_project_id_', {
+var bitlend = new Bitlend('https://mainnet.infura.io/v3/_your_project_id_', {
   privateKey: '0x_your_private_key_', // preferably with environment variable
 });
 
 // Init with HD mnemonic (server side)
-var compound = new Bitlend('mainnet' {
+var bitlend = new Bitlend('mainnet' {
   mnemonic: 'clutch captain shoe...', // preferably with environment variable
 });
 ```
@@ -190,7 +190,7 @@ Supplies the user's Ethereum asset to the Bitlend Protocol.
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 // Ethers.js overrides are an optional 3rd parameter for `supply`
 // const trxOptions = { gasLimit: 250000, mantissa: false };
@@ -198,7 +198,7 @@ const compound = new Bitlend(window.ethereum);
 (async function() {
 
   console.log('Supplying ETH to the Bitlend Protocol...');
-  const trx = await compound.supply(Bitlend.ETH, 1);
+  const trx = await bitlend.supply(Bitlend.ETH, 1);
   console.log('Ethers.js transaction object', trx);
 
 })().catch(console.error);
@@ -215,12 +215,12 @@ Redeems the user's Ethereum asset from the Bitlend Protocol.
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async function() {
 
   console.log('Redeeming ETH...');
-  const trx = await compound.redeem(Bitlend.ETH, 1); // also accepts bToken args
+  const trx = await bitlend.redeem(Bitlend.ETH, 1); // also accepts bToken args
   console.log('Ethers.js transaction object', trx);
 
 })().catch(console.error);
@@ -237,7 +237,7 @@ Borrows an Ethereum asset from the Bitlend Protocol for the user. The user's add
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async function() {
 
@@ -245,7 +245,7 @@ const compound = new Bitlend(window.ethereum);
   const trxOptions = { mantissa: true };
 
   console.log('Borrowing 32 Dai...');
-  const trx = await compound.borrow(Bitlend.DAI, daiScaledUp, trxOptions);
+  const trx = await bitlend.borrow(Bitlend.DAI, daiScaledUp, trxOptions);
 
   console.log('Ethers.js transaction object', trx);
 
@@ -265,13 +265,13 @@ Repays a borrowed Ethereum asset for the user or on behalf of another Ethereum a
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async function() {
 
   console.log('Repaying Dai borrow...');
   const address = null; // set this to any address to repayBorrowBehalf
-  const trx = await compound.repayBorrow(Bitlend.DAI, 32, address);
+  const trx = await bitlend.repayBorrow(Bitlend.DAI, 32, address);
 
   console.log('Ethers.js transaction object', trx);
 
@@ -330,12 +330,12 @@ Create a transaction to claim accrued COMP tokens for the user.
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async function() {
 
   console.log('Claiming COMP...');
-  const trx = await compound.claimComp();
+  const trx = await bitlend.claimComp();
   console.log('Ethers.js transaction object', trx);
 
 })().catch(console.error);
@@ -351,10 +351,10 @@ Create a transaction to delegate Bitlend Governance voting rights to an address.
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async function() {
-  const delegateTx = await compound.delegate('0xa0df350d2637096571F7A701CBc1C5fdE30dF76A');
+  const delegateTx = await bitlend.delegate('0xa0df350d2637096571F7A701CBc1C5fdE30dF76A');
   console.log('Ethers.js transaction object', delegateTx);
 })().catch(console.error);
 ```
@@ -372,10 +372,10 @@ Delegate voting rights in Bitlend Governance using an EIP-712 signature.
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async function() {
-  const delegateTx = await compound.delegateBySig(
+  const delegateTx = await bitlend.delegateBySig(
     '0xa0df350d2637096571F7A701CBc1C5fdE30dF76A',
     42,
     9999999999,
@@ -399,11 +399,11 @@ Create a delegate signature for Bitlend Governance using EIP-712. The signature 
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async () => {
 
-  const delegateSignature = await compound.createDelegateSignature('0xa0df350d2637096571F7A701CBc1C5fdE30dF76A');
+  const delegateSignature = await bitlend.createDelegateSignature('0xa0df350d2637096571F7A701CBc1C5fdE30dF76A');
   console.log('delegateSignature', delegateSignature);
 
 })().catch(console.error);
@@ -423,10 +423,10 @@ Enters the user's address into Bitlend Protocol markets.
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async function () {
-  const trx = await compound.enterMarkets(Bitlend.ETH); // Use [] for multiple
+  const trx = await bitlend.enterMarkets(Bitlend.ETH); // Use [] for multiple
   console.log('Ethers.js transaction object', trx);
 })().catch(console.error);
 ```
@@ -441,10 +441,10 @@ Exits the user's address from a Bitlend Protocol market.
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async function () {
-  const trx = await compound.exitMarket(Bitlend.ETH);
+  const trx = await bitlend.exitMarket(Bitlend.ETH);
   console.log('Ethers.js transaction object', trx);
 })().catch(console.error);
 ```
@@ -547,10 +547,10 @@ Submit a vote on a Bitlend Governance proposal.
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async function() {
-  const castVoteTx = await compound.castVote(12, 1);
+  const castVoteTx = await bitlend.castVote(12, 1);
   console.log('Ethers.js transaction object', castVoteTx);
 })().catch(console.error);
 ```
@@ -566,10 +566,10 @@ Submit a vote on a Bitlend Governance proposal using an EIP-712 signature.
 - `RETURN` (object) Returns an Ethers.js transaction object of the vote transaction.
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async function() {
-  const castVoteTx = await compound.castVoteBySig(
+  const castVoteTx = await bitlend.castVoteBySig(
     12,
     1,
     {
@@ -591,14 +591,14 @@ Create a vote signature for a Bitlend Governance proposal using EIP-712. This ca
 - `RETURN` (object) Returns an object that contains the `v`, `r`, and `s` components of an Ethereum signature as hexadecimal strings.
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async () => {
 
-  const voteForSignature = await compound.createVoteSignature(20, 1);
+  const voteForSignature = await bitlend.createVoteSignature(20, 1);
   console.log('voteForSignature', voteForSignature);
 
-  const voteAgainstSignature = await compound.createVoteSignature(20, 0);
+  const voteAgainstSignature = await bitlend.createVoteSignature(20, 0);
   console.log('voteAgainstSignature', voteAgainstSignature);
 
 })().catch(console.error);
@@ -616,10 +616,10 @@ Submit a Bitlend Governance proposal vote with a reason.
 
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 
 (async function() {
-  const castVoteTx = await compound.castVoteWithReason(12, 1, 'I vote YES because...');
+  const castVoteTx = await bitlend.castVoteWithReason(12, 1, 'I vote YES because...');
   console.log('Ethers.js transaction object', castVoteTx);
 })().catch(console.error);
 ```
@@ -639,15 +639,15 @@ Gets an asset's price from the Bitlend Protocol open price feed. The price
 - `RETURN` (string) Returns a string of the numeric value of the asset.
 
 ```js
-const compound = new Bitlend(window.ethereum);
+const bitlend = new Bitlend(window.ethereum);
 let price;
 
 (async function () {
 
-  price = await compound.getPrice(Bitlend.WBTC);
+  price = await bitlend.getPrice(Bitlend.WBTC);
   console.log('WBTC in USD', price); // 6 decimals, see Open Price Feed docs
 
-  price = await compound.getPrice(Bitlend.BAT, Bitlend.USDC); // supports bTokens too
+  price = await bitlend.getPrice(Bitlend.BAT, Bitlend.USDC); // supports bTokens too
   console.log('BAT in USDC', price);
 
 })().catch(console.error);
