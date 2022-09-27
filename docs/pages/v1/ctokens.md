@@ -37,7 +37,7 @@ Each asset supported by the Bitlend Protocol is integrated through a bToken cont
 
 bTokens are the primary means of interacting with the Bitlend Protocol; when a user mints, redeems, borrows, repays a borrow, liquidates a borrow, or transfers bTokens, she will do so using the bToken contract.
 
-There are currently two types of bTokens: CErc20 and CEther. Though both types expose the EIP-20 interface, CErc20 wraps an underlying ERC-20 asset, while CEther simply wraps Ether itself. As such, the core functions which involve transferring an asset into the protocol have slightly different interfaces depending on the type, each of which is shown below.
+There are currently two types of bTokens: BBrc20 and BBtt. Though both types expose the EIP-20 interface, BBrc20 wraps an underlying BRC-20 asset, while BBtt simply wraps Ether itself. As such, the core functions which involve transferring an asset into the protocol have slightly different interfaces depending on the type, each of which is shown below.
 
 <div class="btoken-faq">
   {% include btoken-faq.html %}
@@ -47,7 +47,7 @@ There are currently two types of bTokens: CErc20 and CEther. Though both types e
 
 The mint function transfers an asset into the protocol, which begins accumulating interest based on the current [Supply Rate](#supply-rate) for the asset. The user receives a quantity of bTokens equal to the underlying tokens supplied, divided by the current [Exchange Rate](#exchange-rate).
 
-#### CErc20
+#### BBrc20
 
 ```solidity
 function mint(uint mintAmount) returns (uint)
@@ -57,7 +57,7 @@ function mint(uint mintAmount) returns (uint)
 * `RETURN`: 0 on success, otherwise an [Error code](#error-codes)
 Before supplying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the bToken to access their token balance.
 
-#### CEther
+#### BBtt
 
 ```solidity
 function mint() payable
@@ -70,14 +70,14 @@ function mint() payable
 
 ```solidity
 Erc20 underlying = Erc20(0xToken...);     // get a handle for the underlying asset contract
-CErc20 bToken = CErc20(0x3FDA...);        // get a handle for the corresponding bToken contract
+BBrc20 bToken = BBrc20(0x3FDA...);        // get a handle for the corresponding bToken contract
 underlying.approve(address(bToken), 100); // approve the transfer
 assert(bToken.mint(100) == 0);            // mint the bTokens and assert there is no error
 ```
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 await bToken.methods.mint().send({from: myAccount, value: 50});
 ```
 
@@ -85,7 +85,7 @@ await bToken.methods.mint().send({from: myAccount, value: 50});
 
 The redeem function converts a specified quantity of bTokens into the underlying asset, and returns them to the user. The amount of underlying tokens received is equal to the quantity of bTokens redeemed, multiplied by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/comptroller#account-liquidity) and the market's available liquidity.
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function redeem(uint redeemTokens) returns (uint)
@@ -97,14 +97,14 @@ function redeem(uint redeemTokens) returns (uint)
 #### Solidity
 
 ```solidity
-CEther bToken = CEther(0x3FDB...);
+BBtt bToken = BBtt(0x3FDB...);
 require(bToken.redeem(7) == 0, "something went wrong");
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CErc20.at(0x3FDA...);
+const bToken = BBrc20.at(0x3FDA...);
 bToken.methods.redeem(1).send({from: ...});
 ```
 
@@ -112,7 +112,7 @@ bToken.methods.redeem(1).send({from: ...});
 
 The redeem underlying function converts bTokens into a specified quantity of the underlying asset, and returns them to the user. The amount of bTokens redeemed is equal to the quantity of underlying tokens received, divided by the current [Exchange Rate](#exchange-rate). The amount redeemed must be less than the user's [Account Liquidity](/comptroller#account-liquidity) and the market's available liquidity.
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function redeemUnderlying(uint redeemAmount) returns (uint)
@@ -124,14 +124,14 @@ function redeemUnderlying(uint redeemAmount) returns (uint)
 #### Solidity
 
 ```solidity
-CEther bToken = CEther(0x3FDB...);
+BBtt bToken = BBtt(0x3FDB...);
 require(bToken.redeemUnderlying(50) == 0, "something went wrong");
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CErc20.at(0x3FDA...);
+const bToken = BBrc20.at(0x3FDA...);
 bToken.methods.redeemUnderlying(10).send({from: ...});
 ```
 
@@ -139,7 +139,7 @@ bToken.methods.redeemUnderlying(10).send({from: ...});
 
 The borrow function transfers an asset from the protocol to the user, and creates a borrow balance which begins accumulating interest based on the [Borrow Rate](#borrow-rate) for the asset. The amount borrowed must be less than the user's [Account Liquidity](/comptroller#account-liquidity) and the market's available liquidity. To borrow Ether, the borrower must be 'payable' (solidity).
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function borrow(uint borrowAmount) returns (uint)
@@ -152,14 +152,14 @@ function borrow(uint borrowAmount) returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 bToken = CErc20(0x3FDA...);
+BBrc20 bToken = BBrc20(0x3FDA...);
 require(bToken.borrow(100) == 0, "got collateral?");
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 await bToken.methods.borrow(50).send({from: 0xMyAccount});
 ```
 
@@ -167,7 +167,7 @@ await bToken.methods.borrow(50).send({from: 0xMyAccount});
 
 The repay function transfers an asset into the protocol, reducing the user's borrow balance.
 
-#### CErc20
+#### BBrc20
 
 ```solidity
 function repayBorrow(uint repayAmount) returns (uint)
@@ -178,7 +178,7 @@ function repayBorrow(uint repayAmount) returns (uint)
 * `RETURN`: 0 on success, otherwise an [Error code](#error-codes)
 Before repaying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the bToken to access their token balance.
 
-#### CEther
+#### BBtt
 
 ```solidity
 function repayBorrow() payable
@@ -191,14 +191,14 @@ function repayBorrow() payable
 #### Solidity
 
 ```solidity
-CEther bToken = CEther(0x3FDB...);
+BBtt bToken = BBtt(0x3FDB...);
 require(bToken.repayBorrow.value(100)() == 0, "transfer approved?");
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CErc20.at(0x3FDA...);
+const bToken = BBrc20.at(0x3FDA...);
 bToken.methods.repayBorrow(10000).send({from: ...});
 ```
 
@@ -206,7 +206,7 @@ bToken.methods.repayBorrow(10000).send({from: ...});
 
 The repay function transfers an asset into the protocol, reducing the target user's borrow balance.
 
-#### CErc20
+#### BBrc20
 
 ```solidity
 function repayBorrowBehalf(address borrower, uint repayAmount) returns (uint)
@@ -218,7 +218,7 @@ function repayBorrowBehalf(address borrower, uint repayAmount) returns (uint)
 * `RETURN`: 0 on success, otherwise an [Error code](#error-codes)
 Before repaying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the bToken to access their token balance.
 
-#### CEther
+#### BBtt
 
 ```solidity
 function repayBorrowBehalf(address borrower) payable
@@ -231,22 +231,22 @@ function repayBorrowBehalf(address borrower) payable
 #### Solidity
 
 ```solidity
-CEther bToken = CEther(0x3FDB...);
+BBtt bToken = BBtt(0x3FDB...);
 require(bToken.repayBorrowBehalf.value(100)(0xBorrower) == 0, "transfer approved?");
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CErc20.at(0x3FDA...);
+const bToken = BBrc20.at(0x3FDA...);
 await bToken.methods.repayBorrowBehalf(0xBorrower, 10000).send({from: 0xPayer});
 ```
 
 ## Transfer
 
-Transfer is an ERC-20 method that allows accounts to send tokens to other Ethereum addresses. A bToken transfer will fail if the account has [entered](/comptroller#enter-markets) that bToken market and the transfer would have put the account into a state of negative [liquidity](/comptroller#account-liquidity).
+Transfer is an BRC-20 method that allows accounts to send tokens to other Ethereum addresses. A bToken transfer will fail if the account has [entered](/comptroller#enter-markets) that bToken market and the transfer would have put the account into a state of negative [liquidity](/comptroller#account-liquidity).
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function transfer(address recipient, uint256 amount) returns (bool)
@@ -259,14 +259,14 @@ function transfer(address recipient, uint256 amount) returns (bool)
 #### Solidity
 
 ```solidity
-CEther bToken = CEther(0x3FDB...);
+BBtt bToken = BBtt(0x3FDB...);
 bToken.transfer(0xABCD..., 100000000000);
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CErc20.at(0x3FDA...);
+const bToken = BBrc20.at(0x3FDA...);
 await bToken.methods.transfer(0xABCD..., 100000000000).send({from: 0xSender});
 ```
 
@@ -275,7 +275,7 @@ await bToken.methods.transfer(0xABCD..., 100000000000).send({from: 0xSender});
 A user who has negative [account liquidity](/comptroller#account-liquidity) is subject to [liquidation](#liquidate-borrow) by other users of the protocol to return his/her account liquidity back to positive (i.e. above the collateral requirement). When a liquidation occurs, a liquidator may repay some or all of an outstanding borrow on behalf of a borrower and in return receive a discounted amount of collateral held by the borrower; this discount is defined as the liquidation incentive.
 A liquidator may close up to a certain fixed percentage (i.e. close factor) of any individual outstanding borrow of the underwater account. Unlike in v1, liquidators must interact with each bToken contract in which they wish to repay a borrow and seize another asset as collateral. When collateral is seized, the liquidator is transferred bTokens, which they may redeem the same as if they had supplied the asset themselves. Users must approve each bToken contract before calling liquidate (i.e. on the borrowed asset which they are repaying), as they are transferring funds into the contract.
 
-#### CErc20
+#### BBrc20
 
 ```solidity
 function liquidateBorrow(address borrower, uint amount, address collateral) returns (uint)
@@ -288,7 +288,7 @@ function liquidateBorrow(address borrower, uint amount, address collateral) retu
 * `RETURN`: 0 on success, otherwise an [Error code](#error-codes)
 Before supplying an asset, users must first [approve](https://eips.ethereum.org/EIPS/eip-20#approve){:target="_blank"} the bToken to access their token balance.
 
-#### CEther
+#### BBtt
 
 ```solidity
 function liquidateBorrow(address borrower, address bTokenCollateral) payable
@@ -303,16 +303,16 @@ function liquidateBorrow(address borrower, address bTokenCollateral) payable
 #### Solidity
 
 ```solidity
-CEther bToken = CEther(0x3FDB...);
-CErc20 bTokenCollateral = CErc20(0x3FDA...);
+BBtt bToken = BBtt(0x3FDB...);
+BBrc20 bTokenCollateral = BBrc20(0x3FDA...);
 require(bToken.liquidateBorrow.value(100)(0xBorrower, bTokenCollateral) == 0, "borrower underwater??");
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CErc20.at(0x3FDA...);
-const bTokenCollateral = CEther.at(0x3FDB...);
+const bToken = BBrc20.at(0x3FDA...);
+const bTokenCollateral = BBtt.at(0x3FDB...);
 await bToken.methods.liquidateBorrow(0xBorrower, 33, bTokenCollateral).send({from: 0xLiquidator});
 ```
 
@@ -343,11 +343,11 @@ await bToken.methods.liquidateBorrow(0xBorrower, 33, bTokenCollateral).send({fro
 | 9    | `MATH_ERROR` | A math calculation error occurred. |
 | 10   | `MARKET_NOT_FRESH` | Interest has not been properly accrued. |
 | 11   | `MARKET_NOT_LISTED` | The market is not currently listed by its comptroller. |
-| 12   | `TOKEN_INSUFFICIENT_ALLOWANCE` | ERC-20 contract must *allow* Money Market contract to call `transferFrom`. The current allowance is either 0 or less than the requested supply, repayBorrow or liquidate amount. |
-| 13   | `TOKEN_INSUFFICIENT_BALANCE` | Caller does not have sufficient balance in the ERC-20 contract to complete the desired action. |
+| 12   | `TOKEN_INSUFFICIENT_ALLOWANCE` | BRC-20 contract must *allow* Money Market contract to call `transferFrom`. The current allowance is either 0 or less than the requested supply, repayBorrow or liquidate amount. |
+| 13   | `TOKEN_INSUFFICIENT_BALANCE` | Caller does not have sufficient balance in the BRC-20 contract to complete the desired action. |
 | 14   | `TOKEN_INSUFFICIENT_CASH` | The market does not have a sufficient cash balance to complete the transaction. You may attempt this transaction again later. |
-| 15   | `TOKEN_TRANSFER_IN_FAILED` | Failure in ERC-20 when transfering token into the market. |
-| 16   | `TOKEN_TRANSFER_OUT_FAILED` | Failure in ERC-20 when transfering token out of the market. |
+| 15   | `TOKEN_TRANSFER_IN_FAILED` | Failure in BRC-20 when transfering token into the market. |
+| 16   | `TOKEN_TRANSFER_OUT_FAILED` | Failure in BRC-20 when transfering token out of the market. |
 {: .error-codes-table }
 
 ## Failure Info
@@ -441,7 +441,7 @@ Each bToken is convertible into an ever increasing quantity of the underlying as
 exchangeRate = (getCash() + totalBorrows() - totalReserves()) / totalSupply()
 ```
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function exchangeRateCurrent() returns (uint)
@@ -451,14 +451,14 @@ function exchangeRateCurrent() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 bToken = BToken(0x3FDA...);
+BBrc20 bToken = BToken(0x3FDA...);
 uint exchangeRateMantissa = bToken.exchangeRateCurrent();
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 const exchangeRate = (await bToken.methods.exchangeRateCurrent().call()) / 1e18;
 ```
 
@@ -468,7 +468,7 @@ Tip: note the use of `call` vs. `send` to invoke the function from off-chain wit
 
 Cash is the amount of underlying balance owned by this bToken contract. One may query the total amount of cash currently available to this market.
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function getCash() returns (uint)
@@ -479,14 +479,14 @@ function getCash() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 bToken = BToken(0x3FDA...);
+BBrc20 bToken = BToken(0x3FDA...);
 uint cash = bToken.getCash();
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 const cash = (await bToken.methods.getCash().call());
 ```
 
@@ -494,7 +494,7 @@ const cash = (await bToken.methods.getCash().call());
 
 Total Borrows is the amount of underlying currently loaned out by the market, and the amount upon which interest is accumulated to suppliers of the market.
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function totalBorrowsCurrent() returns (uint)
@@ -505,14 +505,14 @@ function totalBorrowsCurrent() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 bToken = BToken(0x3FDA...);
+BBrc20 bToken = BToken(0x3FDA...);
 uint borrows = bToken.totalBorrowsCurrent();
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 const borrows = (await bToken.methods.totalBorrowsCurrent().call());
 ```
 
@@ -520,7 +520,7 @@ const borrows = (await bToken.methods.totalBorrowsCurrent().call());
 
 A user who borrows assets from the protocol is subject to accumulated interest based on the current [borrow rate](#borrow-rate). Interest is accumulated every block and integrations may use this function to obtain the current value of a user's borrow balance with interest.
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function borrowBalanceCurrent(address account) returns (uint)
@@ -532,14 +532,14 @@ function borrowBalanceCurrent(address account) returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 bToken = BToken(0x3FDA...);
+BBrc20 bToken = BToken(0x3FDA...);
 uint borrows = bToken.borrowBalanceCurrent(msg.caller);
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 const borrows = await bToken.methods.borrowBalanceCurrent(account).call();
 ```
 
@@ -547,7 +547,7 @@ const borrows = await bToken.methods.borrowBalanceCurrent(account).call();
 
 At any point in time one may query the contract to get the current borrow rate per block.
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function borrowRatePerBlock() returns (uint)
@@ -558,14 +558,14 @@ function borrowRatePerBlock() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 bToken = BToken(0x3FDA...);
+BBrc20 bToken = BToken(0x3FDA...);
 uint borrowRateMantissa = bToken.borrowRatePerBlock();
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 const borrowRate = (await bToken.methods.borrowRatePerBlock().call()) / 1e18;
 ```
 
@@ -573,7 +573,7 @@ const borrowRate = (await bToken.methods.borrowRatePerBlock().call()) / 1e18;
 
 Total Supply is the number of tokens currently in circulation in this bToken market. It is part of the EIP-20 interface of the bToken contract.
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function totalSupply() returns (uint)
@@ -584,14 +584,14 @@ function totalSupply() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 bToken = BToken(0x3FDA...);
+BBrc20 bToken = BToken(0x3FDA...);
 uint tokens = bToken.totalSupply();
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 const tokens = (await bToken.methods.totalSupply().call());
 ```
 
@@ -599,7 +599,7 @@ const tokens = (await bToken.methods.totalSupply().call());
 
 The user's underlying balance, representing their assets in the protocol, is equal to the user's bToken balance multiplied by the [Exchange Rate](#exchange-rate).
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function balanceOfUnderlying(address account) returns (uint)
@@ -610,21 +610,21 @@ function balanceOfUnderlying(address account) returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 bToken = BToken(0x3FDA...);
+BBrc20 bToken = BToken(0x3FDA...);
 uint tokens = bToken.balanceOfUnderlying(msg.caller);
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 const tokens = await bToken.methods.balanceOfUnderlying(account).call();
 ```
 
 ## Supply Rate
 At any point in time one may query the contract to get the current supply rate per block. The supply rate is derived from the [borrow rate](#borrow-rate), [reserve factor](#reserve-factor) and the amount of [total borrows](#total-borrows).
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function supplyRatePerBlock() returns (uint)
@@ -635,14 +635,14 @@ function supplyRatePerBlock() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 bToken = BToken(0x3FDA...);
+BBrc20 bToken = BToken(0x3FDA...);
 uint supplyRateMantissa = bToken.supplyRatePerBlock();
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 const supplyRate = (await bToken.methods.supplyRatePerBlock().call()) / 1e18;
 ```
 
@@ -650,7 +650,7 @@ const supplyRate = (await bToken.methods.supplyRatePerBlock().call()) / 1e18;
 
 Reserves are an accounting entry in each bToken contract that represents a portion of historical interest set aside as [cash](#cash) which can be withdrawn or transferred through the protocol's governance. A small portion of borrower interest accrues into the protocol, determined by the [reserve factor](#reserve-factor).
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function totalReserves() returns (uint)
@@ -661,14 +661,14 @@ function totalReserves() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 bToken = BToken(0x3FDA...);
+BBrc20 bToken = BToken(0x3FDA...);
 uint reserves = bToken.totalReserves();
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 const reserves = (await bToken.methods.totalReserves().call());
 ```
 
@@ -676,7 +676,7 @@ const reserves = (await bToken.methods.totalReserves().call());
 
 The reserve factor defines the portion of borrower interest that is converted into [reserves](#total-reserves).
 
-#### CErc20 / CEther
+#### BBrc20 / BBtt
 
 ```solidity
 function reserveFactorMantissa() returns (uint)
@@ -687,13 +687,13 @@ function reserveFactorMantissa() returns (uint)
 #### Solidity
 
 ```solidity
-CErc20 bToken = BToken(0x3FDA...);
+BBrc20 bToken = BToken(0x3FDA...);
 uint reserveFactorMantissa = bToken.reserveFactorMantissa();
 ```
 
 #### Web3 1.0
 
 ```js
-const bToken = CEther.at(0x3FDB...);
+const bToken = BBtt.at(0x3FDB...);
 const reserveFactor = (await bToken.methods.reserveFactorMantissa().call()) / 1e18;
 ```

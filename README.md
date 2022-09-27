@@ -1,6 +1,6 @@
 # Bitlend Protocol Docs Website
 
-The Bitlend protocol documentation website is a [Jekyll](https://jekyllrb.com/) site hosted by GitHub pages at https://docs.compound.finance/.
+The Bitlend protocol documentation website is a [Jekyll](https://jekyllrb.com/) site hosted by GitHub pages at https://docs.bitlend.finance/.
 
 To modify the website, make a pull request here.
 
@@ -18,10 +18,10 @@ To modify the website, make a pull request here.
 ## Install Ruby first
 
 ## Make sure you FORK the repository so you can make a pull request later
-git clone git@github.com:my-github-username/compound-finance.github.io.git
+git clone git@github.com:my-github-username/bitlend-finance.github.io.git
 
 ## Navigate to the Jekyll app folder
-cd compound-finance.github.io/docs/
+cd bitlend-finance.github.io/docs/
 
 ## Get the Ruby dependencies for Jekyll to work
 bundle
