@@ -17,8 +17,8 @@ sidebar_nav_data:
   liquidation-incentive: Liquidation Incentive
   key-events: Key Events
   error-codes: Error Codes
-  comp-distribution-speeds: COMP Distribution Speeds
-  claim-comp: Claim COMP
+  comp-distribution-speeds: BLEND Distribution Speeds
+  claim-comp: Claim BLEND
   market-metadata: Market Metadata
 ---
 
@@ -139,7 +139,7 @@ function markets(address bTokenAddress) view returns (bool, uint, bool)
 ```
 
 * `bTokenAddress`: The address of the bToken to check if listed and get the collateral factor for.
-* `RETURN`: Tuple of values (isListed, collateralFactorMantissa, isComped); isListed represents whether the comptroller recognizes this bToken; collateralFactorMantissa, scaled by 1e18, is multiplied by a supply balance to determine how much value can be borrowed. The isComped boolean indicates whether or not suppliers and borrowers are distributed COMP tokens.
+* `RETURN`: Tuple of values (isListed, collateralFactorMantissa, isComped); isListed represents whether the comptroller recognizes this bToken; collateralFactorMantissa, scaled by 1e18, is multiplied by a supply balance to determine how much value can be borrowed. The isComped boolean indicates whether or not suppliers and borrowers are distributed BLEND tokens.
 
 #### Solidity
 
@@ -300,12 +300,12 @@ const closeFactor = await troll.methods.liquidationIncentiveMantissa().call();
 | 17   | `SUPPORT_MARKET_EXISTS` |
 | 18   | `SUPPORT_MARKET_OWNER_CHECK` |
 
-## COMP Distribution Speeds
+## BLEND Distribution Speeds
 
-### COMP Speed
+### BLEND Speed
 
-The "COMP speed" unique to each market is an unsigned integer that specifies the amount of COMP that is distributed, per block, to suppliers and borrowers in each market. This number can be changed for individual markets by calling the `_setCompSpeed` method through a successful Bitlend Governance proposal.
-The following is the formula for calculating the rate that COMP is distributed to each supported market.
+The "BLEND speed" unique to each market is an unsigned integer that specifies the amount of BLEND that is distributed, per block, to suppliers and borrowers in each market. This number can be changed for individual markets by calling the `_setCompSpeed` method through a successful Bitlend Governance proposal.
+The following is the formula for calculating the rate that BLEND is distributed to each supported market.
 
 ```solidity
 utility = bTokenTotalBorrows * assetPrice
@@ -313,10 +313,10 @@ utilityFraction = utility / sumOfAllCOMPedMarketUtilities
 marketCompSpeed = compRate * utilityFraction
 ```
 
-### COMP Distributed Per Block (All Markets)
+### BLEND Distributed Per Block (All Markets)
 
-The Comptroller contract’s `compRate` is an unsigned integer that indicates the rate at which the protocol distributes COMP to markets’ suppliers or borrowers, every Ethereum block. The value is the amount of COMP (in wei), per block, allocated for the markets. Note that not every market has COMP distributed to its participants (see Market Metadata).
-The compRate indicates how much COMP goes to the suppliers or borrowers, so doubling this number shows how much COMP goes to all suppliers and borrowers combined. The code examples implement reading the amount of COMP distributed, per Ethereum block, to all markets.
+The Comptroller contract’s `compRate` is an unsigned integer that indicates the rate at which the protocol distributes BLEND to markets’ suppliers or borrowers, every Ethereum block. The value is the amount of BLEND (in wei), per block, allocated for the markets. Note that not every market has BLEND distributed to its participants (see Market Metadata).
+The compRate indicates how much BLEND goes to the suppliers or borrowers, so doubling this number shows how much BLEND goes to all suppliers and borrowers combined. The code examples implement reading the amount of BLEND distributed, per Ethereum block, to all markets.
 
 #### Comptroller
 
@@ -328,11 +328,11 @@ uint public compRate;
 
 ```solidity
 Comptroller troll = Comptroller(0xABCD...);
-// COMP issued per block to suppliers OR borrowers * (1 * 10 ^ 18)
+// BLEND issued per block to suppliers OR borrowers * (1 * 10 ^ 18)
 uint compRate = troll.compRate();
-// Approximate COMP issued per day to suppliers OR borrowers * (1 * 10 ^ 18)
+// Approximate BLEND issued per day to suppliers OR borrowers * (1 * 10 ^ 18)
 uint compRatePerDay = compRate * 4 * 60 * 24;
-// Approximate COMP issued per day to suppliers AND borrowers * (1 * 10 ^ 18)
+// Approximate BLEND issued per day to suppliers AND borrowers * (1 * 10 ^ 18)
 uint compRatePerDayTotal = compRatePerDay * 2;
 ```
 
@@ -342,16 +342,16 @@ uint compRatePerDayTotal = compRatePerDay * 2;
 const comptroller = new web3.eth.Contract(comptrollerAbi, comptrollerAddress);
 let compRate = await comptroller.methods.compRate().call();
 compRate = compRate / 1e18;
-// COMP issued to suppliers OR borrowers
+// BLEND issued to suppliers OR borrowers
 const compRatePerDay = compRate * 4 * 60 * 24;
-// COMP issued to suppliers AND borrowers
+// BLEND issued to suppliers AND borrowers
 const compRatePerDayTotal = compRatePerDay * 2;
 ```
 
-### COMP Distributed Per Block (Single Market)
+### BLEND Distributed Per Block (Single Market)
 
-The Comptroller contract has a mapping called `compSpeeds`. It maps bToken addresses to an integer of each market’s COMP distribution per Ethereum block. The integer indicates the rate at which the protocol distributes COMP to markets’ suppliers or borrowers. The value is the amount of COMP (in wei), per block, allocated for the market. Note that not every market has COMP distributed to its participants (see Market Metadata).
-The speed indicates how much COMP goes to the suppliers or the borrowers, so doubling this number shows how much COMP goes to market suppliers and borrowers combined. The code examples implement reading the amount of COMP distributed, per Ethereum block, to a single market.
+The Comptroller contract has a mapping called `compSpeeds`. It maps bToken addresses to an integer of each market’s BLEND distribution per Ethereum block. The integer indicates the rate at which the protocol distributes BLEND to markets’ suppliers or borrowers. The value is the amount of BLEND (in wei), per block, allocated for the market. Note that not every market has BLEND distributed to its participants (see Market Metadata).
+The speed indicates how much BLEND goes to the suppliers or the borrowers, so doubling this number shows how much BLEND goes to market suppliers and borrowers combined. The code examples implement reading the amount of BLEND distributed, per Ethereum block, to a single market.
 
 #### Comptroller
 
@@ -364,11 +364,11 @@ mapping(address => uint) public compSpeeds;
 ```solidity
 Comptroller troll = Comptroller(0x123...);
 address bToken = 0xabc...;
-// COMP issued per block to suppliers OR borrowers * (1 * 10 ^ 18)
+// BLEND issued per block to suppliers OR borrowers * (1 * 10 ^ 18)
 uint compSpeed = troll.compSpeeds(bToken);
-// Approximate COMP issued per day to suppliers OR borrowers * (1 * 10 ^ 18)
+// Approximate BLEND issued per day to suppliers OR borrowers * (1 * 10 ^ 18)
 uint compSpeedPerDay = compSpeed * 4 * 60 * 24;
-// Approximate COMP issued per day to suppliers AND borrowers * (1 * 10 ^ 18)
+// Approximate BLEND issued per day to suppliers AND borrowers * (1 * 10 ^ 18)
 uint compSpeedPerDayTotal = compSpeedPerDay * 2;
 ```
 
@@ -379,24 +379,24 @@ const bTokenAddress = '0xabc...';
 const comptroller = new web3.eth.Contract(comptrollerAbi, comptrollerAddress);
 let compSpeed = await comptroller.methods.compSpeeds(bTokenAddress).call();
 compSpeed = compSpeed / 1e18;
-// COMP issued to suppliers OR borrowers
+// BLEND issued to suppliers OR borrowers
 const compSpeedPerDay = compSpeed * 4 * 60 * 24;
-// COMP issued to suppliers AND borrowers
+// BLEND issued to suppliers AND borrowers
 const compSpeedPerDayTotal = compSpeedPerDay * 2;
 ```
 
-## Claim COMP
+## Claim BLEND
 
-Every Bitlend user accrues COMP for each block they are supplying to or borrowing from the protocol. Users may call the Comptroller's `claimComp` method at any time to transfer COMP accrued to their address.
+Every Bitlend user accrues BLEND for each block they are supplying to or borrowing from the protocol. Users may call the Comptroller's `claimComp` method at any time to transfer BLEND accrued to their address.
 
 #### Comptroller
 
 ```solidity
-// Claim all the COMP accrued by holder in all markets
+// Claim all the BLEND accrued by holder in all markets
 function claimComp(address holder) public
-// Claim all the COMP accrued by holder in specific markets
+// Claim all the BLEND accrued by holder in specific markets
 function claimComp(address holder, BToken[] memory bTokens) public
-// Claim all the COMP accrued by specific holders in specific markets for their supplies and/or borrows
+// Claim all the BLEND accrued by specific holders in specific markets for their supplies and/or borrows
 function claimComp(address[] memory holders, BToken[] memory bTokens, bool borrowers, bool suppliers) public
 ```
 #### Solidity

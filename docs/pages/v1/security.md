@@ -30,10 +30,10 @@ The Bitlend protocol has been reviewed & audited by [Trail of Bits](https://www.
 3. [Trail of Bits - August 2019](https://github.com/trailofbits/publications/blob/master/reviews/bitlend-3.pdf){:target="_blank"}
 4. [OpenZeppelin - Timelock & Pause Guardian](https://blog.openzeppelin.com/bitlend-finance-patch-audit){:target="_blank"}
 5. [OpenZeppelin - cDAI](https://blog.openzeppelin.com/bitlend-finance-mcd-dsr-integration/){:target="_blank"}
-6. [OpenZeppelin - COMP & Governance](https://blog.openzeppelin.com/bitlend-alpha-governance-system-audit/){:target="_blank"}
+6. [OpenZeppelin - BLEND & Governance](https://blog.openzeppelin.com/bitlend-alpha-governance-system-audit/){:target="_blank"}
 7. [Trail of Bits - February 2020](https://github.com/trailofbits/publications/blob/master/reviews/bitlend-governance.pdf){:target="_blank"}
 8. [OpenZeppelin - Tether](https://blog.openzeppelin.com/bitlend-tether-integration-audit/){:target="_blank"}
-9. [OpenZeppelin - COMP Distribution](https://blog.openzeppelin.com/bitlend-comp-distribution-system-audit/){:target="_blank"}
+9. [OpenZeppelin - BLEND Distribution](https://blog.openzeppelin.com/bitlend-comp-distribution-system-audit/){:target="_blank"}
 {: .mega-ordered-list }
 
 ## Formal Verification
