@@ -36,21 +36,42 @@ sidebar_nav_data:
 # Governance
 
 ## Introduction
+In the first version of the Bitlend protocol, the administration of the protocol shall be scoped to privilege operators
+who would be able to perform day-to-day tasks such as listing new markets, pausing existing markets, changing interest
+rate models, etc. The administrator rights reside with a 3-out-of-5 multi-sig that consists of the Bitlend core team and
+other partners. The multi-sig will execute administrative tasks after m out of n members have approved, for m greater 
+than one. No single party can unilaterally execute administrative tasks, but there will be  need to coordinate with m 
+parties to get something done.
 
-The Bitlend protocol is governed and upgraded by BLEND token-holders, using three distinct components; the [BLEND](https://bttcscan.io/token/0xc00e94cb662c3520282e6f5717214004a7f26888){:target="_blank"} token, governance module ([Governor Bravo](https://bttcscan.io/address/0xc0da02939e1441f497fd74f78ce7decb17b66529){:target="_blank"}), and [Timelock](https://bttcscan.io/address/0x6d903f6003cca6255d85cca4d3b5e5146dc33925#code){:target="_blank"}. Together, these contracts allow the community to propose, vote, and implement changes through the administrative functions of a bToken or the Comptroller. Proposals can modify system parameters, support new markets, or add entirely new functionality to the protocol.
 
-BLEND token-holders can delegate their voting rights to themselves, or an address of their choice. Addresses delegated at least  25,000 BLEND can create governance proposals; any address can lock 100 BLEND to create an Autonomous Proposal, which becomes a governance proposal after being delegated 25,000 BLEND.
+In the future, the Bitlend protocol will be governed and upgraded by BLEND token-holders, using three distinct components; 
+the [BLEND](https://bttcscan.io/token/0xc00e94cb662c3520282e6f5717214004a7f26888){:target="_blank"} token, governance 
+module ([Governor Bravo](https://bttcscan.io/){:target="_blank"}), 
+and [Timelock](https://bttcscan.io/address/0x6d903f6003cca6255d85cca4d3b5e5146dc33925#code){:target="_blank"}. Together, 
+these contracts allow the community to propose, vote, and implement changes through the administrative functions of a 
+bToken or the Comptroller. Proposals can modify system parameters, support new markets, or add entirely new functionality 
+to the protocol.
 
-When a governance proposal is created, it enters a 2 day review period, after which voting weights are recorded and voting begins. Voting lasts for 3 days; if a majority, and at least 400,000 votes are cast for the proposal, it is queued in the Timelock, and can be implemented 2 days later. In total, any change to the protocol takes at least one week.
+BLEND token-holders can delegate their voting rights to themselves, or an address of their choice. Addresses delegated 
+at least  25,000 BLEND can create governance proposals; any address can lock 100 BLEND to create an Autonomous Proposal, 
+which becomes a governance proposal after being delegated 25,000 BLEND.
+
+When a governance proposal is created, it enters a 2 day review period, after which voting weights are recorded and 
+voting begins. Voting lasts for 3 days; if a majority, and at least 400,000 votes are cast for the proposal, it is 
+queued in the Timelock, and can be implemented 2 days later. In total, any change to the protocol takes at least one week.
 ![Governance Diagram](/public/img/gov_diagram.png)
 
 ## BLEND
 
-BLEND is an [BRC-20](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md){:target="_blank"} token that allows the owner to delegate voting rights to any address, including their own address. Changes to the owner’s token balance automatically adjust the voting rights of the delegate.
+BLEND is a [BRC-20](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md){:target="_blank"} token that allows 
+the owner to delegate voting rights to any address, including their own address. Changes to the owner’s token balance 
+automatically adjust the voting rights of the delegate.
 
 ## Delegate
 
-Delegate votes from the sender to the delegatee. Users can delegate to 1 address at a time, and the number of votes added to the delegatee’s vote count is equivalent to the balance of BLEND in the user’s account. Votes are delegated from the current block and onward, until the sender delegates again, or transfers their BLEND.
+Delegate votes from the sender to the delegatee. Users can delegate to 1 address at a time, and the number of votes 
+added to the delegatee’s vote count is equivalent to the balance of BLEND in the user’s account. Votes are delegated 
+from the current block and onward, until the sender delegates again, or transfers their BLEND.
 
 #### BLEND
 
@@ -77,7 +98,9 @@ const tx = await comp.methods.delegate(delegateeAddress).send({ from: sender });
 
 ## Delegate By Signature
 
-Delegate votes from the signatory to the delegatee. This method has the same purpose as Delegate but it instead enables offline signatures to participate in Bitlend governance vote delegation. For more details on how to create an offline signature, review [EIP-712](https://eips.ethereum.org/EIPS/eip-712){:target="_blank"}.
+Delegate votes from the signatory to the delegatee. This method has the same purpose as Delegate but it instead enables 
+offline signatures to participate in Bitlend governance vote delegation. For more details on how to create an offline 
+signature, review [EIP-712](https://eips.ethereum.org/EIPS/eip-712){:target="_blank"}.
 
 #### BLEND
 
