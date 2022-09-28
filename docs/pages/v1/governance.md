@@ -45,9 +45,9 @@ parties to get something done.
 
 
 In the future, the Bitlend protocol will be governed and upgraded by BLEND token-holders, using three distinct components; 
-the [BLEND](https://bttcscan.io/token/0xc00e94cb662c3520282e6f5717214004a7f26888){:target="_blank"} token, governance 
+the [BLEND](https://bttcscan.io/token/0xd7878b71eAc29080559491D16419Ca97cfcFfD3a){:target="_blank"} token, governance 
 module ([Governor Bravo](https://bttcscan.io/){:target="_blank"}), 
-and [Timelock](https://bttcscan.io/address/0x6d903f6003cca6255d85cca4d3b5e5146dc33925#code){:target="_blank"}. Together, 
+and [Timelock](https://bttcscan.io/){:target="_blank"}. Together, 
 these contracts allow the community to propose, vote, and implement changes through the administrative functions of a 
 bToken or the Comptroller. Proposals can modify system parameters, support new markets, or add entirely new functionality 
 to the protocol.
