@@ -1,20 +1,16 @@
 ---
-layout: docs-content
 title: Bitlend | Docs - Getting Started
 permalink: /
 docs_version: v1
-
-## Element ID: In-page Heading
 sidebar_nav_data:
   getting-started: Getting Started
   guides: Guides
   networks: Networks
   protocol-math: Protocol Math
-
 deployments:
-  Ethereum Mainnet - Bitlend: ## this becomes the header text
+  Ethereum Mainnet - Bitlend:
     tab_text: Mainnet
-    blockscan_origin: 'https://bttcscan.io/'
+    blockscan_origin: https://bttcscan.io/
     contracts:
       bUSDC: '0x0000000000000000000000000000000000000000'
       bTRX: '0x0000000000000000000000000000000000000000'
@@ -24,10 +20,9 @@ deployments:
       Comptroller: '0x0000000000000000000000000000000000000000'
       Governance: '0x0000000000000000000000000000000000000000'
       Timelock: '0x0000000000000000000000000000000000000000'
-
   Ethereum Donau Testnet - Bitlend:
     tab_text: Donau
-    blockscan_origin: 'https://testnet.bttcscan.io/'
+    blockscan_origin: https://testnet.bttcscan.io/
     contracts:
       bUSDC: '0x0000000000000000000000000000000000000000'
       bTRX: '0x0000000000000000000000000000000000000000'
@@ -39,65 +34,30 @@ deployments:
       Timelock: '0x0000000000000000000000000000000000000000'
 ---
 
-# Getting Started
-
-## Introduction to Bitlend
-
-<div class="new-docs-banner">
-  <div class="center">
-    <span class="message">Bitlend is now live, you're currently viewing Bitlend documentation.</span>
-    <a href="/">
-      <span class="button">Bitlend Documentation</span>
-    </a>
-  </div>
-</div>
-
-The Bitlend protocol is based on the [Bitlend Whitepaper](https://bitlend.finance/documents/Bitlend.Whitepaper.pdf){:target="_blank"} (2019); the codebase is [open-source](https://github.com/Bitlend-protocol/bitlend-protocol){:target="_blank"}, and maintained by the community.
-
-The app.bitlend.fi interface is [open-source](https://github.com/Bitlend-protocol/palisade){:target="_blank"}, and maintained by the community.
-
-Please join the #development room in the Bitlend community [Discord](https://discord.com/invite/bitlend){:target="_blank"} server; Bitlend Labs and members of the community look forward to helping you build an application on top of Bitlend. Your questions help us improve, so please don't hesitate to ask if you can't find what you are looking for here.
-
-## Guides
-
-1. [Supplying Assets to the Bitlend Protocol](){:target="_blank"}
-2. [Borrowing Assets from the Bitlend Protocol](){:target="_blank"}
-3. [Create a Bitlend API with Infura](){:target="_blank"}
-4. [Building a Governance Interface](){:target="_blank"}
-5. [Delegation & Voting](){:target="_blank"}
-6. [Contributing to the Protocol](){:target="_blank"}
-{: .mega-ordered-list }
-
-## Networks
-
-The Bitlend Protocol is currently deployed on the following networks:
-
-<div id="networks-widget-container"></div>
-
-You can also see a full list of all deployed contract addresses [here](https://github.com/Bitlend-protocol/bitlend-config){:target="_blank"}.
+# 3.7 Protocol Math
 
 ## Protocol Math
 
-The Bitlend protocol contracts use a system of exponential math, [ExponentialNoError.sol](https://github.com/Bitlend-protocol/bitlend-protocol/blob/master/contracts/ExponentialNoError.sol){:target="_blank"}, in order to represent fractional quantities with sufficient precision.
+The Bitlend protocol contracts use a system of exponential math, [ExponentialNoError.sol](https://github.com/Bitlend-protocol/bitlend-protocol/blob/master/contracts/ExponentialNoError.sol){:target="\_blank"}, in order to represent fractional quantities with sufficient precision.
 
-Most numbers are represented as a *mantissa*, an unsigned integer scaled by `1 * 10 ^ 18`, in order to perform basic math at a high level of precision.
+Most numbers are represented as a _mantissa_, an unsigned integer scaled by `1 * 10 ^ 18`, in order to perform basic math at a high level of precision.
 
 ### bToken and Underlying Decimals
 
-Prices and exchange rates are scaled by the decimals unique to each asset; bTokens are BRC-20 tokens with 8 decimals, while their underlying tokens vary, and have a public member named *decimals*.
+Prices and exchange rates are scaled by the decimals unique to each asset; bTokens are BRC-20 tokens with 8 decimals, while their underlying tokens vary, and have a public member named _decimals_.
 
-| bToken | bToken Decimals | Underlying | Underlying Decimals |
-| ------ | --------------- | ---------- | ------------------- |
-| bBTT   | 8               | BTT        | 18                  |
-| bWETH  | 8               | WETH       | 18                  |
-| bWBTC  | 8               | WBTC       | 8                   |
-| bUSDC  | 8               | USDC       | 6                   |
-| bTRX   | 8               | TRX        | 6                   |
-{: .decimals-events-table }
+| bToken                      | bToken Decimals | Underlying | Underlying Decimals |
+| --------------------------- | --------------- | ---------- | ------------------- |
+| bBTT                        | 8               | BTT        | 18                  |
+| bWETH                       | 8               | WETH       | 18                  |
+| bWBTC                       | 8               | WBTC       | 8                   |
+| bUSDC                       | 8               | USDC       | 6                   |
+| bTRX                        | 8               | TRX        | 6                   |
+| {: .decimals-events-table } |                 |            |                     |
 
 ### Interpreting Exchange Rates
 
-The bToken [Exchange Rate](/btokens#exchange-rate) is scaled by the difference in decimals between the bToken and the underlying asset.
+The bToken [Exchange Rate](../../../../btokens/#exchange-rate) is scaled by the difference in decimals between the bToken and the underlying asset.
 
 ```
 oneBTokenInUnderlying = exchangeRateCurrent / (1 * 10 ^ (18 + underlyingDecimals - bTokenDecimals))
@@ -128,9 +88,9 @@ underlyingTokens = bTokenAmount * oneBTokenInUnderlying
 
 Interest rates for each market update on any block in which the ratio of borrowed assets to supplied assets in the market has changed. The amount interest rates are changed depends on the interest rate model smart contract implemented for the market, and the amount of change in the ratio of borrowed assets to supplied assets in the market.
 
-See the interest rate data visualization notebook on [Observable](https://observablehq.com/@jflatow/bitlend-interest-rates){:target="_blank"} to visualize which interest rate model is currently applied to each market.
+See the interest rate data visualization notebook on [Observable](https://observablehq.com/@jflatow/bitlend-interest-rates){:target="\_blank"} to visualize which interest rate model is currently applied to each market.
 
-Historical interest rates can be retrieved from the [MarketHistoryService API](/api#MarketHistoryService).
+Historical interest rates can be retrieved from the [MarketHistoryService API](../../../../api/#MarketHistoryService).
 
 Interest accrues to all suppliers and borrowers in a market when any Ethereum address interacts with the market’s bToken contract, calling one of these functions: mint, redeem, borrow, or repay. Successful execution of one of these functions triggers the `accrueInterest` method, which causes interest to be added to the underlying balance of every supplier and borrower in the market. Interest accrues for the current block, as well as each prior block in which the `accrueInterest` method was not triggered (no user interacted with the bToken contract). Interest bitlends only during blocks in which the bToken contract has one of the aforementioned methods invoked.
 
