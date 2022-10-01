@@ -1,0 +1,10 @@
+version: '3'
+services:
+  jekyll:
+    image: jekyll/jekyll:latest
+    network_mode: host
+    command: bash -c 'jekyll serve --config _config.yml --watch --force_polling --verbose --incremental'
+    environment:
+      - JEKYLL_ENV=production
+    volumes:
+      - .:/srv/jekyll/
