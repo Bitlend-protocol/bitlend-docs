@@ -17,10 +17,11 @@ kramdown:
 
 ## Page Name Anchor Text: Anchor HREF
 v1_nav_data:
+  Introduction: /
+  Guides: /guides/
   bTokens: /btokens/
   Comptroller: /comptroller/
-  Governance: /governance/
-  Open Price Feed: /prices/
-  # API: /api/
-  # Bitlend.js: /bitlend-js/
+  Tokennomics: /tokenomics/
+  Protocol Parameters: /protocol-parameters/
   Security: /security/
+  Roadmap: /roadmap/

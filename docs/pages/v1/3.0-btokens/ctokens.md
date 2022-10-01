@@ -1,6 +1,7 @@
 ---
+layout: docs-content
 title: Bitlend | Docs - bTokens
-permalink: /btokens/
+permalink: /btokens/functions/
 docs_version: v1
 sidebar_nav_data:
   btokens: bTokens
@@ -26,7 +27,7 @@ sidebar_nav_data:
   reserve-factor: Reserve Factor
 ---
 
-# 3.6 bToken Functions
+# bToken Functions
 
 ## Mint
 
