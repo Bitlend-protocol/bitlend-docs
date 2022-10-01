@@ -1,10 +1,9 @@
 ---
+layout: docs-content
 title: Bitlend | Docs - Getting Started
-permalink: /
+permalink: /btokens/protocol-math/
 docs_version: v1
 sidebar_nav_data:
-  getting-started: Getting Started
-  guides: Guides
   networks: Networks
   protocol-math: Protocol Math
 deployments:
@@ -34,7 +33,7 @@ deployments:
       Timelock: '0x0000000000000000000000000000000000000000'
 ---
 
-# 3.7 Protocol Math
+# Protocol Math
 
 ## Protocol Math
 
