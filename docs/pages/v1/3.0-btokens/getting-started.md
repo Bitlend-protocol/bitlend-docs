@@ -3,13 +3,15 @@ layout: docs-content
 title: Bitlend | Docs - Getting Started
 permalink: /btokens/protocol-math/
 docs_version: v1
+## Element ID: In-page Heading
 sidebar_nav_data:
   networks: Networks
   protocol-math: Protocol Math
+
 deployments:
-  Ethereum Mainnet - Bitlend:
+  Ethereum Mainnet - Bitlend: ## this becomes the header text
     tab_text: Mainnet
-    blockscan_origin: https://bttcscan.io/
+    blockscan_origin: 'https://bttcscan.io/'
     contracts:
       bUSDC: '0x0000000000000000000000000000000000000000'
       bTRX: '0x0000000000000000000000000000000000000000'
@@ -19,9 +21,10 @@ deployments:
       Comptroller: '0x0000000000000000000000000000000000000000'
       Governance: '0x0000000000000000000000000000000000000000'
       Timelock: '0x0000000000000000000000000000000000000000'
+
   Ethereum Donau Testnet - Bitlend:
     tab_text: Donau
-    blockscan_origin: https://testnet.bttcscan.io/
+    blockscan_origin: 'https://testnet.bttcscan.io/'
     contracts:
       bUSDC: '0x0000000000000000000000000000000000000000'
       bTRX: '0x0000000000000000000000000000000000000000'
@@ -33,7 +36,13 @@ deployments:
       Timelock: '0x0000000000000000000000000000000000000000'
 ---
 
-# Protocol Math
+## Networks
+
+The Bitlend Protocol is currently deployed on the following networks:
+
+<div id="networks-widget-container"></div>
+
+You can also see a full list of all deployed contract addresses [here](https://github.com/Bitlend-protocol/bitlend-config){:target="_blank"}.
 
 ## Protocol Math
 
